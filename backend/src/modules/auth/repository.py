@@ -30,3 +30,16 @@ class UserRepository:
         self.db.add(user)
 
         return user
+    
+    def get_by_id(
+        self,
+        user_id: str,
+    ):
+
+        return (
+            self.db.query(User)
+            .filter(
+                User.id == user_id
+            )
+            .first()
+        )

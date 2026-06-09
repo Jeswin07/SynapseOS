@@ -15,6 +15,10 @@ from src.modules.auth.schemas import (
 
 from src.modules.auth.service import AuthService
 
+from src.core.security import (
+    get_current_user,
+)
+
 router = APIRouter(
     prefix="/auth",
     tags=["Authentication"],
@@ -54,3 +58,52 @@ def register(
             status_code=400,
             detail=str(exc),
         )
+    
+@router.post(
+    "/login",
+    response_model=TokenResponse,
+)
+def login(
+    payload: LoginRequest,
+    db: Session = Depends(get_db),
+):
+    try:
+        service = AuthService(db)
+
+        token = service.login(
+            payload.email,
+            payload.password,
+        )
+
+        result = service.login(
+            payload.email,
+            payload.password,
+        )
+
+        return TokenResponse(
+            access_token=result["access_token"],
+            user_id=str(result["user"].id),
+            role=result["user"].role.value,
+        )
+
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=401,
+            detail=str(exc),
+        ) from exc
+
+@router.get("/me")
+def get_me(
+    current_user=Depends(
+        get_current_user
+    ),
+):
+
+    return {
+        "id": str(current_user.id),
+        "email": current_user.email,
+        "role": current_user.role.value,
+        "tenant_id": str(
+            current_user.tenant_id
+        ),
+    }

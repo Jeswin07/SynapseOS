@@ -107,8 +107,13 @@ class AuthService:
                 "Invalid credentials"
             )
 
-        return create_access_token(
+        token = create_access_token(
             str(user.id),
             str(user.tenant_id),
             user.role.value,
         )
+
+        return {
+            "access_token": token,
+            "user": user,
+        }

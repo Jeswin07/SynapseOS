@@ -1,4 +1,4 @@
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta, UTC
 
 import jwt
 
@@ -9,18 +9,20 @@ def create_access_token(
     user_id: str,
     tenant_id: str,
     role: str,
-) -> str:
-
-    expire = datetime.now(UTC) + timedelta(
-        minutes=settings.access_token_expire_minutes
+):
+    expire = (
+        datetime.now(UTC)
+        + timedelta(
+            minutes=settings.access_token_expire_minutes
+        )
     )
 
     payload = {
         "sub": user_id,
         "tenant_id": tenant_id,
         "role": role,
-        "exp": expire,
         "type": "access",
+        "exp": expire,
     }
 
     return jwt.encode(
@@ -30,10 +32,13 @@ def create_access_token(
     )
 
 
-def decode_token(token: str) -> dict:
-
+def decode_token(
+    token: str,
+):
     return jwt.decode(
         token,
         settings.jwt_secret_key,
-        algorithms=[settings.jwt_algorithm],
+        algorithms=[
+            settings.jwt_algorithm
+        ],
     )
