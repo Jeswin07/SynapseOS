@@ -1,13 +1,11 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from sqlalchemy import engine_from_config, pool
 
 from alembic import context
-
-from src.db import models
-from src.db.base import Base
 from src.core.config import settings
+from src.db.base import Base
+from src.db import models
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -85,15 +83,3 @@ if context.is_offline_mode():
     run_migrations_offline()
 else:
     run_migrations_online()
-
-print("DATABASE URL:", settings.database_url)
-
-config.set_main_option(
-    "sqlalchemy.url",
-    settings.database_url
-)
-
-print(
-    "ALEMBIC URL:",
-    config.get_main_option("sqlalchemy.url")
-)
