@@ -30,50 +30,27 @@ def register(
 
         service = AuthService(db)
 
-        user = service.register(
-            email=payload.email,
+        result = service.register(
+            company_name=payload.company_name,
+            industry=payload.industry,
             full_name=payload.full_name,
+            email=payload.email,
             password=payload.password,
-            tenant_id=payload.tenant_id,
         )
 
         return {
-            "message": "User created",
-            "user_id": str(user.id),
+            "message": "Organization created successfully",
+            "tenant_id": str(
+                result["tenant"].id
+            ),
+            "user_id": str(
+                result["user"].id
+            ),
         }
 
     except ValueError as exc:
 
         raise HTTPException(
             status_code=400,
-            detail=str(exc),
-        )
-    
-@router.post(
-    "/login",
-    response_model=TokenResponse,
-)
-def login(
-    payload: LoginRequest,
-    db: Session = Depends(get_db),
-):
-
-    try:
-
-        service = AuthService(db)
-
-        token = service.login(
-            payload.email,
-            payload.password,
-        )
-
-        return TokenResponse(
-            access_token=token,
-        )
-
-    except ValueError as exc:
-
-        raise HTTPException(
-            status_code=401,
             detail=str(exc),
         )

@@ -1,5 +1,3 @@
-import uuid
-
 from sqlalchemy.orm import Session
 
 from src.models.user import User
@@ -14,6 +12,10 @@ from src.modules.auth.token_service import (
     create_access_token,
 )
 
+from src.modules.tenants.service import (
+    TenantService,
+)
+
 
 class AuthService:
 
@@ -21,34 +23,66 @@ class AuthService:
         self,
         db: Session,
     ):
+        self.db = db
+
         self.repository = UserRepository(db)
+
+        self.tenant_service = TenantService(db)
 
     def register(
         self,
-        email: str,
+        company_name: str,
+        industry: str,
         full_name: str,
+        email: str,
         password: str,
-        tenant_id: str,
     ):
 
-        existing_user = (
-            self.repository.get_by_email(email)
-        )
+        try:
 
-        if existing_user:
-            raise ValueError(
-                "User already exists"
+            existing_user = (
+                self.repository.get_by_email(email)
             )
 
-        user = User(
-            tenant_id=uuid.UUID(tenant_id),
-            email=email,
-            full_name=full_name,
-            hashed_password=hash_password(password),
-            role=UserRole.ADMIN,
-        )
+            if existing_user:
+                raise ValueError(
+                    "User already exists"
+                )
 
-        return self.repository.create(user)
+            tenant = (
+                self.tenant_service.create_tenant(
+                    company_name=company_name,
+                    industry=industry,
+                )
+            )
+
+            user = User(
+                tenant_id=tenant.id,
+                email=email,
+                full_name=full_name,
+                hashed_password=hash_password(
+                    password
+                ),
+                role=UserRole.ADMIN,
+            )
+
+            self.repository.create(user)
+
+            self.db.commit()
+
+            self.db.refresh(tenant)
+            self.db.refresh(user)
+
+            return {
+                "tenant": tenant,
+                "user": user,
+            }
+
+        except Exception:
+
+            self.db.rollback()
+
+            raise
 
     def login(
         self,

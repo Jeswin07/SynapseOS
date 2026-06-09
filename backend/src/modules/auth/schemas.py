@@ -1,11 +1,14 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
+from pydantic import EmailStr
 
 
 class RegisterRequest(BaseModel):
-    email: EmailStr
+    company_name: str
+    industry: str
+
     full_name: str
+    email: EmailStr
     password: str
-    tenant_id: str
 
 
 class LoginRequest(BaseModel):
@@ -16,10 +19,3 @@ class LoginRequest(BaseModel):
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
-
-
-class UserResponse(BaseModel):
-    id: str
-    email: str
-    full_name: str
-    role: str
