@@ -4,6 +4,7 @@ from datetime import datetime
 from sqlalchemy import (
     DateTime,
     ForeignKey,
+    String,
     func,
 )
 from sqlalchemy.dialects.postgresql import UUID
@@ -25,11 +26,13 @@ class RefreshToken(Base):
     )
 
     user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
         ForeignKey("users.id"),
         nullable=False,
     )
 
     token: Mapped[str] = mapped_column(
+        String,
         nullable=False,
         unique=True,
     )
