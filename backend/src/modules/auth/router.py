@@ -13,6 +13,9 @@ from src.modules.auth.schemas import (
     LoginRequest,
     RegisterRequest,
     TokenResponse,
+    RefreshTokenRequest,
+    AccessTokenResponse,
+    LogoutRequest
 )
 from src.modules.auth.service import AuthService
 
@@ -56,17 +59,17 @@ def register(
     "/login",
     response_model=TokenResponse,
 )
+@router.post(
+    "/login",
+    response_model=TokenResponse,
+)
 def login(
     payload: LoginRequest,
     db: Session = Depends(get_db),
 ):
+
     try:
         service = AuthService(db)
-
-        token = service.login(
-            payload.email,
-            payload.password,
-        )
 
         result = service.login(
             payload.email,
@@ -75,6 +78,7 @@ def login(
 
         return TokenResponse(
             access_token=result["access_token"],
+            refresh_token=result["refresh_token"],
             user_id=str(result["user"].id),
             role=result["user"].role.value,
         )
@@ -83,7 +87,7 @@ def login(
         raise HTTPException(
             status_code=401,
             detail=str(exc),
-        ) from exc
+        )
 
 
 @router.get("/me")
@@ -97,3 +101,52 @@ def get_me(
         "role": current_user.role.value,
         "tenant_id": str(current_user.tenant_id),
     }
+
+
+@router.post(
+    "/refresh",
+    response_model=AccessTokenResponse,
+)
+def refresh_token(
+    payload: RefreshTokenRequest,
+    db: Session = Depends(get_db),
+):
+
+    try:
+        service = AuthService(db)
+
+        access_token = service.refresh_access_token(payload.refresh_token)
+
+        return AccessTokenResponse(access_token=access_token)
+
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=401,
+            detail=str(exc),
+        )
+
+
+@router.post("/logout")
+def logout(
+    payload: LogoutRequest,
+    db: Session = Depends(get_db),
+):
+
+    try:
+
+        service = AuthService(db)
+
+        service.logout(
+            payload.refresh_token
+        )
+
+        return {
+            "message": "Logged out successfully"
+        }
+
+    except ValueError as exc:
+
+        raise HTTPException(
+            status_code=400,
+            detail=str(exc),
+        )

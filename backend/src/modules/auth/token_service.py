@@ -11,12 +11,7 @@ def create_access_token(
     role: str,
 ) -> str:
 
-    expire = (
-        datetime.now(UTC)
-        + timedelta(
-            minutes=settings.access_token_expire_minutes
-        )
-    )
+    expire = datetime.now(UTC) + timedelta(minutes=settings.access_token_expire_minutes)
 
     payload = {
         "sub": user_id,
@@ -40,21 +35,15 @@ def decode_token(
     return jwt.decode(
         token,
         settings.jwt_secret_key,
-        algorithms=[
-            settings.jwt_algorithm
-        ],
+        algorithms=[settings.jwt_algorithm],
     )
+
 
 def create_refresh_token(
     user_id: str,
 ) -> str:
 
-    expire = (
-        datetime.now(UTC)
-        + timedelta(
-            days=settings.refresh_token_expire_days
-        )
-    )
+    expire = datetime.now(UTC) + timedelta(days=settings.refresh_token_expire_days)
 
     payload = {
         "sub": user_id,
@@ -68,20 +57,16 @@ def create_refresh_token(
         algorithm=settings.jwt_algorithm,
     )
 
+
 def is_access_token(
     payload: dict,
 ) -> bool:
 
-    return (
-        payload.get("type")
-        == "access"
-    )
+    return payload.get("type") == "access"
+
 
 def is_refresh_token(
     payload: dict,
 ) -> bool:
 
-    return (
-        payload.get("type")
-        == "refresh"
-    )
+    return payload.get("type") == "refresh"
