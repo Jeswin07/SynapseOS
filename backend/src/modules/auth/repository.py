@@ -4,7 +4,6 @@ from src.models.user import User
 
 
 class UserRepository:
-
     def __init__(
         self,
         db: Session,
@@ -16,11 +15,7 @@ class UserRepository:
         email: str,
     ) -> User | None:
 
-        return (
-            self.db.query(User)
-            .filter(User.email == email)
-            .first()
-        )
+        return self.db.query(User).filter(User.email == email).first()
 
     def create(
         self,
@@ -30,16 +25,10 @@ class UserRepository:
         self.db.add(user)
 
         return user
-    
+
     def get_by_id(
         self,
         user_id: str,
     ):
 
-        return (
-            self.db.query(User)
-            .filter(
-                User.id == user_id
-            )
-            .first()
-        )
+        return self.db.query(User).filter(User.id == user_id).first()

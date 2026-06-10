@@ -5,24 +5,22 @@ from fastapi import (
 )
 from sqlalchemy.orm import Session
 
-from src.db.session import get_db
-
-from src.modules.auth.schemas import (
-    RegisterRequest,
-    LoginRequest,
-    TokenResponse,
-)
-
-from src.modules.auth.service import AuthService
-
 from src.core.security import (
     get_current_user,
 )
+from src.db.session import get_db
+from src.modules.auth.schemas import (
+    LoginRequest,
+    RegisterRequest,
+    TokenResponse,
+)
+from src.modules.auth.service import AuthService
 
 router = APIRouter(
     prefix="/auth",
     tags=["Authentication"],
 )
+
 
 @router.post("/register")
 def register(
@@ -31,7 +29,6 @@ def register(
 ):
 
     try:
-
         service = AuthService(db)
 
         result = service.register(
@@ -44,21 +41,17 @@ def register(
 
         return {
             "message": "Organization created successfully",
-            "tenant_id": str(
-                result["tenant"].id
-            ),
-            "user_id": str(
-                result["user"].id
-            ),
+            "tenant_id": str(result["tenant"].id),
+            "user_id": str(result["user"].id),
         }
 
     except ValueError as exc:
-
         raise HTTPException(
             status_code=400,
             detail=str(exc),
         )
-    
+
+
 @router.post(
     "/login",
     response_model=TokenResponse,
@@ -92,18 +85,15 @@ def login(
             detail=str(exc),
         ) from exc
 
+
 @router.get("/me")
 def get_me(
-    current_user=Depends(
-        get_current_user
-    ),
+    current_user=Depends(get_current_user),
 ):
 
     return {
         "id": str(current_user.id),
         "email": current_user.email,
         "role": current_user.role.value,
-        "tenant_id": str(
-            current_user.tenant_id
-        ),
+        "tenant_id": str(current_user.tenant_id),
     }

@@ -4,7 +4,6 @@ from src.models.tenant import Tenant
 
 
 class TenantRepository:
-
     def __init__(
         self,
         db: Session,
@@ -16,13 +15,7 @@ class TenantRepository:
         company_name: str,
     ) -> Tenant | None:
 
-        return (
-            self.db.query(Tenant)
-            .filter(
-                Tenant.company_name == company_name
-            )
-            .first()
-        )
+        return self.db.query(Tenant).filter(Tenant.company_name == company_name).first()
 
     def create(
         self,

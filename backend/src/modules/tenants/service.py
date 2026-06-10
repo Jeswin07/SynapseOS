@@ -1,23 +1,19 @@
 from sqlalchemy.orm import Session
 
 from src.models.tenant import Tenant
-
 from src.modules.tenants.repository import (
     TenantRepository,
 )
 
 
 class TenantService:
-
     def __init__(
         self,
         db: Session,
     ):
         self.db = db
 
-        self.repository = (
-            TenantRepository(db)
-        )
+        self.repository = TenantRepository(db)
 
     def create_tenant(
         self,
@@ -25,16 +21,10 @@ class TenantService:
         industry: str,
     ) -> Tenant:
 
-        existing = (
-            self.repository.get_by_company_name(
-                company_name
-            )
-        )
+        existing = self.repository.get_by_company_name(company_name)
 
         if existing:
-            raise ValueError(
-                "Company already exists"
-            )
+            raise ValueError("Company already exists")
 
         tenant = Tenant(
             company_name=company_name,

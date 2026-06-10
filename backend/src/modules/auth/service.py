@@ -1,8 +1,7 @@
 from sqlalchemy.orm import Session
 
-from src.models.user import User
 from src.models.enums import UserRole
-
+from src.models.user import User
 from src.modules.auth.repository import UserRepository
 from src.modules.auth.security import (
     hash_password,
@@ -11,14 +10,12 @@ from src.modules.auth.security import (
 from src.modules.auth.token_service import (
     create_access_token,
 )
-
 from src.modules.tenants.service import (
     TenantService,
 )
 
 
 class AuthService:
-
     def __init__(
         self,
         db: Session,
@@ -39,30 +36,21 @@ class AuthService:
     ):
 
         try:
-
-            existing_user = (
-                self.repository.get_by_email(email)
-            )
+            existing_user = self.repository.get_by_email(email)
 
             if existing_user:
-                raise ValueError(
-                    "User already exists"
-                )
+                raise ValueError("User already exists")
 
-            tenant = (
-                self.tenant_service.create_tenant(
-                    company_name=company_name,
-                    industry=industry,
-                )
+            tenant = self.tenant_service.create_tenant(
+                company_name=company_name,
+                industry=industry,
             )
 
             user = User(
                 tenant_id=tenant.id,
                 email=email,
                 full_name=full_name,
-                hashed_password=hash_password(
-                    password
-                ),
+                hashed_password=hash_password(password),
                 role=UserRole.ADMIN,
             )
 
@@ -79,7 +67,6 @@ class AuthService:
             }
 
         except Exception:
-
             self.db.rollback()
 
             raise
@@ -90,22 +77,16 @@ class AuthService:
         password: str,
     ):
 
-        user = (
-            self.repository.get_by_email(email)
-        )
+        user = self.repository.get_by_email(email)
 
         if not user:
-            raise ValueError(
-                "Invalid credentials"
-            )
+            raise ValueError("Invalid credentials")
 
         if not verify_password(
             password,
             user.hashed_password,
         ):
-            raise ValueError(
-                "Invalid credentials"
-            )
+            raise ValueError("Invalid credentials")
 
         token = create_access_token(
             str(user.id),

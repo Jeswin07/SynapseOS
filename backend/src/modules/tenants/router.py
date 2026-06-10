@@ -6,11 +6,9 @@ from fastapi import (
 from sqlalchemy.orm import Session
 
 from src.db.session import get_db
-
 from src.modules.tenants.schemas import (
     TenantCreate,
 )
-
 from src.modules.tenants.service import (
     TenantService,
 )
@@ -20,6 +18,7 @@ router = APIRouter(
     tags=["Tenants"],
 )
 
+
 @router.post("/")
 def create_tenant(
     payload: TenantCreate,
@@ -27,7 +26,6 @@ def create_tenant(
 ):
 
     try:
-
         service = TenantService(db)
 
         tenant = service.create_tenant(
@@ -43,11 +41,9 @@ def create_tenant(
         }
 
     except ValueError as exc:
-
         db.rollback()
 
         raise HTTPException(
             status_code=400,
             detail=str(exc),
         )
-    
