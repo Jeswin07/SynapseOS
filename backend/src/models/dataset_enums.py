@@ -1,0 +1,27 @@
+from enum import StrEnum
+
+
+class DatasetStatus(StrEnum):
+    UPLOADING = "UPLOADING"
+    UPLOADED = "UPLOADED"
+    PROFILING = "PROFILING"
+    READY = "READY"
+    FAILED = "FAILED"
+    ARCHIVED = "ARCHIVED"
+
+
+class DatasetType(StrEnum):
+    SALES = "SALES"
+    INVENTORY = "INVENTORY"
+    CUSTOMER = "CUSTOMER"
+    FINANCE = "FINANCE"
+    GENERIC = "GENERIC"
+
+
+class BusinessDomain(StrEnum):
+    RETAIL = "RETAIL"
+    ECOMMERCE = "ECOMMERCE"
+    FINANCE = "FINANCE"
+    MANUFACTURING = "MANUFACTURING"
+    HEALTHCARE = "HEALTHCARE"
+    GENERIC = "GENERIC"

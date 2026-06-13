@@ -17,6 +17,12 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int
     refresh_token_expire_days: int
 
+    minio_endpoint: str
+    minio_access_key: str
+    minio_secret_key: str
+    minio_bucket_name: str
+    minio_secure: bool
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @property
