@@ -8,6 +8,7 @@ from src.models.dataset import Dataset
 from src.shared.exceptions.dataset import (
     DatasetException,
 )
+from src.models.dataset_profile import DatasetProfile
 from src.shared.logging import logger
 from fastapi import UploadFile
 
@@ -24,6 +25,7 @@ from src.core.storage.path_generator import (
 from src.shared.utils.checksum import (
     calculate_sha256,
 )
+from src.modules.data.profiling.profiler import DatasetProfiler
 
 
 class DatasetService:
@@ -280,6 +282,16 @@ class DatasetService:
                 or "application/octet-stream",
             )
 
+            file.file.seek(0)
+
+            file_bytes = file.file.read()
+
+            profiler = DatasetProfiler()
+
+            profile = profiler.profile(
+                file_bytes,
+            )
+
             dataset_version = DatasetVersion(
                 dataset_id=dataset.id,
                 version=version,
@@ -294,6 +306,19 @@ class DatasetService:
 
             self.repository.create_dataset_version(
                 dataset_version,
+            )
+
+            dataset_profile = DatasetProfile(
+                dataset_version_id=dataset_version.id,
+                row_count=profile["row_count"],
+                column_count=profile["column_count"],
+                duplicate_rows=profile["duplicate_rows"],
+                column_metadata=profile["dtypes"],
+                null_counts=profile["null_count"],
+            )
+
+            self.repository.create_dataset_profile(
+                dataset_profile,
             )
 
             self.repository.commit()
