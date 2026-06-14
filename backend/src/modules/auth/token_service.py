@@ -70,3 +70,4 @@ def is_refresh_token(
 ) -> bool:
 
     return payload.get("type") == "refresh"
+

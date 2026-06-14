@@ -26,9 +26,24 @@ class UserRepository:
 
         return user
 
+    import uuid
+
     def get_by_id(
         self,
-        user_id: str,
-    ):
+        user_id: uuid.UUID,
+    ) -> User | None:
+        """
+        Retrieve a user by ID.
 
-        return self.db.query(User).filter(User.id == user_id).first()
+        Args:
+            user_id: User UUID.
+
+        Returns:
+            User instance if found, otherwise None.
+        """
+
+        return (
+            self.db.query(User)
+            .filter(User.id == user_id)
+            .first()
+        )

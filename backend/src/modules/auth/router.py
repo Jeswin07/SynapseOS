@@ -3,6 +3,7 @@ from fastapi import (
     Depends,
     HTTPException,
 )
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from src.core.security import (
@@ -59,21 +60,21 @@ def register(
     "/login",
     response_model=TokenResponse,
 )
-@router.post(
-    "/login",
-    response_model=TokenResponse,
-)
 def login(
-    payload: LoginRequest,
+    form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
 ):
+    """
+    Authenticate a user and return JWT tokens.
+    """
 
     try:
+
         service = AuthService(db)
 
         result = service.login(
-            payload.email,
-            payload.password,
+            email=form_data.username,
+            password=form_data.password,
         )
 
         return TokenResponse(
@@ -84,69 +85,8 @@ def login(
         )
 
     except ValueError as exc:
+
         raise HTTPException(
             status_code=401,
-            detail=str(exc),
-        )
-
-
-@router.get("/me")
-def get_me(
-    current_user=Depends(get_current_user),
-):
-
-    return {
-        "id": str(current_user.id),
-        "email": current_user.email,
-        "role": current_user.role.value,
-        "tenant_id": str(current_user.tenant_id),
-    }
-
-
-@router.post(
-    "/refresh",
-    response_model=AccessTokenResponse,
-)
-def refresh_token(
-    payload: RefreshTokenRequest,
-    db: Session = Depends(get_db),
-):
-
-    try:
-        service = AuthService(db)
-
-        access_token = service.refresh_access_token(payload.refresh_token)
-
-        return AccessTokenResponse(access_token=access_token)
-
-    except ValueError as exc:
-        raise HTTPException(
-            status_code=401,
-            detail=str(exc),
-        )
-
-
-@router.post("/logout")
-def logout(
-    payload: LogoutRequest,
-    db: Session = Depends(get_db),
-):
-
-    try:
-
-        service = AuthService(db)
-
-        service.logout(
-            payload.refresh_token
-        )
-
-        return {
-            "message": "Logged out successfully"
-        }
-
-    except ValueError as exc:
-
-        raise HTTPException(
-            status_code=400,
             detail=str(exc),
         )
