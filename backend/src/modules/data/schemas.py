@@ -1,3 +1,4 @@
+from datetime import datetime
 from uuid import UUID
 
 from pydantic import BaseModel, Field
@@ -43,3 +44,37 @@ class DatasetVersionResponse(BaseModel):
     version: int
 
     message: str
+
+class DatasetResponse(BaseModel):
+    """Dataset response."""
+
+    id: UUID
+    name: str
+    description: str | None
+    dataset_type: DatasetType
+    business_domain: BusinessDomain
+    created_at: datetime
+
+    model_config = {
+        "from_attributes": True,
+    }
+
+class DatasetDetailResponse(DatasetResponse):
+    """Dataset detail response."""
+
+    tags: list[str] | None
+
+class DatasetVersionItem(BaseModel):
+    version_id: UUID
+
+    version: int
+
+    original_filename: str
+
+    file_size: int
+
+    created_at: datetime
+
+    model_config = {
+        "from_attributes": True,
+    }

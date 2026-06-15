@@ -7,6 +7,7 @@ from fastapi import (
     HTTPException,
     UploadFile,
 )
+from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
 from src.db.session import get_db
@@ -17,6 +18,8 @@ from src.modules.data.schemas import (
     DatasetCreateRequest,
     DatasetCreateResponse,
     DatasetVersionResponse,
+    DatasetResponse,
+    DatasetVersionItem
 )
 from src.modules.data.service import DatasetService
 from src.shared.exceptions.dataset import (
@@ -110,13 +113,16 @@ async def upload_dataset_version(
         )
 
 
-@router.get("")
+@router.get(
+    "",
+    response_model=list[DatasetResponse],
+)
 def list_datasets(
     current_user=Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
     """
-    List all datasets belonging to the authenticated tenant.
+    List all datasets for the current tenant.
     """
 
     service = DatasetService(db)
@@ -158,3 +164,47 @@ def get_dataset(
             status_code=404,
             detail=str(exc),
         )
+
+
+@router.get(
+    "/{dataset_id}/versions",
+    response_model=list[DatasetVersionItem],
+)
+def list_dataset_versions(
+    dataset_id: UUID,
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """
+    List dataset versions.
+    """
+
+    service = DatasetService(db)
+
+    return service.get_dataset_versions(
+        dataset_id,
+    )
+
+@router.get("/{dataset_id}/download")
+def download_dataset(
+    dataset_id: UUID,
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+
+    service = DatasetService(db)
+
+    file_stream, filename = (
+        service.download_dataset(
+            dataset_id,
+        )
+    )
+
+    return StreamingResponse(
+        file_stream,
+        media_type="text/csv",
+        headers={
+            "Content-Disposition":
+            f'attachment; filename="{filename}"'
+        },
+    )

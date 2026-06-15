@@ -1,5 +1,5 @@
 from typing import BinaryIO
-
+from io import BytesIO
 from minio.error import S3Error
 
 from src.core.config import settings
@@ -68,3 +68,27 @@ class StorageService:
             client.make_bucket(
                 settings.minio_bucket_name,
             )
+
+    def download_file(
+        self,
+        object_name: str,
+    ) -> BytesIO:
+        """
+        Download an object from MinIO.
+        """
+
+        response = client.get_object(
+            settings.minio_bucket_name,
+            object_name,
+        )
+
+        data = BytesIO(
+            response.read()
+        )
+
+        response.close()
+        response.release_conn()
+
+        data.seek(0)
+
+        return data

@@ -308,13 +308,14 @@ class DatasetService:
                 dataset_version,
             )
 
+            self.repository.db.flush()
+
+            print("Dataset Version ID:", dataset_version.id)
+
             dataset_profile = DatasetProfile(
                 dataset_version_id=dataset_version.id,
-                row_count=profile["row_count"],
-                column_count=profile["column_count"],
-                duplicate_rows=profile["duplicate_rows"],
-                column_metadata=profile["dtypes"],
-                null_counts=profile["null_count"],
+                profile=profile,
+                quality_score=None,
             )
 
             self.repository.create_dataset_profile(
@@ -342,3 +343,49 @@ class DatasetService:
             self.repository.rollback()
 
             raise
+
+    def get_dataset_versions(
+        self,
+        dataset_id: uuid.UUID,
+    ):
+        """
+        Retrieve dataset version history.
+        """
+
+        dataset = self.repository.get_dataset_by_id(
+            dataset_id,
+        )
+
+        if dataset is None:
+            raise DatasetException(
+                "Dataset not found."
+            )
+
+        return self.repository.get_dataset_versions(
+            dataset_id,
+        )
+    
+
+    def download_dataset(
+        self,
+        dataset_id: uuid.UUID,
+    ):
+        """
+        Download latest dataset version.
+        """
+
+        version = self.repository.get_latest_version(
+            dataset_id,
+        )
+
+        if version is None:
+            raise DatasetException(
+                "Dataset version not found."
+            )
+
+        return (
+            self.storage.download_file(
+                version.storage_path,
+            ),
+            version.original_filename,
+        )

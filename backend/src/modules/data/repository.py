@@ -283,3 +283,42 @@ class DatasetRepository:
             instance: SQLAlchemy ORM instance.
         """
         self.db.refresh(instance)
+
+
+    def get_dataset_versions(
+        self,
+        dataset_id: uuid.UUID,
+    ) -> list[DatasetVersion]:
+        """
+        Retrieve all versions of a dataset.
+        """
+
+        return (
+            self.db.query(DatasetVersion)
+            .filter(
+                DatasetVersion.dataset_id == dataset_id,
+            )
+            .order_by(
+                DatasetVersion.version.desc(),
+            )
+            .all()
+        )
+
+    def get_latest_version(
+        self,
+        dataset_id: uuid.UUID,
+    ) -> DatasetVersion | None:
+        """
+        Retrieve the latest dataset version.
+        """
+
+        return (
+            self.db.query(DatasetVersion)
+            .filter(
+                DatasetVersion.dataset_id == dataset_id,
+            )
+            .order_by(
+                DatasetVersion.version.desc(),
+            )
+            .first()
+        )
