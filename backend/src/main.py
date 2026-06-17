@@ -14,6 +14,9 @@ from src.modules.data.router import (
     router as data_router,
 )
 from src.core.storage.storage_service import StorageService
+from src.modules.ml.router import (
+    router as ml_router,
+)
 
 app = FastAPI(title="SynapseOS API", version="1.0.0")
 
@@ -29,5 +32,5 @@ app.include_router(auth_router)
 app.include_router(tenant_router)
 app.include_router(users_router)
 app.include_router(data_router)
-
+app.include_router(ml_router)
 app.include_router(admin_router)
