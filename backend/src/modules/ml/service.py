@@ -1,21 +1,25 @@
 import uuid
 
+import polars as pl
 from sqlalchemy.orm import Session
 
-from src.ml.training.trainer import MLTrainer
-from src.models.ml_model import MLModel
-from src.modules.ml.repository import MLRepository
-from src.shared.logging import logger
 from src.ml.algorithms.registry import (
     AlgorithmRegistry,
 )
-from src.ml.utils.model_loader import (
-    ModelLoader,
+from src.ml.automl import AutoMLRunner
+from src.ml.explainability.explainer import (
+    ModelExplainer,
 )
 from src.ml.mlflow_manager import (
     MLflowManager,
 )
-import polars as pl
+from src.ml.training.trainer import MLTrainer
+from src.ml.utils.model_loader import (
+    ModelLoader,
+)
+from src.models.ml_model import MLModel
+from src.modules.ml.repository import MLRepository
+from src.shared.logging import logger
 
 
 class MLService:
@@ -32,6 +36,8 @@ class MLService:
 
         self.trainer = MLTrainer()
 
+        self.explainer = ModelExplainer()
+
     def train_model(
         self,
         *,
@@ -40,6 +46,7 @@ class MLService:
         algorithm: str,
         target_column: str,
         time_column: str,
+        training_group: uuid.UUID | None = None,
     ) -> MLModel:
         """
         Train a machine learning model.
@@ -55,6 +62,9 @@ class MLService:
             raise ValueError(
                 "Dataset version not found."
             )
+        
+        if training_group is None:
+            training_group = uuid.uuid4()
 
         model = MLModel(
             dataset_id=dataset_id,
@@ -65,6 +75,8 @@ class MLService:
             metrics={},
             artifact_path="",
             created_by=created_by,
+            training_group=training_group,
+            is_best=False
         )
 
         try:
@@ -92,10 +104,21 @@ class MLService:
             model.artifact_path = artifact_path
 
             model.metrics = {
-                "mse": metrics.mse,
-                "rmse": metrics.rmse,
-                "mae": metrics.mae,
-                "r2": metrics.r2,
+                "dataset": {
+                    "rows": metrics.rows,
+                    "features": metrics.features,
+                    "target": target_column,
+                },
+                "training": {
+                    "algorithm": algorithm,
+                    "time_seconds": metrics.training_time_seconds,
+                },
+                "metrics": {
+                    "mse": metrics.mse,
+                    "rmse": metrics.rmse,
+                    "mae": metrics.mae,
+                    "r2": metrics.r2,
+                },
             }
 
             MLflowManager().log_training(
@@ -134,6 +157,54 @@ class MLService:
 
             raise exc
         
+    def train_auto(
+        self,
+        *,
+        dataset_id: uuid.UUID,
+        created_by: uuid.UUID,
+        target_column: str,
+        time_column: str,
+    ):
+        """
+        Train all supported algorithms and select the best model.
+        """
+
+        runner = AutoMLRunner()
+
+        training_group = uuid.uuid4()
+
+        models = []
+
+        for algorithm in runner.get_algorithms():
+
+            model = self.train_model(
+                dataset_id=dataset_id,
+                created_by=created_by,
+                algorithm=algorithm,
+                target_column=target_column,
+                time_column=time_column,
+                training_group=training_group,
+            )
+
+            models.append(model)
+
+        winner = min(
+            models,
+            key=lambda model: model.metrics["metrics"]["rmse"],
+        )
+
+        winner.is_best = True
+
+        self.repository.commit()
+
+        self.repository.refresh(winner)
+
+        return {
+            "training_group": training_group,
+            "winner": winner,
+            "models": models,
+        }
+        
     def predict(
         self,
         *,
@@ -171,4 +242,41 @@ class MLService:
             model,
             preprocessor,
             dataframe,
+        )
+    
+    def explain(
+        self,
+        *,
+        model_id: uuid.UUID,
+        data: list[dict],
+        sample_index: int = 0,
+    ):
+        """
+        Explain a prediction using SHAP.
+        """
+
+        model_record = self.repository.get_model_by_id(
+            model_id,
+        )
+
+        if model_record is None:
+            raise ValueError(
+                "Model not found."
+            )
+
+        model, preprocessor = (
+            ModelLoader.load(
+                model_record.artifact_path,
+            )
+        )
+
+        dataframe = pl.DataFrame(
+            data,
+        )
+
+        return self.explainer.explain(
+            model=model,
+            preprocessor=preprocessor,
+            dataframe=dataframe,
+            sample_index=sample_index,
         )

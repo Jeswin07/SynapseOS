@@ -14,7 +14,7 @@ class DataPreprocessor:
         self,
         df: pl.DataFrame,
         *,
-        target_column: str,
+        target_column: str | None = None,
         time_column: str | None = None,
     ):
         """
@@ -37,7 +37,8 @@ class DataPreprocessor:
         if time_column and time_column in feature_df.columns:
             feature_df = feature_df.drop(time_column)
 
-        feature_df = feature_df.drop(target_column)
+        if target_column and target_column in feature_df.columns:
+            feature_df = feature_df.drop(target_column)
 
         #
         # Remove obvious identifier columns
@@ -57,7 +58,10 @@ class DataPreprocessor:
         #
         x = feature_df.to_pandas()
 
-        y = df[target_column].to_pandas()
+        if target_column:
+            y = df[target_column].to_pandas()
+        else:
+            y = None
 
         categorical_columns = (
             x.select_dtypes(
@@ -125,3 +129,4 @@ class DataPreprocessor:
             y,
             preprocessor,
         )
+    

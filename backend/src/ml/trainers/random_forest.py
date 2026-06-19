@@ -1,5 +1,4 @@
 import joblib
-
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 
@@ -29,7 +28,15 @@ class RandomForestTrainer(BaseAlgorithm):
         Train a Random Forest regression model.
         """
 
+        print("=" * 60)
+        print("Random Forest Training Started")
+        print("=" * 60)
+
+        print(f"Original dataset shape: {dataframe.shape}")
+
         preprocessor = DataPreprocessor()
+
+        print("Preprocessing dataset...")
 
         x, y, preprocessing_pipeline = (
             preprocessor.prepare(
@@ -39,6 +46,12 @@ class RandomForestTrainer(BaseAlgorithm):
             )
         )
 
+        print("Preprocessing complete.")
+        print(f"Processed feature matrix shape: {x.shape}")
+        print(f"Target shape: {y.shape}")
+
+        print("Splitting dataset...")
+
         x_train, x_test, y_train, y_test = train_test_split(
             x,
             y,
@@ -46,16 +59,28 @@ class RandomForestTrainer(BaseAlgorithm):
             random_state=42,
         )
 
+        print("Train/Test split complete.")
+        print(f"x_train: {x_train.shape}")
+        print(f"x_test : {x_test.shape}")
+
+        print("Initializing Random Forest...")
+
         model = RandomForestRegressor(
-            n_estimators=100,
+            n_estimators=50,
+            max_depth=10,
             random_state=42,
             n_jobs=-1,
+            verbose=2,
         )
+
+        print("Starting model.fit()...")
 
         model.fit(
             x_train,
             y_train,
         )
+
+        print("Model training complete.")
 
         return TrainingResult(
             model=model,
@@ -74,6 +99,8 @@ class RandomForestTrainer(BaseAlgorithm):
         Save trained model and preprocessing pipeline.
         """
 
+        print(f"Saving model to {path}")
+
         joblib.dump(
             {
                 "model": model,
@@ -81,6 +108,8 @@ class RandomForestTrainer(BaseAlgorithm):
             },
             path,
         )
+
+        print("Model saved.")
 
     def predict(
         self,

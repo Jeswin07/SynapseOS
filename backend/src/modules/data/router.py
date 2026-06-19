@@ -17,9 +17,9 @@ from src.modules.auth.dependencies import (
 from src.modules.data.schemas import (
     DatasetCreateRequest,
     DatasetCreateResponse,
-    DatasetVersionResponse,
     DatasetResponse,
-    DatasetVersionItem
+    DatasetVersionItem,
+    DatasetVersionResponse,
 )
 from src.modules.data.service import DatasetService
 from src.shared.exceptions.dataset import (

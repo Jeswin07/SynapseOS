@@ -1,11 +1,9 @@
 from sqlalchemy.orm import Session
 
 from src.models.user import User
-
 from src.modules.auth.security import (
     hash_password,
 )
-
 from src.modules.users.repository import (
     UserManagementRepository,
 )

@@ -1,8 +1,6 @@
 import joblib
-
-from xgboost import XGBRegressor
-
 from sklearn.model_selection import train_test_split
+from xgboost import XGBRegressor
 
 from src.ml.algorithms.base import (
     BaseAlgorithm,

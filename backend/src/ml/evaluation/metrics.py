@@ -19,6 +19,9 @@ class EvaluationResult:
     mae: float
     r2: float
 
+    training_time_seconds: float = 0.0
+    rows: int = 0
+    features: int = 0
 
 class ModelEvaluator:
     """

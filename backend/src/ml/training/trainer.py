@@ -1,3 +1,4 @@
+import time
 from pathlib import Path
 from uuid import UUID
 
@@ -37,6 +38,8 @@ class MLTrainer:
             storage_path,
         )
 
+        start = time.perf_counter()
+
         algorithm_instance = AlgorithmRegistry.get(
             algorithm,
         )
@@ -47,11 +50,26 @@ class MLTrainer:
             time_column,
         )
 
+        training_time = (
+            time.perf_counter() - start
+        )
+
         metrics = self.evaluator.evaluate(
             training_result.model,
             training_result.x_test,
             training_result.y_test,
         )
+
+        metrics.training_time_seconds = round(
+            training_time,
+            3,
+        )
+
+        metrics.rows = dataframe.height
+
+        metrics.features = len(
+            dataframe.columns
+        ) - 1
 
         Path("artifacts").mkdir(
             exist_ok=True,

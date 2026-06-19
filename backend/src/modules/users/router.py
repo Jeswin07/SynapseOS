@@ -5,21 +5,17 @@ from fastapi import (
 )
 from sqlalchemy.orm import Session
 
-from src.db.session import get_db
-
 from src.core.rbac import (
     require_role,
 )
-
+from src.db.session import get_db
 from src.models.enums import (
     UserRole,
 )
-
 from src.modules.users.schemas import (
     CreateUserRequest,
     UserResponse,
 )
-
 from src.modules.users.service import (
     UserManagementService,
 )

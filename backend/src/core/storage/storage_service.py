@@ -1,5 +1,6 @@
-from typing import BinaryIO
 from io import BytesIO
+from typing import BinaryIO
+
 from minio.error import S3Error
 
 from src.core.config import settings

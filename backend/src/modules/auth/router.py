@@ -6,17 +6,10 @@ from fastapi import (
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
-from src.core.security import (
-    get_current_user,
-)
 from src.db.session import get_db
 from src.modules.auth.schemas import (
-    LoginRequest,
     RegisterRequest,
     TokenResponse,
-    RefreshTokenRequest,
-    AccessTokenResponse,
-    LogoutRequest
 )
 from src.modules.auth.service import AuthService
 

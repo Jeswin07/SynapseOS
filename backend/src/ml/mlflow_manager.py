@@ -26,15 +26,28 @@ class MLflowManager:
 
         with mlflow.start_run():
 
+            # Main algorithm
             mlflow.log_param(
                 "algorithm",
                 algorithm,
             )
 
-            mlflow.log_metrics(
-                metrics,
+            # Dataset information
+            mlflow.log_params(
+                metrics["dataset"],
             )
 
+            # Training information
+            mlflow.log_params(
+                metrics["training"],
+            )
+
+            # Evaluation metrics (must be numeric)
+            mlflow.log_metrics(
+                metrics["metrics"],
+            )
+
+            # Save model artifact
             mlflow.log_artifact(
                 artifact_path,
             )

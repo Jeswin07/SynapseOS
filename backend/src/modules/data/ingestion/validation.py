@@ -1,5 +1,4 @@
-from fastapi import HTTPException, UploadFile
-
+from fastapi import HTTPException
 
 ALLOWED_EXTENSIONS = {
     ".csv",

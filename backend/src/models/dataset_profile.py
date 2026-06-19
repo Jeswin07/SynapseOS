@@ -3,8 +3,8 @@ from datetime import datetime
 
 from sqlalchemy import (
     DateTime,
-    ForeignKey,
     Float,
+    ForeignKey,
     func,
 )
 from sqlalchemy.dialects.postgresql import JSONB
