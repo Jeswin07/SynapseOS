@@ -1,0 +1,60 @@
+site_name: SynapseOS
+site_description: Enterprise Intelligence Platform
+site_author: Jeswin K Reji
+repo_name: Jeswin07/SynapseOS
+repo_url: https://github.com/Jeswin07/SynapseOS
+
+theme:
+  name: material
+
+  palette:
+    - scheme: default
+      primary: blue
+      accent: indigo
+
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - Home: README.md
+
+  - Architecture:
+      - Design Decisions: 00_Design_Decisions.md
+      - Project Overview: 01_Project_Overview.md
+      - System Architecture: 02_System_Architecture.md
+      - Backend Architecture: 03_Backend_Architecture.md
+      - Database Design: 04_Database_Design.md
+
+  - Capabilities:
+      - Data Ingestion & ETL: 05_Data_Ingestion_ETL.md
+      - Predictive Analytics: 06_Predictive_Analytics.md
+      - Time-Series Forecasting: 07_Time_Series_Forecasting.md
+      - Risk Analysis: 08_Risk_Analysis.md
+
+  - Reference:
+      - API Documentation: 09_API_Documentation.md
+      - Security Architecture: 10_Security_Architecture.md
+      - Deployment Architecture: 11_Deployment_Architecture.md
+      - Developer Guide: 12_Developer_Guide.md
+      - Requirements: 13_Functional_and_NonFunctional_Requirements.md
+      - Future Roadmap: 14_Future_Roadmap.md
+      - Engineering Retrospective: 15_Engineering_Retrospective.md
