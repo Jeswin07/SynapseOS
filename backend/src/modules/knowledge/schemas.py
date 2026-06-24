@@ -17,6 +17,7 @@ class SourceChunk(BaseModel):
     score: float
     page_label: str | None = None
     file_name: str | None = None
+    chunk_index: int | None = None
 
 
 class QueryRequest(BaseModel):
@@ -37,3 +38,4 @@ class QueryResponse(BaseModel):
     answer: str
     sources: list[SourceChunk]
     processing_time_ms: float
+    chunks_retrieved: int

@@ -1,5 +1,6 @@
 """Handles document chunking and local vector embedding generation."""
 
+from typing import Optional
 from llama_index.core import SimpleDirectoryReader
 from llama_index.core.node_parser import SentenceSplitter
 from sentence_transformers import SentenceTransformer
@@ -9,7 +10,8 @@ class EmbeddingEngine:
     """Singleton engine for generating embeddings and chunking documents."""
 
     _instance = None
-    _model = None
+    _model: Optional[SentenceTransformer] = None
+    _splitter: Optional[SentenceSplitter] = None
 
     def __new__(cls) -> "EmbeddingEngine":
         """Ensures the heavy embedding model is only loaded into memory once."""

@@ -4,7 +4,7 @@ import time
 import uuid
 
 from qdrant_client.models import ScoredPoint
-
+from src.ml.knowledge.retriever import Retriever
 from src.ml.knowledge.embeddings import EmbeddingEngine
 from src.ml.knowledge.generator import GroqGenerator
 from src.modules.knowledge.repository import QdrantRepository
@@ -24,6 +24,7 @@ class KnowledgeService:
         self.embedding_engine = EmbeddingEngine()
         self.repository = QdrantRepository()
         self.generator = GroqGenerator()
+        self.retriever = Retriever()
 
     def process_document(
         self,
@@ -73,14 +74,9 @@ class KnowledgeService:
         """Embeds a query, searches Qdrant, and generates an LLM response."""
         start = time.time()
 
-        query_vec = self.embedding_engine.generate_embeddings([request.query])[0]
-
-        print("Connecting to Qdrant...")
-        print(self.repository.client.get_collections())
-
-        results: list[ScoredPoint] = self.repository.search(
+        results = self.retriever.retrieve(
+            query=request.query,
             collection_name=request.collection_name,
-            query_vector=query_vec,
             top_k=request.top_k,
         )
 
@@ -112,4 +108,5 @@ class KnowledgeService:
             answer=answer,
             sources=sources,
             processing_time_ms=proc_time,
+            chunks_retrieved=len(sources),
         )
