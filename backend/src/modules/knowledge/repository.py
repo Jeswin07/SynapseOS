@@ -1,5 +1,7 @@
 """Data access layer for the Qdrant Vector Database."""
 
+from __future__ import annotations
+
 import uuid
 
 from qdrant_client import QdrantClient
@@ -10,22 +12,30 @@ from qdrant_client.models import ScoredPoint
 class QdrantRepository:
     """Handles connection and operations for the Qdrant vector database."""
 
-    def __init__(self, host: str = "localhost", port: int = 6333) -> None:
-        """Initializes the Qdrant client."""
+    def __init__(
+        self,
+        host: str = "localhost",
+        port: int = 6333,
+    ) -> None:
+        """Initialize the Qdrant client."""
         self.client = QdrantClient(host=host, port=port)
-        self.vector_size = 384  # Output size for BAAI/bge-small-en-v1.5
+        self.vector_size = 384  # BAAI/bge-small-en-v1.5
 
     def ensure_collection(self, collection_name: str) -> None:
-        """Creates the specified collection if it does not already exist."""
+        """Create the collection if it does not already exist."""
+
         collections = self.client.get_collections().collections
-        if not any(c.name == collection_name for c in collections):
-            self.client.create_collection(
-                collection_name=collection_name,
-                vectors_config=models.VectorParams(
-                    size=self.vector_size,
-                    distance=models.Distance.COSINE,
-                ),
-            )
+
+        if any(c.name == collection_name for c in collections):
+            return
+
+        self.client.create_collection(
+            collection_name=collection_name,
+            vectors_config=models.VectorParams(
+                size=self.vector_size,
+                distance=models.Distance.COSINE,
+            ),
+        )
 
     def upsert_chunks(
         self,
@@ -34,13 +44,20 @@ class QdrantRepository:
         embeddings: list[list[float]],
         metadata: list[dict],
     ) -> None:
-        """Inserts text chunks, their vectors, and metadata into Qdrant."""
+        """Insert document chunks into Qdrant."""
+
         self.ensure_collection(collection_name)
 
-        points = []
-        for chunk, embedding, meta in zip(chunks, embeddings, metadata):
-            payload = {"text": chunk}
-            payload.update(meta)
+        points: list[models.PointStruct] = []
+
+        for chunk, embedding, meta in zip(
+            chunks,
+            embeddings,
+            metadata,
+            strict=False,
+        ):
+            payload = dict(meta)
+            payload["text"] = chunk
 
             points.append(
                 models.PointStruct(
@@ -50,7 +67,11 @@ class QdrantRepository:
                 )
             )
 
-        self.client.upsert(collection_name=collection_name, points=points)
+        self.client.upsert(
+            collection_name=collection_name,
+            points=points,
+            wait=True,
+        )
 
     def search(
         self,
@@ -58,11 +79,47 @@ class QdrantRepository:
         query_vector: list[float],
         top_k: int = 5,
     ) -> list[ScoredPoint]:
-        """Finds semantically similar chunks using the modern query API."""
-        results = self.client.query_points(
+        """Perform semantic search."""
+
+        response = self.client.query_points(
             collection_name=collection_name,
             query=query_vector,
             limit=top_k,
+            with_payload=True,
+            with_vectors=False,
         )
-        # query_points returns a QueryResponse object containing .points
-        return results.points
+
+        return response.points
+
+    def delete_document(
+        self,
+        collection_name: str,
+        document_id: str,
+    ) -> None:
+        """Delete all chunks belonging to a document."""
+
+        self.client.delete(
+            collection_name=collection_name,
+            points_selector=models.FilterSelector(
+                filter=models.Filter(
+                    must=[
+                        models.FieldCondition(
+                            key="document_id",
+                            match=models.MatchValue(
+                                value=document_id,
+                            ),
+                        )
+                    ]
+                )
+            ),
+        )
+
+    def collection_exists(self, collection_name: str) -> bool:
+        """Return True if a collection exists."""
+
+        collections = self.client.get_collections().collections
+
+        return any(
+            collection.name == collection_name
+            for collection in collections
+        )

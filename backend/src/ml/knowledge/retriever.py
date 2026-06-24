@@ -1,11 +1,22 @@
-"""Enterprise Retriever for semantic document retrieval."""
+"""Enterprise semantic retriever for the Knowledge module."""
 
 from __future__ import annotations
+
+import time
+from dataclasses import dataclass
 
 from qdrant_client.models import ScoredPoint
 
 from src.ml.knowledge.embeddings import EmbeddingEngine
 from src.modules.knowledge.repository import QdrantRepository
+
+
+@dataclass(slots=True)
+class RetrievalResult:
+    """Container for retrieval results."""
+
+    points: list[ScoredPoint]
+    retrieval_time_ms: float
 
 
 class Retriever:
@@ -20,9 +31,9 @@ class Retriever:
         query: str,
         collection_name: str,
         top_k: int = 5,
-    ) -> list[ScoredPoint]:
+    ) -> RetrievalResult:
         """
-        Retrieves the most relevant chunks for a user query.
+        Retrieve the most relevant chunks.
 
         Steps
         -----
@@ -31,12 +42,22 @@ class Retriever:
         3. Return ranked chunks
         """
 
+        start = time.perf_counter()
+
         query_vector = self.embedding_engine.generate_embeddings([query])[0]
 
-        results = self.repository.search(
+        points = self.repository.search(
             collection_name=collection_name,
             query_vector=query_vector,
             top_k=top_k,
         )
 
-        return results
+        retrieval_time_ms = round(
+            (time.perf_counter() - start) * 1000,
+            2,
+        )
+
+        return RetrievalResult(
+            points=points,
+            retrieval_time_ms=retrieval_time_ms,
+        )

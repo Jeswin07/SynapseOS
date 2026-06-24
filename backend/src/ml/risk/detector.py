@@ -1,6 +1,5 @@
-import polars as pl
 import numpy as np
-
+import polars as pl
 from sklearn.ensemble import IsolationForest
 
 from src.ml.risk.preprocessor import (

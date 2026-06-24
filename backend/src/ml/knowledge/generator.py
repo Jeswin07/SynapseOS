@@ -1,53 +1,92 @@
-"""LLM Adapter for generating answers from retrieved context."""
+"""Enterprise answer generation using Groq."""
 
-from src.core.config import settings
-from abc import ABC, abstractmethod
+from __future__ import annotations
 
 from groq import Groq
 
-
-class BaseGenerator(ABC):
-    """Abstract interface for answer generation."""
-
-    @abstractmethod
-    def generate_answer(self, query: str, context: list[str]) -> str:
-        """Generates an answer based strictly on the provided context."""
-        pass
+from src.core.config import settings
 
 
-class GroqGenerator(BaseGenerator):
-    """Implementation of the generator using the free Groq API."""
+SYSTEM_PROMPT = """
+You are SynapseOS, an Enterprise Decision Intelligence Platform.
 
-    def __init__(self, model_name: str = "llama-3.3-70b-versatile") -> None:
-        """Initializes the Groq client."""
-        api_key = settings.groq_api_key
-        if not api_key:
-            raise ValueError("GROQ_API_KEY environment variable is missing.")
+Your job is to answer ONLY using the provided enterprise context.
 
-        self.client = Groq(api_key=api_key)
-        self.model_name = model_name
+Rules:
 
-    def generate_answer(self, query: str, context: list[str]) -> str:
-        """Constructs a prompt and queries the LLM for a grounded answer."""
-        context_text = "\n\n---\n\n".join(context)
+1. Never use outside knowledge.
+2. Never hallucinate.
+3. If the answer is not present in the context, clearly state:
+   "I could not find the answer in the uploaded enterprise documents."
+4. Keep answers concise and professional.
+5. Always synthesize information instead of copying large passages.
+6. If multiple sources agree, combine them.
+7. Mention important articles, sections or page references when available.
 
-        system_prompt = (
-            "You are SynapseOS, an Enterprise Decision Intelligence Platform. "
-            "Answer the user's query strictly using the provided context. "
-            "If the answer is not in the context, state that you cannot answer "
-            "based on the provided enterprise documents. Do not hallucinate."
+Return answers using this format:
+
+## Summary
+<short answer>
+
+## Key Findings
+- Bullet
+- Bullet
+- Bullet
+
+## Evidence
+- Mention important article/page if available
+
+## Limitations
+If the context is insufficient, clearly mention it.
+"""
+
+
+class GroqGenerator:
+    """Enterprise answer generator."""
+
+    def __init__(self) -> None:
+
+        self.client = Groq(
+            api_key=settings.groq_api_key,
         )
 
-        user_prompt = f"Context:\n{context_text}\n\nQuery: {query}"
+        self.model = settings.groq_model
+
+    def generate_answer(
+        self,
+        query: str,
+        context: list[str],
+    ) -> str:
+
+        context_text = "\n\n".join(context)
+
+        prompt = f"""
+Enterprise Context
+==================
+
+{context_text}
+
+==================
+
+User Question
+
+{query}
+"""
 
         response = self.client.chat.completions.create(
+            model=self.model,
+            temperature=0.1,
+            max_tokens=700,
             messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
+                {
+                    "role": "system",
+                    "content": SYSTEM_PROMPT,
+                },
+                {
+                    "role": "user",
+                    "content": prompt,
+                },
             ],
-            model=self.model_name,
-            temperature=0.0,
-            max_tokens=1024,
         )
 
-        return str(response.choices[0].message.content or "Generation error.")
+        return response.choices[0].message.content.strip()

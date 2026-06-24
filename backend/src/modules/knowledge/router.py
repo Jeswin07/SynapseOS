@@ -1,11 +1,19 @@
 """FastAPI endpoints for Knowledge Intelligence."""
 
+from __future__ import annotations
+
 import os
 import shutil
 import tempfile
-import traceback
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from fastapi import (
+    APIRouter,
+    Depends,
+    File,
+    Form,
+    HTTPException,
+    UploadFile,
+)
 
 from src.modules.knowledge.schemas import (
     DocumentUploadResponse,
@@ -14,63 +22,103 @@ from src.modules.knowledge.schemas import (
 )
 from src.modules.knowledge.service import KnowledgeService
 
-router = APIRouter(prefix="/knowledge", tags=["Knowledge Intelligence"])
+router = APIRouter(
+    prefix="/knowledge",
+    tags=["Knowledge Intelligence"],
+)
 
 
 def get_knowledge_service() -> KnowledgeService:
-    """Dependency injection for the Knowledge Service."""
+    """Dependency injection."""
     return KnowledgeService()
 
 
-@router.post("/ingest", response_model=DocumentUploadResponse)
+@router.post(
+    "/ingest",
+    response_model=DocumentUploadResponse,
+)
 async def ingest_document(
     file: UploadFile = File(...),
     collection_name: str = Form("enterprise_docs"),
     service: KnowledgeService = Depends(get_knowledge_service),
 ) -> DocumentUploadResponse:
-    """Ingests a file (PDF, CSV, TXT), chunks it, and vectorizes it."""
-    filename: str = file.filename or "unnamed_document.pdf"
-    allowed_exts = (".txt", ".md", ".csv", ".pdf")
+    """
+    Upload and index a document into the knowledge base.
+    """
 
-    if not filename.lower().endswith(allowed_exts):
+    filename = file.filename or "document.pdf"
+
+    allowed_extensions = (
+        ".pdf",
+        ".txt",
+        ".md",
+        ".csv",
+    )
+
+    if not filename.lower().endswith(allowed_extensions):
         raise HTTPException(
             status_code=400,
-            detail=f"Only {allowed_exts} files are supported.",
+            detail=f"Supported file types: {allowed_extensions}",
         )
 
-    # Save UploadFile to a temporary disk location for LlamaIndex parsing
     temp_dir = tempfile.mkdtemp()
-    temp_file_path = os.path.join(temp_dir, filename)
+
+    temp_file = os.path.join(
+        temp_dir,
+        filename,
+    )
 
     try:
-        with open(temp_file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+        with open(temp_file, "wb") as buffer:
+            shutil.copyfileobj(
+                file.file,
+                buffer,
+            )
 
-        response = service.process_document(
-            file_path=temp_file_path,
+        return service.process_document(
+            file_path=temp_file,
             file_name=filename,
             collection_name=collection_name,
         )
-        return response
 
-    except Exception as e:
+    except HTTPException:
+        raise
+
+    except Exception as exc:
         raise HTTPException(
             status_code=500,
-            detail=f"Failed to process document: {str(e)}",
-        )
+            detail=f"Document processing failed: {exc}",
+        ) from exc
+
     finally:
-        # Ensure cleanup of the temporary file to prevent memory leaks
-        shutil.rmtree(temp_dir, ignore_errors=True)
+        shutil.rmtree(
+            temp_dir,
+            ignore_errors=True,
+        )
 
 
-@router.post("/query", response_model=QueryResponse)
+@router.post(
+    "/query",
+    response_model=QueryResponse,
+)
 async def query_documents(
     request: QueryRequest,
-    service: KnowledgeService = Depends(get_knowledge_service),
+    service: KnowledgeService = Depends(
+        get_knowledge_service,
+    ),
 ) -> QueryResponse:
-    """Queries the enterprise knowledge base and generates an answer."""
+    """
+    Query the enterprise knowledge base.
+    """
+
     try:
         return service.query_knowledge_base(request)
-    except Exception as e:
-        traceback.print_exc()
+
+    except HTTPException:
         raise
+
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Query failed: {exc}",
+        ) from exc

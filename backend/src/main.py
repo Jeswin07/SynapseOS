@@ -11,6 +11,9 @@ from src.modules.data.router import (
 from src.modules.forecast.router import (
     router as forecast_router,
 )
+from src.modules.knowledge.router import (
+    router as knowledge_router,
+)
 from src.modules.ml.router import (
     router as ml_router,
 )
@@ -23,10 +26,6 @@ from src.modules.tenants.router import (
 from src.modules.users.router import (
     router as users_router,
 )
-from src.modules.knowledge.router import (
-    router as knowledge_router,
-)
-
 
 app = FastAPI(title="SynapseOS API", version="1.0.0")
 

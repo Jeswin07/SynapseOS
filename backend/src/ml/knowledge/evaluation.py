@@ -1,6 +1,7 @@
 """Module for quantitative evaluation of the RAG pipeline metrics."""
 
 import json
+
 from src.ml.knowledge.generator import GroqGenerator
 
 
