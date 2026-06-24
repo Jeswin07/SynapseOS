@@ -23,6 +23,8 @@ class Settings(BaseSettings):
     minio_bucket_name: str
     minio_secure: bool
 
+    groq_api_key: str
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @property
