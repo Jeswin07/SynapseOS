@@ -8,8 +8,10 @@ from datetime import datetime
 from pathlib import Path
 from src.ml.knowledge.embeddings import EmbeddingEngine
 from src.ml.knowledge.generator import GroqGenerator
-from src.ml.knowledge.retriever import Retriever
+from src.ml.knowledge.hybrid_retriever import HybridRetriever
 from src.modules.knowledge.repository import QdrantRepository
+from src.ml.knowledge.reranker import CrossEncoderReranker
+from src.core.config import settings
 from src.modules.knowledge.schemas import (
     DocumentUploadResponse,
     QueryMetrics,
@@ -26,7 +28,8 @@ class KnowledgeService:
         self.embedding_engine = EmbeddingEngine()
         self.repository = QdrantRepository()
         self.generator = GroqGenerator()
-        self.retriever = Retriever()
+        self.retriever = HybridRetriever()
+        self.reranker = CrossEncoderReranker()
 
     def process_document(
         self,
@@ -110,6 +113,9 @@ class KnowledgeService:
             metadata=chunk_metadata,
         )
 
+        if isinstance(self.retriever, HybridRetriever):
+            self.retriever.invalidate_index()
+
         return DocumentUploadResponse(
             message="Document processed successfully.",
             document_id=document_id,
@@ -134,40 +140,13 @@ class KnowledgeService:
         retrieval = self.retriever.retrieve(
             query=request.query,
             collection_name=request.collection_name,
+            candidate_k=settings.rag_candidate_k,
+        )
+
+        points = self.reranker.rerank(
+            query=request.query,
+            candidates=retrieval.points,
             top_k=request.top_k,
-        )
-
-        MIN_SIMILARITY_SCORE = 0.70
-
-        points = [
-            point
-            for point in retrieval.points
-            if float(point.score) >= MIN_SIMILARITY_SCORE
-        ]
-
-        if not points:
-            points = retrieval.points[:3]
-
-        points.sort(
-            key=lambda point: float(point.score),
-            reverse=True,
-        )
-
-        scores = [
-            float(point.score)
-            for point in points
-        ]
-
-        average_similarity = (
-            round(sum(scores) / len(scores), 4)
-            if scores
-            else 0.0
-        )
-
-        highest_similarity = (
-            round(max(scores), 4)
-            if scores
-            else 0.0
         )
 
         context: list[str] = []
@@ -225,7 +204,7 @@ class KnowledgeService:
                 generation_time_ms=generation_time_ms,
                 total_time_ms=total_time_ms,
                 chunks_retrieved=len(sources),
-                average_similarity=average_similarity,
-                highest_similarity=highest_similarity,
+                average_similarity=retrieval.average_similarity,
+                highest_similarity=retrieval.highest_similarity,
             ),
         )

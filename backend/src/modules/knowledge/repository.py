@@ -123,3 +123,48 @@ class QdrantRepository:
             collection.name == collection_name
             for collection in collections
         )
+
+    def get_all_chunks(
+        self,
+        collection_name: str,
+    ) -> list[dict]:
+        """
+        Returns every chunk stored in a collection.
+
+        Used for building the local BM25 index.
+        """
+
+        records: list[dict] = []
+
+        offset = None
+
+        while True:
+
+            points, offset = self.client.scroll(
+                collection_name=collection_name,
+                limit=100,
+                offset=offset,
+                with_payload=True,
+                with_vectors=False,
+            )
+
+            for point in points:
+
+                payload = point.payload or {}
+
+                records.append(
+                    {
+                        "text": str(
+                            payload.get(
+                                "text",
+                                "",
+                            )
+                        ),
+                        "payload": payload,
+                    }
+                )
+
+            if offset is None:
+                break
+
+        return records

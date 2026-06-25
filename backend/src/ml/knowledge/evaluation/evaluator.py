@@ -16,8 +16,9 @@ from src.ml.knowledge.evaluation.schemas import (
     EvaluationMetrics,
     EvaluationResult,
 )
-from src.ml.knowledge.retriever import Retriever
-
+from src.core.config import settings
+from src.ml.knowledge.hybrid_retriever import HybridRetriever
+from src.ml.knowledge.reranker import CrossEncoderReranker
 
 class KnowledgeEvaluator:
     """
@@ -28,7 +29,8 @@ class KnowledgeEvaluator:
     """
 
     def __init__(self) -> None:
-        self.retriever = Retriever()
+        self.retriever = HybridRetriever()
+        self.reranker = CrossEncoderReranker()
 
     def evaluate(
         self,
@@ -38,6 +40,12 @@ class KnowledgeEvaluator:
         retrieval = self.retriever.retrieve(
             query=case.question,
             collection_name=case.collection_name,
+            candidate_k=settings.rag_candidate_k,
+        )
+
+        retrieval.points = self.reranker.rerank(
+            query=case.question,
+            candidates=retrieval.points,
             top_k=case.top_k,
         )
 

@@ -3,24 +3,17 @@
 from __future__ import annotations
 
 import time
-from dataclasses import dataclass
-
-from qdrant_client.models import ScoredPoint
 
 from src.ml.knowledge.embeddings import EmbeddingEngine
+from src.ml.knowledge.retrieval_models import (
+    RetrievedChunk,
+    RetrievalResult,
+)
 from src.modules.knowledge.repository import QdrantRepository
 
 
-@dataclass(slots=True)
-class RetrievalResult:
-    """Container for retrieval results."""
-
-    points: list[ScoredPoint]
-    retrieval_time_ms: float
-
-
 class Retriever:
-    """Handles semantic retrieval from the vector database."""
+    """Dense semantic retriever backed by Qdrant."""
 
     def __init__(self) -> None:
         self.embedding_engine = EmbeddingEngine()
@@ -33,18 +26,14 @@ class Retriever:
         top_k: int = 5,
     ) -> RetrievalResult:
         """
-        Retrieve the most relevant chunks.
-
-        Steps
-        -----
-        1. Embed query
-        2. Search Qdrant
-        3. Return ranked chunks
+        Retrieve the most relevant chunks using dense vector search.
         """
 
         start = time.perf_counter()
 
-        query_vector = self.embedding_engine.generate_embeddings([query])[0]
+        query_vector = self.embedding_engine.generate_embeddings(
+            [query]
+        )[0]
 
         points = self.repository.search(
             collection_name=collection_name,
@@ -57,7 +46,42 @@ class Retriever:
             2,
         )
 
+        retrieved_points: list[RetrievedChunk] = []
+
+        similarities: list[float] = []
+
+        for point in points:
+
+            score = float(point.score)
+
+            similarities.append(score)
+
+            retrieved_points.append(
+                RetrievedChunk(
+                    payload=point.payload or {},
+                    score=score,
+                    dense_score=score,
+                )
+            )
+
+        average_similarity = (
+            round(
+                sum(similarities) / len(similarities),
+                4,
+            )
+            if similarities
+            else 0.0
+        )
+
+        highest_similarity = (
+            max(similarities)
+            if similarities
+            else 0.0
+        )
+
         return RetrievalResult(
-            points=points,
+            points=retrieved_points,
             retrieval_time_ms=retrieval_time_ms,
+            average_similarity=average_similarity,
+            highest_similarity=highest_similarity,
         )

@@ -31,7 +31,9 @@ class Settings(BaseSettings):
     knowledge_chunk_size: int = 384
     knowledge_chunk_overlap: int = 64
     knowledge_top_k: int = 5
-    knowledge_min_score: float = 0.70
+    rag_similarity_threshold: float = 0.70
+    rag_candidate_k: int = 20
+    rag_top_k: int = 5
     knowledge_default_search_limit: int = 20
     # ---------- Embeddings ----------
     embedding_model: str = "BAAI/bge-small-en-v1.5"

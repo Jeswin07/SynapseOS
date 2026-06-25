@@ -3,12 +3,12 @@
     "collection": "enterprise_docs_v3",
     "documents": 3,
     "questions": 60,
-    "precision_at_k": 0.2067,
-    "recall_at_k": 0.8444,
+    "precision_at_k": 0.1933,
+    "recall_at_k": 0.8111,
     "hit_rate": 0.9333,
-    "mrr": 0.8922,
-    "average_similarity": 0.6959,
-    "average_latency_ms": 62.97,
+    "mrr": 0.8958,
+    "average_similarity": 0.2194,
+    "average_latency_ms": 85.59,
     "results": [
         {
             "question": "Which dataset contains customer reviews?",
@@ -20,34 +20,34 @@
                 "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002"
             ],
             "retrieved_pages": [
-                "5",
                 "13",
-                "4",
+                "5",
                 "1",
-                "10"
+                "4",
+                "3"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7201,
-                "highest_similarity": 0.7673,
-                "retrieval_latency_ms": 440.54
+                "average_similarity": 0.299,
+                "highest_similarity": 0.8634,
+                "retrieval_latency_ms": 615.34
             },
             "similarities": [
-                0.7673331,
-                0.73921585,
-                0.7318856,
-                0.6887977,
-                0.6734048
+                0.8633508086204529,
+                0.3115745484828949,
+                0.13284863531589508,
+                0.12827761471271515,
+                0.05910129472613335
             ]
         },
         {
@@ -60,34 +60,34 @@
                 "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0006"
             ],
             "retrieved_pages": [
-                "1",
-                "4",
-                "13",
                 "3",
-                "10"
+                "1",
+                "13",
+                "4",
+                "7"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7217,
-                "highest_similarity": 0.7395,
-                "retrieval_latency_ms": 104.36
+                "average_similarity": 0.3089,
+                "highest_similarity": 0.7279,
+                "retrieval_latency_ms": 51.7
             },
             "similarities": [
-                0.73953635,
-                0.73866606,
-                0.7265868,
-                0.70737624,
-                0.6965418
+                0.7279229760169983,
+                0.3350234925746918,
+                0.2717862129211426,
+                0.1435665637254715,
+                0.06622908264398575
             ]
         },
         {
@@ -95,39 +95,39 @@
             "retrieved_documents": [
                 "olist_data_catalog.pdf",
                 "olist_data_catalog.pdf",
+                "webshoppers_report.pdf",
                 "olist_data_catalog.pdf",
-                "olist_data_catalog.pdf",
-                "webshoppers_report.pdf"
+                "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0008",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0007",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0042"
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0082",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0008"
             ],
             "retrieved_pages": [
                 "3",
-                "5",
-                "9",
                 "8",
-                "19"
+                "35",
+                "13",
+                "9"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7003,
-                "highest_similarity": 0.7303,
-                "retrieval_latency_ms": 98.15
+                "average_similarity": 0.0627,
+                "highest_similarity": 0.1441,
+                "retrieval_latency_ms": 102.16
             },
             "similarities": [
-                0.7303258,
-                0.7138444,
-                0.6975179,
-                0.6863406,
-                0.67367065
+                0.14414475858211517,
+                0.06508710235357285,
+                0.049573786556720734,
+                0.044304344803094864,
+                0.01050973404198885
             ]
         },
         {
@@ -140,74 +140,74 @@
                 "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0006",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0005"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0006"
             ],
             "retrieved_pages": [
-                "1",
+                "3",
+                "5",
+                "2",
                 "13",
-                "10",
-                "7",
-                "6"
+                "7"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.732,
-                "highest_similarity": 0.7467,
-                "retrieval_latency_ms": 51.7
+                "average_similarity": 0.3341,
+                "highest_similarity": 0.8156,
+                "retrieval_latency_ms": 53.4
             },
             "similarities": [
-                0.7466625,
-                0.7343192,
-                0.72894454,
-                0.725575,
-                0.7243149
+                0.8155797719955444,
+                0.3936483561992645,
+                0.24482250213623047,
+                0.13363751769065857,
+                0.08288222551345825
             ]
         },
         {
             "question": "How are customers linked to orders?",
             "retrieved_documents": [
                 "olist_data_catalog.pdf",
+                "brazilian_cdc_law_8078.pdf",
                 "olist_data_catalog.pdf",
-                "olist_data_catalog.pdf",
-                "olist_data_catalog.pdf",
-                "brazilian_cdc_law_8078.pdf"
+                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0006",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0008",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0008"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0010",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001"
             ],
             "retrieved_pages": [
-                "4",
-                "3",
+                "7",
+                "5",
                 "13",
-                "2",
-                "5"
+                "6",
+                "2"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.667,
-                "highest_similarity": 0.6958,
-                "retrieval_latency_ms": 50.58
+                "average_similarity": 0.2058,
+                "highest_similarity": 0.7673,
+                "retrieval_latency_ms": 52.6
             },
             "similarities": [
-                0.69578373,
-                0.67201865,
-                0.66365576,
-                0.6585843,
-                0.64513093
+                0.7672556042671204,
+                0.23210091888904572,
+                0.01526123657822609,
+                0.01225660927593708,
+                0.0022669918835163116
             ]
         },
         {
@@ -220,34 +220,34 @@
                 "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0011",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0010"
             ],
             "retrieved_pages": [
-                "10",
                 "2",
-                "1",
-                "4",
-                "13"
+                "10",
+                "12",
+                "3",
+                "11"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6964,
-                "highest_similarity": 0.7238,
-                "retrieval_latency_ms": 53.55
+                "average_similarity": 0.1337,
+                "highest_similarity": 0.2861,
+                "retrieval_latency_ms": 54.01
             },
             "similarities": [
-                0.72383165,
-                0.7181269,
-                0.69617164,
-                0.6732908,
-                0.67073995
+                0.28610432147979736,
+                0.146159827709198,
+                0.10665129125118256,
+                0.0701126903295517,
+                0.0595456063747406
             ]
         },
         {
@@ -261,73 +261,73 @@
             ],
             "retrieved_chunk_ids": [
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003"
             ],
             "retrieved_pages": [
                 "5",
-                "4",
                 "13",
+                "3",
                 "1",
-                "10"
+                "4"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6807,
-                "highest_similarity": 0.7501,
-                "retrieval_latency_ms": 50.38
+                "average_similarity": 0.1647,
+                "highest_similarity": 0.682,
+                "retrieval_latency_ms": 83.87
             },
             "similarities": [
-                0.75005823,
-                0.6864712,
-                0.67221487,
-                0.6525196,
-                0.64229774
+                0.6820435523986816,
+                0.08223247528076172,
+                0.030377591028809547,
+                0.0150614557787776,
+                0.013655428774654865
             ]
         },
         {
             "question": "What information is available about products?",
             "retrieved_documents": [
                 "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf",
                 "brazilian_cdc_law_8078.pdf",
-                "brazilian_cdc_law_8078.pdf",
-                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf",
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0087",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0105",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0085",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0086",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0044"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0091",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0105"
             ],
             "retrieved_pages": [
-                "44",
-                "53",
                 "43",
-                "43",
-                "22"
+                "3",
+                "46",
+                "5",
+                "53"
             ],
             "metrics": {
-                "precision_at_k": 0.0,
-                "recall_at_k": 0.0,
-                "hit_rate": 0.0,
-                "mrr": 0.0,
-                "average_similarity": 0.6653,
-                "highest_similarity": 0.6907,
-                "retrieval_latency_ms": 52.78
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 0.5,
+                "average_similarity": 0.0191,
+                "highest_similarity": 0.0294,
+                "retrieval_latency_ms": 48.04
             },
             "similarities": [
-                0.6906744,
-                0.67552656,
-                0.66604674,
-                0.6588676,
-                0.6353987
+                0.029423952102661133,
+                0.02463822066783905,
+                0.018492843955755234,
+                0.017820773646235466,
+                0.005130778066813946
             ]
         },
         {
@@ -340,34 +340,34 @@
                 "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003"
             ],
             "retrieved_pages": [
-                "1",
-                "4",
-                "13",
                 "2",
-                "3"
+                "3",
+                "1",
+                "13",
+                "4"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7241,
-                "highest_similarity": 0.7633,
-                "retrieval_latency_ms": 57.18
+                "average_similarity": 0.1524,
+                "highest_similarity": 0.322,
+                "retrieval_latency_ms": 49.59
             },
             "similarities": [
-                0.7633013,
-                0.72407454,
-                0.7236093,
-                0.71724296,
-                0.69246304
+                0.3220069408416748,
+                0.19716879725456238,
+                0.1101451888680458,
+                0.0752859115600586,
+                0.05749202519655228
             ]
         },
         {
@@ -381,33 +381,33 @@
             ],
             "retrieved_chunk_ids": [
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0006",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0007",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012"
             ],
             "retrieved_pages": [
                 "7",
-                "1",
-                "2",
-                "13",
-                "5"
+                "5",
+                "8",
+                "4",
+                "13"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7248,
-                "highest_similarity": 0.7433,
-                "retrieval_latency_ms": 58.57
+                "average_similarity": 0.4403,
+                "highest_similarity": 0.9163,
+                "retrieval_latency_ms": 70.26
             },
             "similarities": [
-                0.7432556,
-                0.73723656,
-                0.71594566,
-                0.71548504,
-                0.71220165
+                0.9162548184394836,
+                0.4304957687854767,
+                0.3836796283721924,
+                0.2590618133544922,
+                0.21176864206790924
             ]
         },
         {
@@ -420,34 +420,34 @@
                 "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0008",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012"
             ],
             "retrieved_pages": [
-                "13",
-                "10",
                 "3",
-                "1",
-                "4"
+                "5",
+                "9",
+                "10",
+                "13"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.703,
-                "highest_similarity": 0.7524,
-                "retrieval_latency_ms": 52.64
+                "average_similarity": 0.5695,
+                "highest_similarity": 0.9117,
+                "retrieval_latency_ms": 50.32
             },
             "similarities": [
-                0.75241125,
-                0.69799834,
-                0.6972279,
-                0.6876856,
-                0.6797148
+                0.9117205142974854,
+                0.8640802502632141,
+                0.6729754209518433,
+                0.3193555176258087,
+                0.07956214249134064
             ]
         },
         {
@@ -462,32 +462,32 @@
             "retrieved_chunk_ids": [
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0010"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003"
             ],
             "retrieved_pages": [
                 "1",
                 "13",
+                "5",
                 "10",
-                "4",
-                "11"
+                "4"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7059,
-                "highest_similarity": 0.7291,
-                "retrieval_latency_ms": 57.76
+                "average_similarity": 0.1368,
+                "highest_similarity": 0.6479,
+                "retrieval_latency_ms": 51.21
             },
             "similarities": [
-                0.72914076,
-                0.72453535,
-                0.70860934,
-                0.69332033,
-                0.67376864
+                0.6479400992393494,
+                0.012647276744246483,
+                0.010493194684386253,
+                0.007162218913435936,
+                0.005586252547800541
             ]
         },
         {
@@ -500,34 +500,34 @@
                 "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0010",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002"
             ],
             "retrieved_pages": [
-                "10",
-                "4",
                 "2",
-                "13",
-                "1"
+                "5",
+                "1",
+                "11",
+                "3"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.696,
-                "highest_similarity": 0.7059,
-                "retrieval_latency_ms": 61.9
+                "average_similarity": 0.1938,
+                "highest_similarity": 0.7273,
+                "retrieval_latency_ms": 57.23
             },
             "similarities": [
-                0.70593625,
-                0.7001897,
-                0.69796,
-                0.6897505,
-                0.6862705
+                0.7272703051567078,
+                0.09389539062976837,
+                0.07730405032634735,
+                0.04762926697731018,
+                0.0230447668582201
             ]
         },
         {
@@ -542,14 +542,14 @@
             "retrieved_chunk_ids": [
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0011",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001"
             ],
             "retrieved_pages": [
                 "3",
                 "12",
-                "10",
+                "13",
                 "1",
                 "2"
             ],
@@ -558,16 +558,16 @@
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.689,
-                "highest_similarity": 0.7113,
-                "retrieval_latency_ms": 49.23
+                "average_similarity": 0.1855,
+                "highest_similarity": 0.872,
+                "retrieval_latency_ms": 55.29
             },
             "similarities": [
-                0.7112643,
-                0.70778286,
-                0.68935466,
-                0.66870844,
-                0.6679467
+                0.8719896674156189,
+                0.018371451646089554,
+                0.01482971291989088,
+                0.011746266856789589,
+                0.010367089882493019
             ]
         },
         {
@@ -580,34 +580,34 @@
                 "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0007"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0006",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0007",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004"
             ],
             "retrieved_pages": [
-                "13",
                 "1",
-                "4",
-                "10",
-                "8"
+                "13",
+                "7",
+                "8",
+                "5"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6927,
-                "highest_similarity": 0.7262,
-                "retrieval_latency_ms": 51.24
+                "average_similarity": 0.026,
+                "highest_similarity": 0.0494,
+                "retrieval_latency_ms": 57.77
             },
             "similarities": [
-                0.7262223,
-                0.6984879,
-                0.6874599,
-                0.68089074,
-                0.6702057
+                0.049440883100032806,
+                0.02721393294632435,
+                0.023249849677085876,
+                0.01803567260503769,
+                0.012118428014218807
             ]
         },
         {
@@ -621,33 +621,33 @@
             ],
             "retrieved_chunk_ids": [
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0003",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0113",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0133",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0059",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0132"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0004",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0135",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0132",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0060"
             ],
             "retrieved_pages": [
                 "3",
-                "57",
+                "3",
+                "68",
                 "66",
-                "30",
-                "66"
+                "30"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7864,
-                "highest_similarity": 0.8157,
-                "retrieval_latency_ms": 50.96
+                "average_similarity": 0.6934,
+                "highest_similarity": 0.8597,
+                "retrieval_latency_ms": 118.76
             },
             "similarities": [
-                0.8157001,
-                0.7820049,
-                0.7790498,
-                0.7783912,
-                0.77695614
+                0.8597338199615479,
+                0.7792574763298035,
+                0.6870097517967224,
+                0.6148736476898193,
+                0.5259222984313965
             ]
         },
         {
@@ -660,17 +660,17 @@
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0005",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0019",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0074",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0027",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0127",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0077",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0125",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0030"
             ],
             "retrieved_pages": [
-                "4",
-                "10",
-                "37",
                 "13",
+                "63",
+                "39",
+                "62",
                 "15"
             ],
             "metrics": {
@@ -678,16 +678,16 @@
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6392,
-                "highest_similarity": 0.6513,
-                "retrieval_latency_ms": 48.05
+                "average_similarity": 0.3694,
+                "highest_similarity": 0.843,
+                "retrieval_latency_ms": 83.91
             },
             "similarities": [
-                0.6513168,
-                0.6432574,
-                0.63749486,
-                0.6330426,
-                0.6309374
+                0.8429526686668396,
+                0.5054470300674438,
+                0.21534451842308044,
+                0.16366444528102875,
+                0.11949672549962997
             ]
         },
         {
@@ -701,33 +701,33 @@
             ],
             "retrieved_chunk_ids": [
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0015",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0133",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0134",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0019",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0132"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0027",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0132",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0025",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0005"
             ],
             "retrieved_pages": [
                 "8",
+                "13",
                 "66",
-                "67",
-                "10",
-                "66"
+                "12",
+                "4"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7468,
-                "highest_similarity": 0.7676,
-                "retrieval_latency_ms": 50.32
+                "average_similarity": 0.5458,
+                "highest_similarity": 0.9984,
+                "retrieval_latency_ms": 51.61
             },
             "similarities": [
-                0.76760453,
-                0.74672294,
-                0.7453016,
-                0.7376499,
-                0.73688656
+                0.9983550906181335,
+                0.5408595204353333,
+                0.5254678726196289,
+                0.40350207686424255,
+                0.2606801688671112
             ]
         },
         {
@@ -740,34 +740,34 @@
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0080",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0021",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0092",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0018",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0016",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0081",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0018"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0019",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0073"
             ],
             "retrieved_pages": [
-                "40",
-                "11",
+                "46",
+                "10",
                 "9",
-                "41",
-                "10"
+                "10",
+                "37"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6256,
-                "highest_similarity": 0.6425,
-                "retrieval_latency_ms": 52.03
+                "average_similarity": 0.033,
+                "highest_similarity": 0.0774,
+                "retrieval_latency_ms": 54.88
             },
             "similarities": [
-                0.64254594,
-                0.6246402,
-                0.6220288,
-                0.6197287,
-                0.6189544
+                0.0773908719420433,
+                0.03066721186041832,
+                0.021328963339328766,
+                0.018533583730459213,
+                0.017069198191165924
             ]
         },
         {
@@ -780,34 +780,34 @@
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0107",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0013",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0116",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0106",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0109",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0046",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0110",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0013"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0085"
             ],
             "retrieved_pages": [
-                "54",
+                "7",
+                "58",
+                "53",
                 "55",
-                "23",
-                "55",
-                "7"
+                "43"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7026,
-                "highest_similarity": 0.7421,
-                "retrieval_latency_ms": 52.74
+                "average_similarity": 0.0545,
+                "highest_similarity": 0.1872,
+                "retrieval_latency_ms": 63.39
             },
             "similarities": [
-                0.7420941,
-                0.6959338,
-                0.6925455,
-                0.6922405,
-                0.6902367
+                0.18715506792068481,
+                0.049427811056375504,
+                0.02590283565223217,
+                0.005385369528084993,
+                0.004579329863190651
             ]
         },
         {
@@ -820,34 +820,34 @@
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0028",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0019",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0121",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0008",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0030",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0115",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0051",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0105"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0051"
             ],
             "retrieved_pages": [
-                "14",
+                "10",
+                "60",
+                "5",
                 "15",
-                "57",
-                "26",
-                "53"
+                "26"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7196,
-                "highest_similarity": 0.7347,
-                "retrieval_latency_ms": 52.25
+                "average_similarity": 0.2378,
+                "highest_similarity": 0.4836,
+                "retrieval_latency_ms": 62.22
             },
             "similarities": [
-                0.7346779,
-                0.7262152,
-                0.7186692,
-                0.71036226,
-                0.7078599
+                0.4835813343524933,
+                0.32429006695747375,
+                0.16416341066360474,
+                0.13027243316173553,
+                0.08660946786403656
             ]
         },
         {
@@ -860,17 +860,17 @@
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0080",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0105",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0125",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0107",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0053",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0109",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0052",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0115"
             ],
             "retrieved_pages": [
+                "40",
+                "53",
                 "62",
-                "54",
-                "27",
-                "55",
+                "26",
                 "57"
             ],
             "metrics": {
@@ -878,16 +878,16 @@
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.607,
-                "highest_similarity": 0.6099,
-                "retrieval_latency_ms": 65.99
+                "average_similarity": 0.0012,
+                "highest_similarity": 0.0038,
+                "retrieval_latency_ms": 67.2
             },
             "similarities": [
-                0.6099378,
-                0.6067156,
-                0.606501,
-                0.606243,
-                0.6057193
+                0.003836676711216569,
+                0.0009564711363054812,
+                0.0005522896535694599,
+                0.0003648223355412483,
+                0.00035076800850220025
             ]
         },
         {
@@ -900,34 +900,34 @@
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0115",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0028",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0030",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0051",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0125"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0030",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0110",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0129",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0052"
             ],
             "retrieved_pages": [
-                "57",
-                "14",
-                "15",
                 "26",
-                "62"
+                "15",
+                "55",
+                "64",
+                "26"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7334,
-                "highest_similarity": 0.7514,
-                "retrieval_latency_ms": 47.14
+                "average_similarity": 0.6038,
+                "highest_similarity": 0.9835,
+                "retrieval_latency_ms": 52.39
             },
             "similarities": [
-                0.7513591,
-                0.734395,
-                0.7291594,
-                0.7275381,
-                0.7246853
+                0.9835278987884521,
+                0.7734482884407043,
+                0.6366866827011108,
+                0.4380660355091095,
+                0.1871487945318222
             ]
         },
         {
@@ -940,34 +940,34 @@
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0134",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0112",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0051",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0118",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0110"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0134",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0003",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0047",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0132"
             ],
             "retrieved_pages": [
-                "67",
-                "56",
                 "26",
-                "59",
-                "55"
+                "67",
+                "3",
+                "24",
+                "66"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.8053,
-                "highest_similarity": 0.8651,
-                "retrieval_latency_ms": 51.3
+                "average_similarity": 0.2838,
+                "highest_similarity": 0.7639,
+                "retrieval_latency_ms": 91.42
             },
             "similarities": [
-                0.8650544,
-                0.80831075,
-                0.799183,
-                0.7793807,
-                0.774366
+                0.7638571262359619,
+                0.5812291502952576,
+                0.028020434081554413,
+                0.02368978038430214,
+                0.022035079076886177
             ]
         },
         {
@@ -980,34 +980,34 @@
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0041",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0005",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0030",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0028",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0012",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0051"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0028",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0041"
             ],
             "retrieved_pages": [
-                "21",
+                "4",
                 "15",
-                "14",
                 "7",
-                "26"
+                "14",
+                "21"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7536,
-                "highest_similarity": 0.7618,
-                "retrieval_latency_ms": 55.02
+                "average_similarity": 0.0984,
+                "highest_similarity": 0.1792,
+                "retrieval_latency_ms": 59.75
             },
             "similarities": [
-                0.76175004,
-                0.7582779,
-                0.75006264,
-                0.7492191,
-                0.74854267
+                0.1792137324810028,
+                0.0949014276266098,
+                0.07999410480260849,
+                0.0768396258354187,
+                0.061288923025131226
             ]
         },
         {
@@ -1020,74 +1020,74 @@
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0127",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0105",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0109",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0071",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0133"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0027",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0030",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0123",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0077",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0028"
             ],
             "retrieved_pages": [
-                "63",
-                "53",
-                "55",
-                "36",
-                "66"
+                "13",
+                "15",
+                "61",
+                "39",
+                "14"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6337,
-                "highest_similarity": 0.6462,
-                "retrieval_latency_ms": 49.47
+                "average_similarity": 0.3124,
+                "highest_similarity": 0.994,
+                "retrieval_latency_ms": 183.58
             },
             "similarities": [
-                0.6462388,
-                0.6317886,
-                0.6316389,
-                0.6298319,
-                0.6288381
+                0.9940310120582581,
+                0.4481531083583832,
+                0.04392632097005844,
+                0.03844369202852249,
+                0.0375838577747345
             ]
         },
         {
             "question": "Which consumer rights are most relevant to delayed deliveries in e-commerce?",
             "retrieved_documents": [
                 "brazilian_cdc_law_8078.pdf",
-                "webshoppers_report.pdf",
+                "brazilian_cdc_law_8078.pdf",
                 "brazilian_cdc_law_8078.pdf",
                 "brazilian_cdc_law_8078.pdf",
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0133",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0062",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0109",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0134",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0137"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0117",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0105",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0132",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0011",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0005"
             ],
             "retrieved_pages": [
+                "58",
+                "53",
                 "66",
-                "27",
-                "55",
-                "67",
-                "69"
+                "6",
+                "4"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6843,
-                "highest_similarity": 0.7028,
-                "retrieval_latency_ms": 132.78
+                "average_similarity": 0.0044,
+                "highest_similarity": 0.0117,
+                "retrieval_latency_ms": 63.55
             },
             "similarities": [
-                0.70282537,
-                0.69642836,
-                0.674554,
-                0.674505,
-                0.6731618
+                0.011655273847281933,
+                0.005274584516882896,
+                0.001726625021547079,
+                0.0016590979648754,
+                0.0016242308774963021
             ]
         },
         {
@@ -1100,34 +1100,34 @@
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0115",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0052",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0019",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0049",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0042",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0043",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0113"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0052",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0051"
             ],
             "retrieved_pages": [
-                "57",
-                "26",
+                "10",
+                "25",
                 "21",
-                "22",
-                "57"
+                "26",
+                "26"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7005,
-                "highest_similarity": 0.7311,
-                "retrieval_latency_ms": 52.4
+                "average_similarity": 0.1392,
+                "highest_similarity": 0.2823,
+                "retrieval_latency_ms": 83.03
             },
             "similarities": [
-                0.7310574,
-                0.70258427,
-                0.69295686,
-                0.6909944,
-                0.68480486
+                0.2823115587234497,
+                0.1610388606786728,
+                0.1482083797454834,
+                0.0721575915813446,
+                0.03238426893949509
             ]
         },
         {
@@ -1140,34 +1140,34 @@
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0044",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0105",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0129",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0013",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0018",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0125",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0127",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0125"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0119"
             ],
             "retrieved_pages": [
-                "22",
-                "53",
-                "64",
+                "7",
+                "10",
+                "62",
                 "63",
-                "62"
+                "59"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6869,
-                "highest_similarity": 0.7183,
-                "retrieval_latency_ms": 49.86
+                "average_similarity": 0.0043,
+                "highest_similarity": 0.01,
+                "retrieval_latency_ms": 52.85
             },
             "similarities": [
-                0.71834916,
-                0.70128584,
-                0.67524195,
-                0.67435104,
-                0.6651113
+                0.009973503649234772,
+                0.004684145096689463,
+                0.002776687266305089,
+                0.0023575816303491592,
+                0.0019473984139040112
             ]
         },
         {
@@ -1180,34 +1180,34 @@
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0019",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0024",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0028",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0030",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0005"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0015",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0042",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0132",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0051",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0019"
             ],
             "retrieved_pages": [
-                "10",
-                "12",
-                "14",
-                "15",
-                "4"
+                "8",
+                "21",
+                "66",
+                "26",
+                "10"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7429,
-                "highest_similarity": 0.7556,
-                "retrieval_latency_ms": 51.04
+                "average_similarity": 0.7822,
+                "highest_similarity": 0.9979,
+                "retrieval_latency_ms": 98.37
             },
             "similarities": [
-                0.75561345,
-                0.749113,
-                0.73747337,
-                0.7372991,
-                0.73488086
+                0.9978887438774109,
+                0.835345983505249,
+                0.7154947519302368,
+                0.6813892126083374,
+                0.6806871891021729
             ]
         },
         {
@@ -1220,17 +1220,17 @@
                 "webshoppers_report.pdf"
             ],
             "retrieved_chunk_ids": [
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0048",
                 "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0003",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0013",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0012",
                 "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0001",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0015",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0012"
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0013"
             ],
             "retrieved_pages": [
+                "22",
                 "4",
                 "8",
                 "2",
-                "9",
                 "8"
             ],
             "metrics": {
@@ -1238,16 +1238,16 @@
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.753,
-                "highest_similarity": 0.7868,
-                "retrieval_latency_ms": 61.39
+                "average_similarity": 0.2157,
+                "highest_similarity": 0.5362,
+                "retrieval_latency_ms": 159.05
             },
             "similarities": [
-                0.78682035,
-                0.7560639,
-                0.74881923,
-                0.7457762,
-                0.7274971
+                0.536207914352417,
+                0.44078391790390015,
+                0.06811880320310593,
+                0.018861867487430573,
+                0.01437809132039547
             ]
         },
         {
@@ -1257,37 +1257,37 @@
                 "webshoppers_report.pdf",
                 "webshoppers_report.pdf",
                 "webshoppers_report.pdf",
-                "webshoppers_report.pdf"
+                "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0003",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0013",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0049",
                 "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0048",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0082"
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0049",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0045",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0082",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0061"
             ],
             "retrieved_pages": [
-                "4",
-                "8",
                 "22",
                 "22",
-                "35"
+                "21",
+                "35",
+                "31"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7177,
-                "highest_similarity": 0.7451,
-                "retrieval_latency_ms": 46.65
+                "average_similarity": 0.6413,
+                "highest_similarity": 0.9999,
+                "retrieval_latency_ms": 104.86
             },
             "similarities": [
-                0.7451343,
-                0.73814064,
-                0.72041,
-                0.6930825,
-                0.69161594
+                0.9999110698699951,
+                0.9907440543174744,
+                0.9890868663787842,
+                0.2243414968252182,
+                0.002563220215961337
             ]
         },
         {
@@ -1300,74 +1300,74 @@
                 "webshoppers_report.pdf"
             ],
             "retrieved_chunk_ids": [
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0003",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0018",
                 "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0049",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0013",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0051"
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0048",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0012",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0051",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0047"
             ],
             "retrieved_pages": [
-                "4",
-                "10",
+                "22",
                 "22",
                 "8",
-                "23"
-            ],
-            "metrics": {
-                "precision_at_k": 0.2,
-                "recall_at_k": 1.0,
-                "hit_rate": 1.0,
-                "mrr": 1.0,
-                "average_similarity": 0.7334,
-                "highest_similarity": 0.744,
-                "retrieval_latency_ms": 49.02
-            },
-            "similarities": [
-                0.7440454,
-                0.7374848,
-                0.73280644,
-                0.72943884,
-                0.72307324
-            ]
-        },
-        {
-            "question": "Which product categories experienced significant growth?",
-            "retrieved_documents": [
-                "olist_data_catalog.pdf",
-                "olist_data_catalog.pdf",
-                "webshoppers_report.pdf",
-                "olist_data_catalog.pdf",
-                "webshoppers_report.pdf"
-            ],
-            "retrieved_chunk_ids": [
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0010",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0047",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0005",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0048"
-            ],
-            "retrieved_pages": [
-                "11",
-                "13",
-                "22",
-                "6",
+                "23",
                 "22"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
-                "mrr": 0.3333,
-                "average_similarity": 0.6194,
-                "highest_similarity": 0.6267,
-                "retrieval_latency_ms": 45.46
+                "mrr": 1.0,
+                "average_similarity": 0.569,
+                "highest_similarity": 0.9178,
+                "retrieval_latency_ms": 88.99
             },
             "similarities": [
-                0.6266728,
-                0.6183449,
-                0.61783594,
-                0.61725044,
-                0.61694527
+                0.9177618622779846,
+                0.9068244099617004,
+                0.6632829904556274,
+                0.34833934903144836,
+                0.008615437895059586
+            ]
+        },
+        {
+            "question": "Which product categories experienced significant growth?",
+            "retrieved_documents": [
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0047",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0048",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0010",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0005",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0061"
+            ],
+            "retrieved_pages": [
+                "22",
+                "22",
+                "6",
+                "6",
+                "31"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": 0.0058,
+                "highest_similarity": 0.0123,
+                "retrieval_latency_ms": 52.16
+            },
+            "similarities": [
+                0.012253648601472378,
+                0.01131943054497242,
+                0.002006761496886611,
+                0.001767219859175384,
+                0.0014853749889880419
             ]
         },
         {
@@ -1375,39 +1375,39 @@
             "retrieved_documents": [
                 "webshoppers_report.pdf",
                 "webshoppers_report.pdf",
-                "webshoppers_report.pdf",
                 "olist_data_catalog.pdf",
-                "brazilian_cdc_law_8078.pdf"
+                "olist_data_catalog.pdf",
+                "webshoppers_report.pdf"
             ],
             "retrieved_chunk_ids": [
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0062",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0003",
                 "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0001",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0000",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0053"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0013"
             ],
             "retrieved_pages": [
-                "27",
+                "4",
                 "2",
-                "1",
                 "2",
-                "27"
+                "13",
+                "8"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6462,
-                "highest_similarity": 0.672,
-                "retrieval_latency_ms": 52.0
+                "average_similarity": 0.1801,
+                "highest_similarity": 0.7768,
+                "retrieval_latency_ms": 83.55
             },
             "similarities": [
-                0.67199755,
-                0.64272296,
-                0.64152503,
-                0.6386169,
-                0.6361084
+                0.776786208152771,
+                0.115676648914814,
+                0.0036044439766556025,
+                0.0021790380124002695,
+                0.0021687576081603765
             ]
         },
         {
@@ -1417,37 +1417,37 @@
                 "webshoppers_report.pdf",
                 "brazilian_cdc_law_8078.pdf",
                 "webshoppers_report.pdf",
-                "brazilian_cdc_law_8078.pdf"
+                "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0086",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0042",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0085",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0018",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0087"
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0049",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0087",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0015",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004"
             ],
             "retrieved_pages": [
                 "43",
-                "19",
-                "43",
-                "10",
-                "44"
+                "22",
+                "44",
+                "9",
+                "5"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 0.5,
-                "average_similarity": 0.6681,
-                "highest_similarity": 0.6765,
-                "retrieval_latency_ms": 64.87
+                "average_similarity": 0.1628,
+                "highest_similarity": 0.7895,
+                "retrieval_latency_ms": 93.92
             },
             "similarities": [
-                0.6764567,
-                0.674926,
-                0.6681832,
-                0.66549164,
-                0.6554694
+                0.7894566059112549,
+                0.015680192038416862,
+                0.0037298095412552357,
+                0.003323636017739773,
+                0.0015893823001533747
             ]
         },
         {
@@ -1460,114 +1460,114 @@
                 "webshoppers_report.pdf"
             ],
             "retrieved_chunk_ids": [
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0013",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0057",
                 "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0051",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0081",
                 "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0022",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0049"
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0048",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0082"
             ],
             "retrieved_pages": [
-                "8",
-                "25",
                 "23",
+                "35",
                 "12",
-                "22"
+                "22",
+                "35"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7787,
-                "highest_similarity": 0.7941,
-                "retrieval_latency_ms": 49.45
+                "average_similarity": 0.195,
+                "highest_similarity": 0.5646,
+                "retrieval_latency_ms": 68.58
             },
             "similarities": [
-                0.79405886,
-                0.780447,
-                0.7760791,
-                0.77216256,
-                0.7706235
+                0.5646001100540161,
+                0.18063749372959137,
+                0.09965614974498749,
+                0.08578355610370636,
+                0.0444147102534771
             ]
         },
         {
             "question": "What purchasing behaviors are discussed in the report?",
             "retrieved_documents": [
-                "brazilian_cdc_law_8078.pdf",
-                "olist_data_catalog.pdf",
                 "olist_data_catalog.pdf",
                 "brazilian_cdc_law_8078.pdf",
-                "brazilian_cdc_law_8078.pdf"
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0007",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0087",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0121",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0086"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0086",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002"
             ],
             "retrieved_pages": [
+                "8",
                 "44",
-                "3",
-                "4",
                 "60",
-                "43"
+                "43",
+                "3"
             ],
             "metrics": {
                 "precision_at_k": 0.0,
                 "recall_at_k": 0.0,
                 "hit_rate": 0.0,
                 "mrr": 0.0,
-                "average_similarity": 0.6473,
-                "highest_similarity": 0.6699,
-                "retrieval_latency_ms": 56.05
+                "average_similarity": 0.0887,
+                "highest_similarity": 0.4295,
+                "retrieval_latency_ms": 53.33
             },
             "similarities": [
-                0.6698779,
-                0.6504017,
-                0.64566076,
-                0.635836,
-                0.634916
+                0.42948630452156067,
+                0.006875785533338785,
+                0.0038615053053945303,
+                0.0023599942214787006,
+                0.0008384881657548249
             ]
         },
         {
             "question": "How does delivery performance affect customer satisfaction?",
             "retrieved_documents": [
                 "brazilian_cdc_law_8078.pdf",
-                "olist_data_catalog.pdf",
                 "brazilian_cdc_law_8078.pdf",
                 "olist_data_catalog.pdf",
-                "brazilian_cdc_law_8078.pdf"
+                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0087",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0010",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0086",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0088"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0088",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0107",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0010"
             ],
             "retrieved_pages": [
-                "44",
-                "11",
                 "43",
-                "4",
-                "44"
+                "44",
+                "5",
+                "54",
+                "11"
             ],
             "metrics": {
                 "precision_at_k": 0.0,
                 "recall_at_k": 0.0,
                 "hit_rate": 0.0,
                 "mrr": 0.0,
-                "average_similarity": 0.6165,
-                "highest_similarity": 0.6309,
-                "retrieval_latency_ms": 46.05
+                "average_similarity": 0.003,
+                "highest_similarity": 0.0109,
+                "retrieval_latency_ms": 85.46
             },
             "similarities": [
-                0.6308623,
-                0.62860954,
-                0.61069137,
-                0.6096611,
-                0.6024872
+                0.010940412990748882,
+                0.0014402973465621471,
+                0.00136284320615232,
+                0.0010052938014268875,
+                0.0003821366699412465
             ]
         },
         {
@@ -1576,78 +1576,78 @@
                 "webshoppers_report.pdf",
                 "webshoppers_report.pdf",
                 "webshoppers_report.pdf",
-                "webshoppers_report.pdf",
-                "webshoppers_report.pdf"
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0018",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0013",
                 "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0048",
                 "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0050",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0007"
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0049",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0095",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0124"
             ],
             "retrieved_pages": [
-                "10",
-                "8",
                 "22",
                 "23",
-                "6"
+                "22",
+                "48",
+                "62"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6673,
-                "highest_similarity": 0.6748,
-                "retrieval_latency_ms": 51.26
+                "average_similarity": 0.0177,
+                "highest_similarity": 0.0579,
+                "retrieval_latency_ms": 53.2
             },
             "similarities": [
-                0.6747735,
-                0.67461365,
-                0.6691701,
-                0.65955967,
-                0.65816104
+                0.05792619287967682,
+                0.0267610102891922,
+                0.0028678879607468843,
+                0.0004688247572630644,
+                0.0002523909497540444
             ]
         },
         {
             "question": "Which strategies can improve customer experience in e-commerce?",
             "retrieved_documents": [
                 "webshoppers_report.pdf",
+                "olist_data_catalog.pdf",
                 "webshoppers_report.pdf",
-                "webshoppers_report.pdf",
-                "webshoppers_report.pdf",
-                "webshoppers_report.pdf"
+                "olist_data_catalog.pdf",
+                "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
                 "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0018",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0042",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0013",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0049",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0061"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0051",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0007",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0080"
             ],
             "retrieved_pages": [
                 "10",
-                "19",
+                "1",
+                "23",
                 "8",
-                "22",
-                "26"
+                "40"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6491,
-                "highest_similarity": 0.6771,
-                "retrieval_latency_ms": 51.4
+                "average_similarity": 0.0038,
+                "highest_similarity": 0.008,
+                "retrieval_latency_ms": 85.8
             },
             "similarities": [
-                0.6770896,
-                0.66493595,
-                0.6367594,
-                0.6339036,
-                0.63260704
+                0.008045660331845284,
+                0.004698853939771652,
+                0.002791254548355937,
+                0.0018661593785509467,
+                0.0015253861201927066
             ]
         },
         {
@@ -1655,39 +1655,39 @@
             "retrieved_documents": [
                 "brazilian_cdc_law_8078.pdf",
                 "webshoppers_report.pdf",
-                "webshoppers_report.pdf",
-                "webshoppers_report.pdf",
-                "webshoppers_report.pdf"
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0104",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0049",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0133",
                 "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0048",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0047",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0003"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0107",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0113",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0104"
             ],
             "retrieved_pages": [
-                "52",
+                "66",
                 "22",
-                "22",
-                "22",
-                "4"
+                "54",
+                "57",
+                "52"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 0.5,
-                "average_similarity": 0.7182,
-                "highest_similarity": 0.7341,
-                "retrieval_latency_ms": 49.77
+                "average_similarity": 0.2102,
+                "highest_similarity": 0.9663,
+                "retrieval_latency_ms": 53.59
             },
             "similarities": [
-                0.73410916,
-                0.72972983,
-                0.7237377,
-                0.707646,
-                0.6956624
+                0.9662920236587524,
+                0.06946054846048355,
+                0.009181917645037174,
+                0.0029857358895242214,
+                0.0029432561714202166
             ]
         },
         {
@@ -1697,37 +1697,37 @@
                 "brazilian_cdc_law_8078.pdf",
                 "brazilian_cdc_law_8078.pdf",
                 "brazilian_cdc_law_8078.pdf",
-                "webshoppers_report.pdf"
+                "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0053",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0126",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0054",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0071",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0069",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0063"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0125",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0071"
             ],
             "retrieved_pages": [
+                "63",
                 "27",
-                "27",
-                "36",
                 "35",
-                "28"
+                "62",
+                "36"
             ],
             "metrics": {
-                "precision_at_k": 0.2,
-                "recall_at_k": 1.0,
-                "hit_rate": 1.0,
-                "mrr": 0.2,
-                "average_similarity": 0.6309,
-                "highest_similarity": 0.6602,
-                "retrieval_latency_ms": 48.93
+                "precision_at_k": 0.0,
+                "recall_at_k": 0.0,
+                "hit_rate": 0.0,
+                "mrr": 0.0,
+                "average_similarity": 0.0012,
+                "highest_similarity": 0.0025,
+                "retrieval_latency_ms": 90.32
             },
             "similarities": [
-                0.66020685,
-                0.62891674,
-                0.62290484,
-                0.6216103,
-                0.6208079
+                0.002473424421623349,
+                0.0022323571611195803,
+                0.000607504160143435,
+                0.0003475703706499189,
+                0.00031852780375629663
             ]
         },
         {
@@ -1737,37 +1737,37 @@
                 "brazilian_cdc_law_8078.pdf",
                 "brazilian_cdc_law_8078.pdf",
                 "brazilian_cdc_law_8078.pdf",
-                "brazilian_cdc_law_8078.pdf"
+                "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0109",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0076",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0086",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0021",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0088"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0094",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0077",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0085",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004"
             ],
             "retrieved_pages": [
-                "55",
-                "38",
                 "43",
-                "11",
-                "44"
+                "47",
+                "39",
+                "43",
+                "5"
             ],
             "metrics": {
                 "precision_at_k": 0.0,
                 "recall_at_k": 0.0,
                 "hit_rate": 0.0,
                 "mrr": 0.0,
-                "average_similarity": 0.6542,
-                "highest_similarity": 0.6616,
-                "retrieval_latency_ms": 46.47
+                "average_similarity": 0.0582,
+                "highest_similarity": 0.2881,
+                "retrieval_latency_ms": 57.55
             },
             "similarities": [
-                0.6615733,
-                0.65789294,
-                0.6517714,
-                0.65038884,
-                0.64915556
+                0.2880895733833313,
+                0.0011735757580026984,
+                0.0007718086126260459,
+                0.0006401098216883838,
+                0.00023753492860123515
             ]
         },
         {
@@ -1777,37 +1777,37 @@
                 "webshoppers_report.pdf",
                 "webshoppers_report.pdf",
                 "webshoppers_report.pdf",
-                "olist_data_catalog.pdf"
+                "webshoppers_report.pdf"
             ],
             "retrieved_chunk_ids": [
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0013",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0048",
                 "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0003",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0061",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012"
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0001",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0015",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0013",
+                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0000"
             ],
             "retrieved_pages": [
-                "8",
-                "22",
                 "4",
-                "26",
-                "13"
+                "2",
+                "9",
+                "8",
+                "1"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 1.0,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6251,
-                "highest_similarity": 0.6293,
-                "retrieval_latency_ms": 54.43
+                "average_similarity": 0.0279,
+                "highest_similarity": 0.1134,
+                "retrieval_latency_ms": 97.63
             },
             "similarities": [
-                0.62930155,
-                0.62886536,
-                0.6245304,
-                0.62191856,
-                0.62099373
+                0.1133856400847435,
+                0.01844705455005169,
+                0.0036231295671314,
+                0.0029245202895253897,
+                0.0012832204811275005
             ]
         },
         {
@@ -1820,34 +1820,34 @@
                 "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001"
             ],
             "retrieved_pages": [
-                "13",
                 "1",
                 "10",
-                "2",
-                "4"
+                "3",
+                "13",
+                "2"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 0.5,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7604,
-                "highest_similarity": 0.7865,
-                "retrieval_latency_ms": 56.28
+                "average_similarity": 0.5263,
+                "highest_similarity": 0.6437,
+                "retrieval_latency_ms": 59.54
             },
             "similarities": [
-                0.7865131,
-                0.76974523,
-                0.76903635,
-                0.7635147,
-                0.7131823
+                0.6436550617218018,
+                0.6090714931488037,
+                0.48796287178993225,
+                0.45698368549346924,
+                0.43399500846862793
             ]
         },
         {
@@ -1857,37 +1857,37 @@
                 "olist_data_catalog.pdf",
                 "olist_data_catalog.pdf",
                 "olist_data_catalog.pdf",
-                "webshoppers_report.pdf"
+                "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0001"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0007"
             ],
             "retrieved_pages": [
-                "13",
                 "1",
+                "13",
+                "5",
                 "10",
-                "4",
-                "2"
+                "8"
             ],
             "metrics": {
-                "precision_at_k": 0.4,
-                "recall_at_k": 1.0,
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7481,
-                "highest_similarity": 0.8404,
-                "retrieval_latency_ms": 56.35
+                "average_similarity": 0.7028,
+                "highest_similarity": 0.8796,
+                "retrieval_latency_ms": 105.01
             },
             "similarities": [
-                0.8403617,
-                0.7670056,
-                0.74564373,
-                0.7015823,
-                0.6861207
+                0.8795753121376038,
+                0.8430136442184448,
+                0.7478567361831665,
+                0.7278404831886292,
+                0.31558117270469666
             ]
         },
         {
@@ -1897,37 +1897,37 @@
                 "olist_data_catalog.pdf",
                 "olist_data_catalog.pdf",
                 "olist_data_catalog.pdf",
-                "webshoppers_report.pdf"
+                "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0006"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003"
             ],
             "retrieved_pages": [
-                "13",
                 "5",
-                "4",
+                "13",
                 "1",
-                "5"
+                "10",
+                "4"
             ],
             "metrics": {
-                "precision_at_k": 0.4,
-                "recall_at_k": 1.0,
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6667,
-                "highest_similarity": 0.6985,
-                "retrieval_latency_ms": 52.41
+                "average_similarity": 0.0447,
+                "highest_similarity": 0.1578,
+                "retrieval_latency_ms": 90.06
             },
             "similarities": [
-                0.6985097,
-                0.67391586,
-                0.66213626,
-                0.65046716,
-                0.648698
+                0.1577686071395874,
+                0.048051632940769196,
+                0.007991823367774487,
+                0.006139261648058891,
+                0.0036204555071890354
             ]
         },
         {
@@ -1940,74 +1940,74 @@
                 "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0002",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000"
             ],
             "retrieved_pages": [
-                "13",
                 "10",
-                "1",
-                "2",
-                "3"
+                "13",
+                "3",
+                "5",
+                "1"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 0.5,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7446,
-                "highest_similarity": 0.7977,
-                "retrieval_latency_ms": 53.02
+                "average_similarity": 0.754,
+                "highest_similarity": 0.9027,
+                "retrieval_latency_ms": 91.5
             },
             "similarities": [
-                0.79774195,
-                0.7822629,
-                0.74178314,
-                0.7151045,
-                0.686097
+                0.9026535153388977,
+                0.7798681259155273,
+                0.7694076895713806,
+                0.6801952719688416,
+                0.6379281878471375
             ]
         },
         {
             "question": "Which consumer rights should Olist consider when delivery delays occur?",
             "retrieved_documents": [
-                "brazilian_cdc_law_8078.pdf",
-                "brazilian_cdc_law_8078.pdf",
-                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
                 "brazilian_cdc_law_8078.pdf",
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0133",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0132",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0109",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0137",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0107"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0011",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0015"
             ],
             "retrieved_pages": [
-                "66",
-                "66",
-                "55",
-                "69",
-                "54"
+                "1",
+                "10",
+                "2",
+                "6",
+                "8"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 0.5,
                 "hit_rate": 1.0,
-                "mrr": 1.0,
-                "average_similarity": 0.6772,
-                "highest_similarity": 0.6987,
-                "retrieval_latency_ms": 63.07
+                "mrr": 0.25,
+                "average_similarity": 0.0237,
+                "highest_similarity": 0.0813,
+                "retrieval_latency_ms": 53.0
             },
             "similarities": [
-                0.6986522,
-                0.6749656,
-                0.67347664,
-                0.6706469,
-                0.66827667
+                0.08127719908952713,
+                0.017846573144197464,
+                0.014261548407375813,
+                0.0036840408574789762,
+                0.0014181641163304448
             ]
         },
         {
@@ -2020,34 +2020,34 @@
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0105",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0051",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0052",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0112",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0109"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0105",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0053",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0122",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0063"
             ],
             "retrieved_pages": [
-                "53",
-                "26",
-                "26",
                 "56",
-                "55"
+                "53",
+                "27",
+                "61",
+                "32"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 0.5,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7282,
-                "highest_similarity": 0.7383,
-                "retrieval_latency_ms": 51.43
+                "average_similarity": 0.015,
+                "highest_similarity": 0.0303,
+                "retrieval_latency_ms": 94.93
             },
             "similarities": [
-                0.7382535,
-                0.7295443,
-                0.72711957,
-                0.72581345,
-                0.72027165
+                0.03030354157090187,
+                0.028368208557367325,
+                0.007187442388385534,
+                0.00538382213562727,
+                0.0035366390366107225
             ]
         },
         {
@@ -2060,17 +2060,17 @@
                 "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003"
             ],
             "retrieved_pages": [
+                "2",
+                "1",
                 "13",
                 "10",
-                "1",
-                "2",
                 "4"
             ],
             "metrics": {
@@ -2078,16 +2078,16 @@
                 "recall_at_k": 0.5,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7254,
-                "highest_similarity": 0.7628,
-                "retrieval_latency_ms": 72.03
+                "average_similarity": 0.6148,
+                "highest_similarity": 0.8885,
+                "retrieval_latency_ms": 79.21
             },
             "similarities": [
-                0.7628211,
-                0.74281937,
-                0.7241188,
-                0.71943533,
-                0.67798513
+                0.8885395526885986,
+                0.7907346487045288,
+                0.6133125424385071,
+                0.581574559211731,
+                0.1997896283864975
             ]
         },
         {
@@ -2100,34 +2100,34 @@
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0008",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0112",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0052",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0105",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0043",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0051"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0113",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0003",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0121"
             ],
             "retrieved_pages": [
+                "5",
                 "56",
-                "26",
-                "53",
-                "22",
-                "26"
+                "57",
+                "3",
+                "60"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 0.5,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6934,
-                "highest_similarity": 0.6972,
-                "retrieval_latency_ms": 52.45
+                "average_similarity": 0.0832,
+                "highest_similarity": 0.139,
+                "retrieval_latency_ms": 53.68
             },
             "similarities": [
-                0.6972226,
-                0.6953582,
-                0.6950995,
-                0.6907656,
-                0.6883639
+                0.13895103335380554,
+                0.11375104635953903,
+                0.08078043162822723,
+                0.05855196714401245,
+                0.02382553368806839
             ]
         },
         {
@@ -2141,136 +2141,56 @@
             ],
             "retrieved_chunk_ids": [
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0010"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009"
             ],
             "retrieved_pages": [
                 "13",
-                "4",
+                "1",
+                "2",
                 "5",
-                "10",
-                "11"
+                "10"
             ],
             "metrics": {
                 "precision_at_k": 0.2,
                 "recall_at_k": 0.3333,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6927,
-                "highest_similarity": 0.7038,
-                "retrieval_latency_ms": 49.9
+                "average_similarity": 0.0102,
+                "highest_similarity": 0.0187,
+                "retrieval_latency_ms": 54.55
             },
             "similarities": [
-                0.7038353,
-                0.7031116,
-                0.69599193,
-                0.68191427,
-                0.6784472
+                0.01872979663312435,
+                0.010370940901339054,
+                0.01003141701221466,
+                0.0062552159652113914,
+                0.005512240342795849
             ]
         },
         {
             "question": "How can Olist improve customer satisfaction while remaining compliant with consumer protection regulations?",
             "retrieved_documents": [
                 "brazilian_cdc_law_8078.pdf",
-                "brazilian_cdc_law_8078.pdf",
-                "brazilian_cdc_law_8078.pdf",
-                "brazilian_cdc_law_8078.pdf",
-                "brazilian_cdc_law_8078.pdf"
-            ],
-            "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0104",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0109",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0107",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0051",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0103"
-            ],
-            "retrieved_pages": [
-                "52",
-                "55",
-                "54",
-                "26",
-                "52"
-            ],
-            "metrics": {
-                "precision_at_k": 0.2,
-                "recall_at_k": 0.5,
-                "hit_rate": 1.0,
-                "mrr": 1.0,
-                "average_similarity": 0.7009,
-                "highest_similarity": 0.7242,
-                "retrieval_latency_ms": 48.2
-            },
-            "similarities": [
-                0.7241952,
-                0.7100621,
-                0.6923564,
-                0.6898957,
-                0.6881008
-            ]
-        },
-        {
-            "question": "Which datasets and business indicators should be monitored to reduce delivery-related complaints?",
-            "retrieved_documents": [
-                "webshoppers_report.pdf",
                 "olist_data_catalog.pdf",
                 "olist_data_catalog.pdf",
                 "olist_data_catalog.pdf",
-                "brazilian_cdc_law_8078.pdf"
-            ],
-            "retrieved_chunk_ids": [
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0031",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0044"
-            ],
-            "retrieved_pages": [
-                "15",
-                "2",
-                "4",
-                "10",
-                "22"
-            ],
-            "metrics": {
-                "precision_at_k": 0.4,
-                "recall_at_k": 1.0,
-                "hit_rate": 1.0,
-                "mrr": 1.0,
-                "average_similarity": 0.6554,
-                "highest_similarity": 0.6606,
-                "retrieval_latency_ms": 53.15
-            },
-            "similarities": [
-                0.6606187,
-                0.65966594,
-                0.6534868,
-                0.65215194,
-                0.6510277
-            ]
-        },
-        {
-            "question": "How can Olist combine business data and legal requirements to improve customer trust?",
-            "retrieved_documents": [
-                "olist_data_catalog.pdf",
-                "webshoppers_report.pdf",
-                "olist_data_catalog.pdf",
-                "webshoppers_report.pdf",
                 "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0108",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0042",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0018",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009"
             ],
             "retrieved_pages": [
+                "54",
+                "5",
                 "13",
-                "19",
                 "1",
-                "10",
                 "10"
             ],
             "metrics": {
@@ -2278,16 +2198,96 @@
                 "recall_at_k": 0.5,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6928,
-                "highest_similarity": 0.7673,
-                "retrieval_latency_ms": 72.42
+                "average_similarity": 0.1709,
+                "highest_similarity": 0.691,
+                "retrieval_latency_ms": 89.04
             },
             "similarities": [
-                0.7673325,
-                0.68202966,
-                0.68201077,
-                0.66733915,
-                0.6651772
+                0.6909780502319336,
+                0.13448093831539154,
+                0.014919749461114407,
+                0.008573970757424831,
+                0.0053478931076824665
+            ]
+        },
+        {
+            "question": "Which datasets and business indicators should be monitored to reduce delivery-related complaints?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0011",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000"
+            ],
+            "retrieved_pages": [
+                "2",
+                "5",
+                "10",
+                "12",
+                "1"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": 0.0141,
+                "highest_similarity": 0.0524,
+                "retrieval_latency_ms": 141.98
+            },
+            "similarities": [
+                0.052370585501194,
+                0.005879967473447323,
+                0.005840879864990711,
+                0.003698536427691579,
+                0.0029062898829579353
+            ]
+        },
+        {
+            "question": "How can Olist combine business data and legal requirements to improve customer trust?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0006",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000"
+            ],
+            "retrieved_pages": [
+                "13",
+                "10",
+                "5",
+                "7",
+                "1"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": 0.0718,
+                "highest_similarity": 0.2813,
+                "retrieval_latency_ms": 96.48
+            },
+            "similarities": [
+                0.28128546476364136,
+                0.02533769980072975,
+                0.025080472230911255,
+                0.015592582523822784,
+                0.011837877333164215
             ]
         },
         {
@@ -2296,118 +2296,118 @@
                 "olist_data_catalog.pdf",
                 "olist_data_catalog.pdf",
                 "olist_data_catalog.pdf",
-                "webshoppers_report.pdf",
+                "olist_data_catalog.pdf",
                 "olist_data_catalog.pdf"
             ],
             "retrieved_chunk_ids": [
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0006",
-                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0003"
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0009",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0004",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0001"
             ],
             "retrieved_pages": [
                 "13",
-                "10",
                 "1",
+                "10",
                 "5",
-                "4"
+                "2"
             ],
             "metrics": {
-                "precision_at_k": 0.4,
-                "recall_at_k": 1.0,
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7183,
-                "highest_similarity": 0.8003,
-                "retrieval_latency_ms": 51.44
+                "average_similarity": 0.3297,
+                "highest_similarity": 0.5276,
+                "retrieval_latency_ms": 91.95
             },
             "similarities": [
-                0.8002837,
-                0.73906803,
-                0.7257924,
-                0.6707161,
-                0.6555039
+                0.5276269316673279,
+                0.44570207595825195,
+                0.3551985025405884,
+                0.2842773497104645,
+                0.035792089998722076
             ]
         },
         {
             "question": "What business decisions can Olist make by combining operational data, industry insights, and consumer protection regulations?",
             "retrieved_documents": [
                 "olist_data_catalog.pdf",
-                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf",
                 "brazilian_cdc_law_8078.pdf",
                 "brazilian_cdc_law_8078.pdf",
                 "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
                 "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0012",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0109",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0051",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0105",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0103"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0002",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0085"
             ],
             "retrieved_pages": [
                 "13",
-                "55",
-                "26",
+                "1",
                 "53",
-                "52"
+                "2",
+                "43"
             ],
             "metrics": {
                 "precision_at_k": 0.4,
                 "recall_at_k": 0.6667,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.7049,
-                "highest_similarity": 0.7264,
-                "retrieval_latency_ms": 56.87
+                "average_similarity": 0.0067,
+                "highest_similarity": 0.0145,
+                "retrieval_latency_ms": 97.36
             },
             "similarities": [
-                0.7263647,
-                0.7152783,
-                0.69787395,
-                0.6926176,
-                0.6926013
+                0.01445030327886343,
+                0.010590585879981518,
+                0.003483455628156662,
+                0.0027004224248230457,
+                0.002456493442878127
             ]
         },
         {
             "question": "Based on the Data Catalog, Webshoppers Report, and Consumer Protection Code, what information should executives review before improving the delivery experience?",
             "retrieved_documents": [
                 "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf",
                 "brazilian_cdc_law_8078.pdf",
                 "brazilian_cdc_law_8078.pdf",
-                "brazilian_cdc_law_8078.pdf",
-                "webshoppers_report.pdf"
+                "brazilian_cdc_law_8078.pdf"
             ],
             "retrieved_chunk_ids": [
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0105",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0003",
+                "7a4bc9ec-8bb8-4cd6-9be5-bb5db06ec196_chunk_0000",
                 "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0008",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0043",
-                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0046",
-                "e37e9d09-c9ec-49c0-8e24-9d2e26e4bc44_chunk_0018"
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0115",
+                "971aeab1-83d4-459d-bbb3-6701cb499940_chunk_0013"
             ],
             "retrieved_pages": [
-                "53",
+                "3",
+                "1",
                 "5",
-                "22",
-                "23",
-                "10"
+                "57",
+                "7"
             ],
             "metrics": {
                 "precision_at_k": 0.4,
                 "recall_at_k": 0.6667,
                 "hit_rate": 1.0,
                 "mrr": 1.0,
-                "average_similarity": 0.6338,
-                "highest_similarity": 0.6539,
-                "retrieval_latency_ms": 63.91
+                "average_similarity": 0.0178,
+                "highest_similarity": 0.0396,
+                "retrieval_latency_ms": 69.36
             },
             "similarities": [
-                0.6539223,
-                0.6405555,
-                0.6346761,
-                0.620262,
-                0.61966527
+                0.03963509947061539,
+                0.02997237630188465,
+                0.015065515413880348,
+                0.0023476879578083754,
+                0.001806749845854938
             ]
         }
     ]
