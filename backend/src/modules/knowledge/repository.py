@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import uuid
-
+from src.core.config import settings
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from qdrant_client.models import ScoredPoint
@@ -19,7 +19,7 @@ class QdrantRepository:
     ) -> None:
         """Initialize the Qdrant client."""
         self.client = QdrantClient(host=host, port=port)
-        self.vector_size = 384  # BAAI/bge-small-en-v1.5
+        self.vector_size = settings.embedding_dimension  # BAAI/bge-small-en-v1.5
 
     def ensure_collection(self, collection_name: str) -> None:
         """Create the collection if it does not already exist."""

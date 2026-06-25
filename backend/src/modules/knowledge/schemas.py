@@ -1,6 +1,7 @@
 """Pydantic schemas for Knowledge Intelligence API contracts."""
 
 from pydantic import BaseModel, Field
+from src.core.config import settings
 
 
 class DocumentUploadResponse(BaseModel):
@@ -19,9 +20,11 @@ class SourceChunk(BaseModel):
     score: float
     file_name: str
     page_label: str
+    page_number: int | None = None
     chunk_index: int
     file_type: str | None = None
     chunk_length: int | None = None
+    chunk_id: str | None = None
 
 
 class QueryMetrics(BaseModel):
@@ -31,6 +34,8 @@ class QueryMetrics(BaseModel):
     generation_time_ms: float
     total_time_ms: float
     chunks_retrieved: int
+    average_similarity: float
+    highest_similarity: float
 
 
 class QueryRequest(BaseModel):
@@ -43,7 +48,7 @@ class QueryRequest(BaseModel):
     )
 
     collection_name: str = Field(
-        default="enterprise_docs",
+        default=settings.knowledge_collection,
         description="The Qdrant collection to search.",
     )
 

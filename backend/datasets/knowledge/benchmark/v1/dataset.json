@@ -1,0 +1,107 @@
+[
+  {
+    "id": "DATA_001",
+    "difficulty": "easy",
+    "category": "dataset",
+    "question": "Which dataset contains customer reviews?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  },
+  {
+    "id": "DATA_002",
+    "difficulty": "easy",
+    "category": "dataset",
+    "question": "Which dataset stores payment information?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  },
+  {
+    "id": "DATA_003",
+    "difficulty": "easy",
+    "category": "dataset",
+    "question": "Which table contains seller information?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  },
+  {
+    "id": "DATA_004",
+    "difficulty": "easy",
+    "category": "dataset",
+    "question": "Which dataset contains product information?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  },
+  {
+    "id": "DATA_005",
+    "difficulty": "medium",
+    "category": "dataset",
+    "question": "How are customers linked to orders?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  },
+  {
+    "id": "DATA_006",
+    "difficulty": "medium",
+    "category": "dataset",
+    "question": "Which datasets are required to analyze delivery delays?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  },
+  {
+    "id": "DATA_007",
+    "difficulty": "medium",
+    "category": "dataset",
+    "question": "Which dataset contains review scores?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  },
+  {
+    "id": "DATA_008",
+    "difficulty": "medium",
+    "category": "dataset",
+    "question": "What information is available about products?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  },
+  {
+    "id": "DATA_009",
+    "difficulty": "medium",
+    "category": "dataset",
+    "question": "Which datasets are commonly joined with the orders table?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  },
+  {
+    "id": "DATA_010",
+    "difficulty": "medium",
+    "category": "dataset",
+    "question": "What business information is stored in the customers dataset?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  },
+  {
+    "id": "DATA_011",
+    "difficulty": "hard",
+    "category": "dataset",
+    "question": "Which datasets would you combine to analyze seller performance?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  },
+  {
+    "id": "DATA_012",
+    "difficulty": "hard",
+    "category": "dataset",
+    "question": "Which datasets are needed to calculate customer lifetime value?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  },
+  {
+    "id": "DATA_013",
+    "difficulty": "hard",
+    "category": "dataset",
+    "question": "Which datasets should be used to investigate delayed deliveries and customer satisfaction?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  },
+  {
+    "id": "DATA_014",
+    "difficulty": "hard",
+    "category": "dataset",
+    "question": "Which datasets contain information about freight costs?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  },
+  {
+    "id": "DATA_015",
+    "difficulty": "hard",
+    "category": "dataset",
+    "question": "How would you identify repeat customers using the available datasets?",
+    "expected_documents": ["olist_data_catalog.pdf"]
+  }
+]

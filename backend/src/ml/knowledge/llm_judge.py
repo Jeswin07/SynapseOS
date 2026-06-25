@@ -1,7 +1,7 @@
 """Module for quantitative evaluation of the RAG pipeline metrics."""
 
 import json
-
+from src.core.config import settings
 from src.ml.knowledge.generator import GroqGenerator
 
 
@@ -11,7 +11,7 @@ class RAGEvaluator:
     def __init__(self) -> None:
         """Initializes the judge LLM engine."""
         # Using the 70B model ensures deep reasoning capacity for auditing
-        self.judge = GroqGenerator(model_name="llama-3.3-70b-versatile")
+        self.judge = GroqGenerator(model_name=settings.groq_model)
 
     def evaluate_faithfulness(self, answer: str, context: list[str]) -> float:
         """Calculates faithfulness score (0.0 to 1.0) to detect hallucinations."""

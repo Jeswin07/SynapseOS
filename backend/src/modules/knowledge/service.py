@@ -70,18 +70,24 @@ class KnowledgeService:
 
             chunk_text = node.get_content()
 
+            page_label = str(
+                node.metadata.get(
+                    "page_label",
+                    "1",
+                )
+            )
+
+            page_number = int(page_label)
+
             chunk_metadata.append(
                 {
                     "document_id": document_id,
                     "file_name": file_name,
                     "file_type": file_type,
-                    "page_label": str(
-                        node.metadata.get(
-                            "page_label",
-                            "1",
-                        )
-                    ),
+                    "page_label": page_label,
+                    "page_number": page_number,
                     "chunk_index": index,
+                    "chunk_id": f"{document_id}_chunk_{index:04d}",
                     "chunk_length": len(chunk_text),
                     "uploaded_at": metadata["uploaded_at"],
                 }
@@ -131,10 +137,43 @@ class KnowledgeService:
             top_k=request.top_k,
         )
 
+        MIN_SIMILARITY_SCORE = 0.70
+
+        points = [
+            point
+            for point in retrieval.points
+            if float(point.score) >= MIN_SIMILARITY_SCORE
+        ]
+
+        if not points:
+            points = retrieval.points[:3]
+
+        points.sort(
+            key=lambda point: float(point.score),
+            reverse=True,
+        )
+
+        scores = [
+            float(point.score)
+            for point in points
+        ]
+
+        average_similarity = (
+            round(sum(scores) / len(scores), 4)
+            if scores
+            else 0.0
+        )
+
+        highest_similarity = (
+            round(max(scores), 4)
+            if scores
+            else 0.0
+        )
+
         context: list[str] = []
         sources: list[SourceChunk] = []
 
-        for point in retrieval.points:
+        for point in points:
             payload = point.payload or {}
 
             text = str(payload.get("text", ""))
@@ -147,10 +186,12 @@ class KnowledgeService:
                     score=round(float(point.score), 4),
                     file_name=str(payload.get("file_name", "Unknown")),
                     page_label=str(payload.get("page_label", "1")),
+                    page_number=payload.get("page_number"),
                     chunk_index=payload.get("chunk_index"),
+                    chunk_id=payload.get("chunk_id"),
                     file_type=payload.get("file_type"),
                     chunk_length=payload.get("chunk_length"),
-)
+                )
             )
 
         # ---------------------------------
@@ -184,5 +225,7 @@ class KnowledgeService:
                 generation_time_ms=generation_time_ms,
                 total_time_ms=total_time_ms,
                 chunks_retrieved=len(sources),
+                average_similarity=average_similarity,
+                highest_similarity=highest_similarity,
             ),
         )

@@ -7,7 +7,8 @@ from typing import Any
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core.schema import Document
 from sentence_transformers import SentenceTransformer
-
+from src.core.config import settings
+from src.shared.logging import logger
 from src.ml.knowledge.loaders import DocumentLoader
 
 
@@ -23,31 +24,32 @@ class EmbeddingEngine:
     - Generate embeddings
     """
 
-    _instance: "EmbeddingEngine | None" = None
+    _instance: EmbeddingEngine | None = None
 
     _model: SentenceTransformer
     _splitter: SentenceSplitter
     _loader: DocumentLoader
 
-    MODEL_NAME = "BAAI/bge-small-en-v1.5"
-
-    def __new__(cls) -> "EmbeddingEngine":
+    def __new__(cls) -> EmbeddingEngine:
 
         if cls._instance is None:
 
             cls._instance = super().__new__(cls)
 
-            print(
-                f"Loading embedding model: {cls.MODEL_NAME}"
+            logger.info(
+                "Loading embedding model '%s'.",
+                settings.embedding_model,
             )
 
             cls._instance._model = SentenceTransformer(
-                cls.MODEL_NAME
+                settings.embedding_model
             )
 
             cls._instance._splitter = SentenceSplitter(
-                chunk_size=512,
-                chunk_overlap=50,
+                chunk_size=settings.knowledge_chunk_size,
+                chunk_overlap=settings.knowledge_chunk_overlap,
+                separator="\n",
+                paragraph_separator="\n\n",
             )
 
             cls._instance._loader = DocumentLoader()

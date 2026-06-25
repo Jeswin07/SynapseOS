@@ -26,6 +26,21 @@ class Settings(BaseSettings):
     groq_api_key: str
     groq_model: str = "llama-3.3-70b-versatile"
 
+    # ---------- Knowledge ----------
+    knowledge_collection: str = "enterprise_docs_v3"
+    knowledge_chunk_size: int = 384
+    knowledge_chunk_overlap: int = 64
+    knowledge_top_k: int = 5
+    knowledge_min_score: float = 0.70
+    knowledge_default_search_limit: int = 20
+    # ---------- Embeddings ----------
+    embedding_model: str = "BAAI/bge-small-en-v1.5"
+    embedding_dimension: int = 384
+    # ---------- Generator ----------
+    groq_model: str = "llama-3.3-70b-versatile"
+    generator_temperature: float = 0.1
+    generator_max_tokens: int = 700
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @property

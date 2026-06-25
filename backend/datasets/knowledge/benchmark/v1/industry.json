@@ -1,0 +1,107 @@
+[
+  {
+    "id": "IND_001",
+    "difficulty": "easy",
+    "category": "industry",
+    "question": "What are the major trends shaping Brazilian e-commerce according to the Webshoppers Report?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  },
+  {
+    "id": "IND_002",
+    "difficulty": "easy",
+    "category": "industry",
+    "question": "How has online shopping evolved in Brazil?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  },
+  {
+    "id": "IND_003",
+    "difficulty": "easy",
+    "category": "industry",
+    "question": "What factors are driving the growth of Brazilian e-commerce?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  },
+  {
+    "id": "IND_004",
+    "difficulty": "easy",
+    "category": "industry",
+    "question": "Which product categories experienced significant growth?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  },
+  {
+    "id": "IND_005",
+    "difficulty": "medium",
+    "category": "industry",
+    "question": "What logistics challenges are highlighted in the Webshoppers Report?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  },
+  {
+    "id": "IND_006",
+    "difficulty": "medium",
+    "category": "industry",
+    "question": "How do customer expectations influence e-commerce businesses?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  },
+  {
+    "id": "IND_007",
+    "difficulty": "medium",
+    "category": "industry",
+    "question": "What role does mobile commerce play in the Brazilian e-commerce market?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  },
+  {
+    "id": "IND_008",
+    "difficulty": "medium",
+    "category": "industry",
+    "question": "What purchasing behaviors are discussed in the report?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  },
+  {
+    "id": "IND_009",
+    "difficulty": "medium",
+    "category": "industry",
+    "question": "How does delivery performance affect customer satisfaction?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  },
+  {
+    "id": "IND_010",
+    "difficulty": "medium",
+    "category": "industry",
+    "question": "What opportunities exist for online marketplaces according to the report?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  },
+  {
+    "id": "IND_011",
+    "difficulty": "hard",
+    "category": "industry",
+    "question": "Which strategies can improve customer experience in e-commerce?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  },
+  {
+    "id": "IND_012",
+    "difficulty": "hard",
+    "category": "industry",
+    "question": "How can sellers improve their competitiveness in the Brazilian marketplace?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  },
+  {
+    "id": "IND_013",
+    "difficulty": "hard",
+    "category": "industry",
+    "question": "What business risks are associated with poor logistics performance?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  },
+  {
+    "id": "IND_014",
+    "difficulty": "hard",
+    "category": "industry",
+    "question": "How can organizations use market trends to improve business decision-making?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  },
+  {
+    "id": "IND_015",
+    "difficulty": "hard",
+    "category": "industry",
+    "question": "According to the Webshoppers Report, which business areas should companies prioritize for long-term growth?",
+    "expected_documents": ["webshoppers_report.pdf"]
+  }
+]
