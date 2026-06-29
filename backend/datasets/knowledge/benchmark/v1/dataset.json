@@ -4,6 +4,8 @@
     "difficulty": "easy",
     "category": "dataset",
     "question": "Which dataset contains customer reviews?",
+    "expected_answer": "The dataset containing customer reviews is olist_order_reviews_dataset.csv. It stores customer ratings and textual feedback submitted after order completion. The dataset includes the review identifier, related order ID, review score, review title, review message, review creation date, and seller response timestamp, making it the primary source for customer satisfaction and sentiment analysis.",
+    "expected_pages": ["4", "5"],
     "expected_documents": ["olist_data_catalog.pdf"]
   },
   {
@@ -11,6 +13,8 @@
     "difficulty": "easy",
     "category": "dataset",
     "question": "Which dataset stores payment information?",
+    "expected_answer": "Payment information is stored in olist_order_payments_dataset.csv. This dataset contains payment details for every order, including payment sequence, payment type, number of installments, and payment value. Since orders may contain multiple payment transactions, the dataset supports revenue reporting, payment analytics, installment analysis, and financial dashboards.",
+    "expected_pages": ["3", "4"],
     "expected_documents": ["olist_data_catalog.pdf"]
   },
   {
@@ -18,6 +22,8 @@
     "difficulty": "easy",
     "category": "dataset",
     "question": "Which table contains seller information?",
+    "expected_answer": "Seller information is stored in olist_sellers_dataset.csv. The dataset contains seller identifiers together with ZIP code prefixes, city, and state information. It is intended for seller analytics, marketplace performance analysis, and regional seller reporting, enabling evaluation of seller distribution and top-performing sellers.",
+    "expected_pages": ["8", "9"],
     "expected_documents": ["olist_data_catalog.pdf"]
   },
   {
@@ -25,6 +31,8 @@
     "difficulty": "easy",
     "category": "dataset",
     "question": "Which dataset contains product information?",
+    "expected_answer": "The olist_products_dataset.csv dataset contains product information. It stores metadata describing products available on the marketplace, including product category, title length, description length, number of product images, weight, and physical dimensions. These attributes support product catalog management, inventory analytics, shipping optimization, and category analysis.",
+    "expected_pages": ["5", "6"],
     "expected_documents": ["olist_data_catalog.pdf"]
   },
   {
@@ -32,6 +40,8 @@
     "difficulty": "medium",
     "category": "dataset",
     "question": "How are customers linked to orders?",
+    "expected_answer": "Customers are linked to orders through the customer_id field. In the olist_orders_dataset.csv table, customer_id is a foreign key referencing the customer_id in olist_customers_dataset.csv. This relationship connects each order with the corresponding customer record, allowing customer location and purchasing information to be analyzed together.",
+    "expected_pages": ["1", "7", "13"],
     "expected_documents": ["olist_data_catalog.pdf"]
   },
   {
@@ -39,6 +49,8 @@
     "difficulty": "medium",
     "category": "dataset",
     "question": "Which datasets are required to analyze delivery delays?",
+    "expected_answer": "Delivery delay analysis primarily requires olist_orders_dataset.csv because it contains purchase, carrier, actual delivery, and estimated delivery timestamps. The engineered olist_ml_dataset.csv also includes delivery_days, estimated_delivery_days, and delivery_delay features, making it suitable for analytics, forecasting, and machine learning tasks related to delivery performance.",
+    "expected_pages": ["1", "10", "11", "12"],
     "expected_documents": ["olist_data_catalog.pdf"]
   },
   {
@@ -46,6 +58,8 @@
     "difficulty": "medium",
     "category": "dataset",
     "question": "Which dataset contains review scores?",
+    "expected_answer": "Review scores are available in olist_order_reviews_dataset.csv through the review_score column, which stores customer ratings from 1 to 5. The engineered olist_ml_dataset.csv also includes review_score as a customer satisfaction feature for machine learning, explainable AI, forecasting, and business analytics.",
+    "expected_pages": ["5", "11", "12"],
     "expected_documents": ["olist_data_catalog.pdf"]
   },
   {
@@ -53,6 +67,8 @@
     "difficulty": "medium",
     "category": "dataset",
     "question": "What information is available about products?",
+    "expected_answer": "The products dataset provides product metadata including the product identifier, category name, title length, description length, number of photos, weight, length, height, and width. The engineered machine learning dataset further derives product volume and includes translated category names, enabling shipping analysis, inventory optimization, and category-based analytics.",
+    "expected_pages": ["5", "6", "11"],
     "expected_documents": ["olist_data_catalog.pdf"]
   },
   {
@@ -60,6 +76,8 @@
     "difficulty": "medium",
     "category": "dataset",
     "question": "Which datasets are commonly joined with the orders table?",
+    "expected_answer": "The orders dataset is commonly joined with customers through customer_id and with order items, payments, and reviews through order_id. Additional joins can connect products and sellers through the order items table. The dataset relationship diagram also shows these links, forming the core structure of the Olist data ecosystem.",
+    "expected_pages": ["1", "2", "4", "5", "7", "8", "13"],
     "expected_documents": ["olist_data_catalog.pdf"]
   },
   {
@@ -67,6 +85,8 @@
     "difficulty": "medium",
     "category": "dataset",
     "question": "What business information is stored in the customers dataset?",
+    "expected_answer": "The customers dataset stores customer identifiers and location information, including customer_unique_id, ZIP code prefix, city, and state. These attributes support customer segmentation, regional analysis, geographic reporting, and analyses such as customers by city, customers by state, and regional purchasing behavior.",
+    "expected_pages": ["7", "8"],
     "expected_documents": ["olist_data_catalog.pdf"]
   },
   {
@@ -74,6 +94,8 @@
     "difficulty": "hard",
     "category": "dataset",
     "question": "Which datasets would you combine to analyze seller performance?",
+    "expected_answer": "Seller performance analysis can be performed by combining olist_sellers_dataset.csv with olist_order_items_dataset.csv using seller_id. Additional joins with olist_orders_dataset.csv provide order status and delivery information, while olist_order_reviews_dataset.csv contributes customer feedback. Together these datasets support revenue analysis, seller performance monitoring, fulfillment evaluation, and customer satisfaction assessment.",
+    "expected_pages": ["2", "3", "5", "8", "13"],
     "expected_documents": ["olist_data_catalog.pdf"]
   },
   {
@@ -81,6 +103,8 @@
     "difficulty": "hard",
     "category": "dataset",
     "question": "Which datasets are needed to calculate customer lifetime value?",
+    "expected_answer": "Customer lifetime value can be estimated by combining olist_customers_dataset.csv with olist_orders_dataset.csv through customer_id and linking payment information from olist_order_payments_dataset.csv using order_id. The customer dataset identifies unique customers, while orders and payments provide purchase history and monetary value needed for lifetime value analysis.",
+    "expected_pages": ["1", "3", "4", "7", "13"],
     "expected_documents": ["olist_data_catalog.pdf"]
   },
   {
@@ -88,6 +112,8 @@
     "difficulty": "hard",
     "category": "dataset",
     "question": "Which datasets should be used to investigate delayed deliveries and customer satisfaction?",
+    "expected_answer": "This analysis should combine olist_orders_dataset.csv, which contains delivery and estimated delivery dates, with olist_order_reviews_dataset.csv, which provides customer ratings and review comments linked through order_id. The engineered olist_ml_dataset.csv also includes delivery_delay and review_score features, making it useful for integrated analytics and machine learning.",
+    "expected_pages": ["1", "4", "5", "10", "11", "12"],
     "expected_documents": ["olist_data_catalog.pdf"]
   },
   {
@@ -95,6 +121,8 @@
     "difficulty": "hard",
     "category": "dataset",
     "question": "Which datasets contain information about freight costs?",
+    "expected_answer": "Freight cost information is available in olist_order_items_dataset.csv through the freight_value column. The engineered olist_ml_dataset.csv also contains freight_value and the derived freight_ratio feature, which measures shipping cost relative to product price. These datasets support freight analysis, logistics optimization, and shipping cost evaluation.",
+    "expected_pages": ["3", "10", "11", "12"],
     "expected_documents": ["olist_data_catalog.pdf"]
   },
   {
@@ -102,6 +130,8 @@
     "difficulty": "hard",
     "category": "dataset",
     "question": "How would you identify repeat customers using the available datasets?",
+    "expected_answer": "Repeat customers can be identified by combining olist_customers_dataset.csv with olist_orders_dataset.csv using customer_id. The customer dataset includes customer_unique_id, which uniquely identifies customers across multiple purchases. By linking orders to this identifier, purchase histories can be aggregated to determine customers who have placed more than one order.",
+    "expected_pages": ["1", "7", "8", "13"],
     "expected_documents": ["olist_data_catalog.pdf"]
   }
 ]

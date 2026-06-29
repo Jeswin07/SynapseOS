@@ -21,7 +21,7 @@ class SourceChunk(BaseModel):
     file_name: str
     page_label: str
     page_number: int | None = None
-    chunk_index: int
+    chunk_index: int | None = None
     file_type: str | None = None
     chunk_length: int | None = None
     chunk_id: str | None = None

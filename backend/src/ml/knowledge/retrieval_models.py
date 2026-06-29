@@ -20,6 +20,9 @@ class RetrievedChunk(BaseModel):
 
     rrf_score: float | None = None
 
+    graph_score: float | None = None
+    reranker_score: float | None = None
+
 
 class RetrievalResult(BaseModel):
     """

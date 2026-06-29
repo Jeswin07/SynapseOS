@@ -27,10 +27,12 @@ router = APIRouter(
     tags=["Knowledge Intelligence"],
 )
 
+knowledge_service = KnowledgeService()
+
 
 def get_knowledge_service() -> KnowledgeService:
-    """Dependency injection."""
-    return KnowledgeService()
+    """Return singleton KnowledgeService."""
+    return knowledge_service
 
 
 @router.post(

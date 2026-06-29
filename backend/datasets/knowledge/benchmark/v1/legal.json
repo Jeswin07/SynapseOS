@@ -4,6 +4,8 @@
     "difficulty": "easy",
     "category": "legal",
     "question": "What is the purpose of the Brazilian Consumer Protection Code?",
+    "expected_answer": "The Brazilian Consumer Protection Code is a law of public order and social interest intended to protect consumers, regulate consumption relationships, and promote fairness in the marketplace. It establishes consumer rights, recognizes consumer vulnerability, defines principles for the National Consumer Relations Policy, and provides legal mechanisms that promote transparency, consumer safety, access to justice, and balanced relationships between consumers and suppliers.",
+    "expected_pages": ["4", "5", "6", "7"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   },
   {
@@ -11,6 +13,8 @@
     "difficulty": "easy",
     "category": "legal",
     "question": "What does Article 39 prohibit?",
+    "expected_answer": "Article 39 addresses abusive commercial practices. Among the prohibited practices highlighted in the document are demanding an excessive advantage from consumers and increasing the price of products or services without a justified cause. These provisions aim to prevent unfair commercial conduct that could harm consumers or distort fair market practices.",
+    "expected_pages": ["14", "15"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   },
   {
@@ -18,6 +22,8 @@
     "difficulty": "easy",
     "category": "legal",
     "question": "What rights are guaranteed to consumers under the Consumer Protection Code?",
+    "expected_answer": "The Code guarantees consumers rights including protection of life, health, and safety; education about proper product and service use; clear and accurate product information; protection from misleading and abusive advertising; review of unfair contract terms; prevention and compensation for damages; access to judicial and administrative protection; facilitation of legal defense through possible reversal of the burden of proof; and adequate public services.",
+    "expected_pages": ["8", "9"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   },
   {
@@ -25,6 +31,8 @@
     "difficulty": "easy",
     "category": "legal",
     "question": "What is considered an abusive commercial practice?",
+    "expected_answer": "The Consumer Protection Code considers practices abusive when they unfairly disadvantage consumers or distort fair commercial relationships. Examples described in the document include demanding excessive advantages from consumers, raising prices without just cause, using misleading or abusive advertising, applying coercive or disloyal commercial methods, and imposing abusive contractual terms in the supply of products or services.",
+    "expected_pages": ["9", "14", "15"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   },
   {
@@ -32,6 +40,8 @@
     "difficulty": "medium",
     "category": "legal",
     "question": "What responsibilities do suppliers have towards consumers?",
+    "expected_answer": "Suppliers are expected to provide products and services that meet appropriate standards of quality, safety, durability, and performance. They must supply clear and accurate information about products and services, avoid misleading or abusive commercial practices, encourage quality control and conflict resolution mechanisms, and respect consumer rights established by the National Consumer Relations Policy.",
+    "expected_pages": ["7", "8", "9"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   },
   {
@@ -39,6 +49,8 @@
     "difficulty": "medium",
     "category": "legal",
     "question": "How does the Consumer Protection Code address unfair pricing practices?",
+    "expected_answer": "The Code addresses unfair pricing by identifying abusive commercial practices that harm consumers. Article 39 specifically prohibits suppliers from demanding excessive advantages from consumers and from increasing the prices of products or services without a fair cause. These provisions are intended to promote fair competition and protect consumers' economic interests within the marketplace.",
+    "expected_pages": ["14", "15"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   },
   {
@@ -46,6 +58,8 @@
     "difficulty": "medium",
     "category": "legal",
     "question": "What remedies are available to consumers in case of defective products?",
+    "expected_answer": "The document states that consumers have the right to effective prevention and repair of individual, collective, patrimonial, and moral damages. They are also guaranteed access to judicial and administrative bodies for resolving disputes and may benefit from reversal of the burden of proof when the judge considers the claim probable or the consumer is considered vulnerable.",
+    "expected_pages": ["8", "9"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   },
   {
@@ -53,6 +67,8 @@
     "difficulty": "medium",
     "category": "legal",
     "question": "How does the Consumer Protection Code promote consumer safety?",
+    "expected_answer": "Consumer safety is promoted by recognizing consumer vulnerability and requiring government action to protect consumers effectively. The Code establishes protection of life, health, and safety as a basic consumer right, requires products and services to meet appropriate quality and safety standards, encourages supplier quality control, and supports enforcement through specialized consumer protection institutions.",
+    "expected_pages": ["6", "7", "8", "9"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   },
   {
@@ -60,6 +76,8 @@
     "difficulty": "medium",
     "category": "legal",
     "question": "What role does the judicial system play in consumer protection?",
+    "expected_answer": "The judicial system protects consumer rights by providing access to courts for preventing and repairing damages, reviewing unfair contractual terms, and facilitating consumer claims through possible reversal of the burden of proof. The Code also supports specialized courts, consumer prosecution offices, and other legal institutions dedicated to resolving consumer disputes and enforcing consumer protection laws.",
+    "expected_pages": ["8", "9", "10"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   },
   {
@@ -67,6 +85,8 @@
     "difficulty": "medium",
     "category": "legal",
     "question": "How does the law define consumer protection policy?",
+    "expected_answer": "The National Consumer Relations Policy is defined as the set of principles guiding government actions to protect consumers, improve market conditions, and harmonize consumption relationships. Its objectives include respecting consumer dignity, health, safety, and economic interests while promoting transparency, education, fair competition, quality standards, efficient public services, and continuous monitoring of market changes.",
+    "expected_pages": ["7", "8"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   },
   {
@@ -74,6 +94,8 @@
     "difficulty": "hard",
     "category": "legal",
     "question": "How can businesses ensure compliance with Article 39 when setting prices?",
+    "expected_answer": "Businesses can comply with Article 39 by avoiding abusive commercial practices when determining prices. The document specifically states that suppliers should not demand excessive advantages from consumers or increase prices without a fair cause. Compliance also aligns with the broader principles of good faith, transparency, balance in consumer relationships, and protection of consumers' economic interests established by the Code.",
+    "expected_pages": ["7", "14", "15"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   },
   {
@@ -81,6 +103,8 @@
     "difficulty": "hard",
     "category": "legal",
     "question": "Which consumer rights are most relevant to delayed deliveries in e-commerce?",
+    "expected_answer": "The rights most relevant to delayed deliveries include access to clear and accurate information about products and services, effective prevention and repair of damages, access to judicial and administrative protection, review of unfair contractual terms when appropriate, and the right to adequate and effective public services. These rights help consumers seek remedies when delivery obligations are not fulfilled.",
+    "expected_pages": ["8", "9"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   },
   {
@@ -88,6 +112,8 @@
     "difficulty": "hard",
     "category": "legal",
     "question": "How should an online marketplace respond to consumer complaints under the Consumer Protection Code?",
+    "expected_answer": "According to the principles described in the Code, an online marketplace should provide effective consumer protection by supplying accurate information, respecting consumer rights, avoiding abusive practices, encouraging efficient conflict resolution mechanisms, and ensuring consumers have access to judicial or administrative remedies when disputes arise. The document also emphasizes supplier responsibility for quality and fair treatment within consumption relationships.",
+    "expected_pages": ["7", "8", "9"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   },
   {
@@ -95,6 +121,8 @@
     "difficulty": "hard",
     "category": "legal",
     "question": "What legal obligations do suppliers have regarding product information and transparency?",
+    "expected_answer": "Suppliers are required to provide consumers with appropriate, clear, and accurate information about products and services, including quantity, characteristics, composition, quality, price, and potential risks. The National Consumer Relations Policy also emphasizes education and information for both suppliers and consumers to improve transparency and promote balanced, fair consumption relationships.",
+    "expected_pages": ["7", "8", "9"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   },
   {
@@ -102,6 +130,8 @@
     "difficulty": "hard",
     "category": "legal",
     "question": "How does the Consumer Protection Code balance consumer rights and supplier responsibilities?",
+    "expected_answer": "The Code balances consumer rights and supplier responsibilities by recognizing consumer vulnerability while promoting harmony between consumers and suppliers through good faith and balanced relationships. It protects consumers through legal rights, government action, and judicial mechanisms, while expecting suppliers to provide quality products and services, transparent information, fair commercial practices, and compliance with safety and performance standards.",
+    "expected_pages": ["6", "7", "8", "12", "14"],
     "expected_documents": ["brazilian_cdc_law_8078.pdf"]
   }
 ]

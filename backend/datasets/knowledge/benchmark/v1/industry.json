@@ -4,6 +4,8 @@
     "difficulty": "easy",
     "category": "industry",
     "question": "What are the major trends shaping Brazilian e-commerce according to the Webshoppers Report?",
+    "expected_answer": "The report identifies several major trends shaping Brazilian e-commerce, including strong double-digit market growth, rapid expansion of marketplaces, increasing adoption of mobile commerce, growth of omnichannel retail, rising digital commerce beyond traditional retail, and continued expansion of online tourism and ticketing. The report also highlights increasing consumer demand for convenience, wider product selection, and integrated online and offline shopping experiences.",
+    "expected_pages": ["8", "9", "20", "21", "22", "23"],
     "expected_documents": ["webshoppers_report.pdf"]
   },
   {
@@ -11,6 +13,8 @@
     "difficulty": "easy",
     "category": "industry",
     "question": "How has online shopping evolved in Brazil?",
+    "expected_answer": "According to the report, online shopping in Brazil has evolved through consistent market expansion, increasing numbers of online consumers, broader adoption of smartphones for purchases, rapid marketplace growth, and expansion into tourism, ticketing, and consumer-to-consumer commerce. Consumers increasingly expect multichannel experiences, while digital commerce has become a much larger component of the Brazilian retail landscape.",
+    "expected_pages": ["8", "9", "11", "12", "20", "21"],
     "expected_documents": ["webshoppers_report.pdf"]
   },
   {
@@ -18,6 +22,8 @@
     "difficulty": "easy",
     "category": "industry",
     "question": "What factors are driving the growth of Brazilian e-commerce?",
+    "expected_answer": "The report attributes growth to expanding marketplaces, greater smartphone adoption, increasing mobile purchases, broader product availability, competitive pricing, consumer demand for convenience, and continued development of digital commerce sectors such as tourism and online ticketing. The report also notes that omnichannel retail and integrated shopping experiences contribute to sustained market expansion.",
+    "expected_pages": ["8", "9", "11", "12", "20", "22", "23"],
     "expected_documents": ["webshoppers_report.pdf"]
   },
   {
@@ -25,6 +31,8 @@
     "difficulty": "easy",
     "category": "industry",
     "question": "Which product categories experienced significant growth?",
+    "expected_answer": "The report highlights that Health, Perfumery, and Cosmetics became the leading product category by surpassing Fashion and Accessories in order volume during the first half of 2018. It also reports strong growth in marketplaces for new and used products, tourism services, and digital commerce sectors such as online ticket sales.",
+    "expected_pages": ["9", "20", "21", "22", "26"],
     "expected_documents": ["webshoppers_report.pdf"]
   },
   {
@@ -32,6 +40,8 @@
     "difficulty": "medium",
     "category": "industry",
     "question": "What logistics challenges are highlighted in the Webshoppers Report?",
+    "expected_answer": "The report discusses logistics as an important factor affecting customer experience. It emphasizes the importance of omnichannel fulfillment, integration between online and offline channels, and delivery convenience. It also references disruptions such as the truck drivers' strike, which affected sales during major shopping periods, demonstrating how logistics performance can directly influence e-commerce operations.",
+    "expected_pages": ["8", "9", "27"],
     "expected_documents": ["webshoppers_report.pdf"]
   },
   {
@@ -39,6 +49,8 @@
     "difficulty": "medium",
     "category": "industry",
     "question": "How do customer expectations influence e-commerce businesses?",
+    "expected_answer": "Customer expectations encourage businesses to provide greater convenience, competitive pricing, broad product selection, and seamless omnichannel experiences. The report notes that consumers increasingly value integrated online and offline purchasing, while satisfaction is higher for certain omnichannel delivery methods. Businesses are therefore encouraged to adapt to changing shopping behaviors and emerging digital trends.",
+    "expected_pages": ["8", "9", "21", "22"],
     "expected_documents": ["webshoppers_report.pdf"]
   },
   {
@@ -46,6 +58,8 @@
     "difficulty": "medium",
     "category": "industry",
     "question": "What role does mobile commerce play in the Brazilian e-commerce market?",
+    "expected_answer": "Mobile commerce has become a major growth driver within Brazilian e-commerce. The report states that more than 32% of online transactions occurred through mobile devices during the first half of 2018, with significant increases in both orders and revenue. Growing smartphone adoption has made mobile devices an increasingly important purchasing channel for consumers.",
+    "expected_pages": ["9", "11", "12", "22", "23"],
     "expected_documents": ["webshoppers_report.pdf"]
   },
   {
@@ -53,6 +67,8 @@
     "difficulty": "medium",
     "category": "industry",
     "question": "What purchasing behaviors are discussed in the report?",
+    "expected_answer": "The report describes several purchasing behaviors, including increased smartphone shopping, greater use of marketplaces, demand for convenience, adoption of omnichannel purchasing, growth in purchases of new and used products, and rising participation from first-time online buyers. Consumers are also described as becoming increasingly multichannel and seeking broader product choices and competitive prices.",
+    "expected_pages": ["8", "9", "20", "21", "22", "23"],
     "expected_documents": ["webshoppers_report.pdf"]
   },
   {
@@ -60,6 +76,8 @@
     "difficulty": "medium",
     "category": "industry",
     "question": "How does delivery performance affect customer satisfaction?",
+    "expected_answer": "The report indicates that delivery methods directly influence customer satisfaction. It highlights that omnichannel fulfillment options, such as in-store pickup or collection points, achieved higher satisfaction levels than deliveries handled by transport companies or postal services. Faster, more convenient fulfillment therefore contributes positively to the overall customer experience.",
+    "expected_pages": ["8", "9", "27"],
     "expected_documents": ["webshoppers_report.pdf"]
   },
   {
@@ -67,6 +85,8 @@
     "difficulty": "medium",
     "category": "industry",
     "question": "What opportunities exist for online marketplaces according to the report?",
+    "expected_answer": "The report identifies strong opportunities for marketplaces through continued expansion of B2B, B2C, and C2C commerce. Marketplaces offer consumers broader product variety, competitive pricing, and greater convenience, while providing sellers with scalable platforms that reduce the need to build independent e-commerce infrastructure. Growth is also supported by increasing consumer acceptance of marketplace purchasing.",
+    "expected_pages": ["20", "21", "22", "23"],
     "expected_documents": ["webshoppers_report.pdf"]
   },
   {
@@ -74,6 +94,8 @@
     "difficulty": "hard",
     "category": "industry",
     "question": "Which strategies can improve customer experience in e-commerce?",
+    "expected_answer": "According to the report, organizations can improve customer experience by expanding omnichannel capabilities, offering convenient delivery and pickup options, improving logistics performance, supporting mobile commerce, providing competitive prices and wider product selection through marketplaces, and adapting continuously to changing consumer purchasing behaviors and expectations across digital channels.",
+    "expected_pages": ["8", "9", "12", "21", "22", "27"],
     "expected_documents": ["webshoppers_report.pdf"]
   },
   {
@@ -81,6 +103,8 @@
     "difficulty": "hard",
     "category": "industry",
     "question": "How can sellers improve their competitiveness in the Brazilian marketplace?",
+    "expected_answer": "The report suggests that sellers can strengthen competitiveness by participating in marketplaces, embracing mobile commerce, offering competitive prices, expanding product variety, improving logistics and fulfillment, and responding to evolving consumer preferences. Marketplace platforms also allow sellers to scale operations more efficiently while reaching a broader customer base without building their own e-commerce infrastructure.",
+    "expected_pages": ["12", "21", "22", "23"],
     "expected_documents": ["webshoppers_report.pdf"]
   },
   {
@@ -88,6 +112,8 @@
     "difficulty": "hard",
     "category": "industry",
     "question": "What business risks are associated with poor logistics performance?",
+    "expected_answer": "The report indicates that logistics disruptions can negatively affect sales and customer satisfaction. Events such as the truck drivers' strike impacted important commercial periods, while less convenient delivery methods produced lower satisfaction than omnichannel alternatives. Poor logistics can therefore reduce operational efficiency, limit customer convenience, and weaken the overall shopping experience.",
+    "expected_pages": ["8", "9", "27"],
     "expected_documents": ["webshoppers_report.pdf"]
   },
   {
@@ -95,6 +121,8 @@
     "difficulty": "hard",
     "category": "industry",
     "question": "How can organizations use market trends to improve business decision-making?",
+    "expected_answer": "The report recommends using market trends such as marketplace expansion, mobile commerce growth, omnichannel adoption, customer purchasing behavior, and sector-specific performance to guide strategic decisions. Understanding these trends helps organizations prioritize investments, improve customer experiences, expand digital capabilities, and respond effectively to evolving consumer demand within Brazil's e-commerce market.",
+    "expected_pages": ["4", "8", "9", "20", "21", "22"],
     "expected_documents": ["webshoppers_report.pdf"]
   },
   {
@@ -102,6 +130,8 @@
     "difficulty": "hard",
     "category": "industry",
     "question": "According to the Webshoppers Report, which business areas should companies prioritize for long-term growth?",
+    "expected_answer": "The report suggests prioritizing marketplace participation, mobile commerce, omnichannel integration, logistics improvement, customer convenience, and digital commerce expansion into sectors such as tourism and online ticketing. Companies should also monitor changing consumer behavior and invest in technologies and business models that support integrated multichannel shopping experiences and long-term competitiveness.",
+    "expected_pages": ["8", "9", "12", "20", "21", "22", "23", "27"],
     "expected_documents": ["webshoppers_report.pdf"]
   }
 ]

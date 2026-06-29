@@ -4,6 +4,8 @@
     "difficulty": "medium",
     "category": "cross_document",
     "question": "Which Olist datasets should be analyzed to investigate delivery delays mentioned in the Webshoppers Report?",
+    "expected_answer": "To investigate delivery delays highlighted in the Webshoppers Report, the primary datasets are olist_orders_dataset.csv and olist_ml_dataset.csv. The orders dataset contains purchase, estimated delivery, carrier, and actual delivery dates, while the engineered machine learning dataset includes delivery_days, estimated_delivery_days, and delivery_delay. These datasets allow operational analysis of delivery performance alongside the industry report's discussion of logistics and customer satisfaction.",
+    "expected_pages": ["1", "10", "11", "12", "8", "9", "27"],
     "expected_documents": [
       "olist_data_catalog.pdf",
       "webshoppers_report.pdf"
@@ -14,6 +16,8 @@
     "difficulty": "medium",
     "category": "cross_document",
     "question": "Which Olist datasets can be used to validate customer behavior trends discussed in the Webshoppers Report?",
+    "expected_answer": "Customer behavior trends described in the Webshoppers Report can be validated using olist_orders_dataset.csv, olist_customers_dataset.csv, olist_order_reviews_dataset.csv, olist_order_payments_dataset.csv, and olist_ml_dataset.csv. Together these datasets provide purchasing activity, customer locations, payment behavior, customer satisfaction, delivery performance, and engineered features that support analysis of buying patterns and customer engagement.",
+    "expected_pages": ["1", "4", "5", "7", "10", "11", "12", "8", "9", "11", "12"],
     "expected_documents": [
       "olist_data_catalog.pdf",
       "webshoppers_report.pdf"
@@ -24,6 +28,8 @@
     "difficulty": "medium",
     "category": "cross_document",
     "question": "Which datasets should be combined to study customer satisfaction alongside industry trends?",
+    "expected_answer": "Customer satisfaction can be studied by combining olist_order_reviews_dataset.csv with olist_orders_dataset.csv and the engineered olist_ml_dataset.csv. Review scores, review comments, delivery metrics, and engineered satisfaction features can then be interpreted alongside the Webshoppers Report's discussion of customer experience, omnichannel fulfillment, and the relationship between delivery performance and consumer satisfaction.",
+    "expected_pages": ["1", "4", "5", "10", "11", "12", "8", "9", "27"],
     "expected_documents": [
       "olist_data_catalog.pdf",
       "webshoppers_report.pdf"
@@ -34,6 +40,8 @@
     "difficulty": "medium",
     "category": "cross_document",
     "question": "Which Olist datasets are most relevant for analyzing logistics performance discussed in the industry report?",
+    "expected_answer": "The most relevant datasets are olist_orders_dataset.csv, olist_order_items_dataset.csv, and olist_ml_dataset.csv. These datasets provide delivery timestamps, freight values, shipping deadlines, delivery delay metrics, freight ratios, and logistics-related engineered features. Together they support analysis of delivery efficiency, freight costs, and operational performance discussed throughout the Webshoppers logistics section.",
+    "expected_pages": ["1", "2", "3", "10", "11", "12", "27"],
     "expected_documents": [
       "olist_data_catalog.pdf",
       "webshoppers_report.pdf"
@@ -44,6 +52,8 @@
     "difficulty": "hard",
     "category": "cross_document",
     "question": "Which consumer rights should Olist consider when delivery delays occur?",
+    "expected_answer": "When delivery delays occur, the Consumer Protection Code emphasizes consumers' rights to clear information, effective prevention and repair of damages, access to judicial and administrative protection, and review of unfair contractual terms when appropriate. The Webshoppers Report also stresses the importance of delivery quality and customer satisfaction, indicating that reliable fulfillment and transparent communication are essential for maintaining positive customer experiences.",
+    "expected_pages": ["8", "9", "27", "8", "9"],
     "expected_documents": [
       "webshoppers_report.pdf",
       "brazilian_cdc_law_8078.pdf"
@@ -54,6 +64,8 @@
     "difficulty": "hard",
     "category": "cross_document",
     "question": "How do logistics challenges discussed in the Webshoppers Report relate to consumer protection regulations?",
+    "expected_answer": "The Webshoppers Report identifies logistics performance and delivery convenience as important factors affecting customer satisfaction. The Consumer Protection Code complements this by requiring consumer protection through accurate information, fair treatment, effective remedies, and access to justice when consumer rights are affected. Together the documents highlight that efficient logistics and legal protection both contribute to trustworthy consumer relationships.",
+    "expected_pages": ["8", "9", "27", "7", "8", "9"],
     "expected_documents": [
       "webshoppers_report.pdf",
       "brazilian_cdc_law_8078.pdf"
@@ -64,6 +76,8 @@
     "difficulty": "hard",
     "category": "cross_document",
     "question": "Which Olist datasets should be analyzed to monitor compliance with consumer protection laws for delayed deliveries?",
+    "expected_answer": "Monitoring delayed deliveries requires olist_orders_dataset.csv, olist_order_reviews_dataset.csv, and olist_ml_dataset.csv. Delivery timestamps and delay metrics can be evaluated together with customer reviews and satisfaction scores to assess whether delivery performance aligns with the Consumer Protection Code's emphasis on consumer rights, transparency, and effective protection against harm arising from consumption relationships.",
+    "expected_pages": ["1", "4", "5", "10", "11", "12", "8", "9"],
     "expected_documents": [
       "olist_data_catalog.pdf",
       "brazilian_cdc_law_8078.pdf"
@@ -74,6 +88,8 @@
     "difficulty": "hard",
     "category": "cross_document",
     "question": "How can customer review data help evaluate issues discussed in the Consumer Protection Code?",
+    "expected_answer": "Customer review data provides ratings and written feedback that help identify dissatisfaction related to product quality, service quality, delivery performance, and supplier behavior. These insights support evaluation of issues addressed by the Consumer Protection Code, including consumer protection, transparency, product quality, consumer safety, and effective resolution of problems experienced during consumption relationships.",
+    "expected_pages": ["4", "5", "8", "9"],
     "expected_documents": [
       "olist_data_catalog.pdf",
       "brazilian_cdc_law_8078.pdf"
@@ -84,6 +100,8 @@
     "difficulty": "hard",
     "category": "cross_document",
     "question": "Which datasets should management analyze to understand the relationship between delivery performance and customer complaints?",
+    "expected_answer": "Management should analyze olist_orders_dataset.csv, olist_order_reviews_dataset.csv, olist_order_items_dataset.csv, and olist_ml_dataset.csv. These datasets provide delivery dates, freight information, review scores, customer comments, and engineered delivery metrics. Combined with the Webshoppers Report's logistics findings and the Consumer Protection Code's emphasis on consumer rights, they support comprehensive evaluation of delivery-related complaints.",
+    "expected_pages": ["1", "2", "3", "4", "5", "10", "11", "12", "8", "9", "27", "8", "9"],
     "expected_documents": [
       "olist_data_catalog.pdf",
       "webshoppers_report.pdf",
@@ -95,6 +113,8 @@
     "difficulty": "hard",
     "category": "cross_document",
     "question": "How can Olist improve customer satisfaction while remaining compliant with consumer protection regulations?",
+    "expected_answer": "Olist can improve customer satisfaction by strengthening logistics performance, supporting convenient omnichannel fulfillment, providing accurate product and delivery information, and responding effectively to customer concerns. These actions align with the Consumer Protection Code's requirements for transparency, consumer protection, and fair treatment while reflecting the Webshoppers Report's emphasis on delivery quality and customer experience.",
+    "expected_pages": ["8", "9", "27", "7", "8", "9"],
     "expected_documents": [
       "webshoppers_report.pdf",
       "brazilian_cdc_law_8078.pdf"
@@ -105,6 +125,8 @@
     "difficulty": "hard",
     "category": "cross_document",
     "question": "Which datasets and business indicators should be monitored to reduce delivery-related complaints?",
+    "expected_answer": "Organizations should monitor olist_orders_dataset.csv, olist_order_reviews_dataset.csv, olist_order_items_dataset.csv, and olist_ml_dataset.csv. Important indicators include delivery_delay, delivery_days, estimated_delivery_days, freight_value, freight_ratio, review_score, customer feedback, and order status. These operational measures complement the Webshoppers Report's focus on logistics quality, delivery performance, and customer satisfaction.",
+    "expected_pages": ["1", "2", "3", "4", "5", "10", "11", "12", "8", "9", "27"],
     "expected_documents": [
       "olist_data_catalog.pdf",
       "webshoppers_report.pdf"
@@ -115,6 +137,8 @@
     "difficulty": "hard",
     "category": "cross_document",
     "question": "How can Olist combine business data and legal requirements to improve customer trust?",
+    "expected_answer": "Olist can combine operational data from orders, reviews, payments, and engineered analytics with the Consumer Protection Code's requirements for transparency, consumer safety, accurate information, and effective protection of consumer rights. Monitoring operational performance while ensuring compliance with legal obligations helps strengthen trust, improve service quality, and support long-term customer relationships.",
+    "expected_pages": ["1", "3", "4", "5", "10", "11", "12", "7", "8", "9"],
     "expected_documents": [
       "olist_data_catalog.pdf",
       "brazilian_cdc_law_8078.pdf"
@@ -125,6 +149,8 @@
     "difficulty": "hard",
     "category": "cross_document",
     "question": "How can industry trends be validated using Olist's operational datasets?",
+    "expected_answer": "Industry trends can be validated by comparing Webshoppers market observations with Olist operational datasets covering orders, customers, products, payments, reviews, and the engineered machine learning dataset. Metrics such as order growth, customer behavior, payment patterns, delivery performance, freight costs, and customer satisfaction can be analyzed to determine whether marketplace trends are reflected in operational business data.",
+    "expected_pages": ["1", "3", "4", "5", "7", "10", "11", "12", "8", "9", "20", "21", "22", "23"],
     "expected_documents": [
       "olist_data_catalog.pdf",
       "webshoppers_report.pdf"
@@ -135,6 +161,8 @@
     "difficulty": "hard",
     "category": "cross_document",
     "question": "What business decisions can Olist make by combining operational data, industry insights, and consumer protection regulations?",
+    "expected_answer": "By combining operational datasets with industry trends and consumer protection principles, Olist can prioritize logistics improvements, strengthen customer service, optimize freight performance, improve marketplace operations, enhance transparency, monitor customer satisfaction, and ensure compliance with consumer rights. Together these documents support evidence-based decisions that improve both operational efficiency and customer trust.",
+    "expected_pages": ["1", "2", "3", "4", "5", "10", "11", "12", "8", "9", "20", "21", "22", "7", "8", "9"],
     "expected_documents": [
       "olist_data_catalog.pdf",
       "webshoppers_report.pdf",
@@ -146,6 +174,8 @@
     "difficulty": "hard",
     "category": "cross_document",
     "question": "Based on the Data Catalog, Webshoppers Report, and Consumer Protection Code, what information should executives review before improving the delivery experience?",
+    "expected_answer": "Executives should review operational delivery metrics including delivery dates, delivery delays, freight costs, order status, customer reviews, review scores, and engineered logistics features from the Olist datasets. These operational indicators should be considered together with the Webshoppers Report's findings on logistics, omnichannel fulfillment, and customer satisfaction, while ensuring that improvements remain aligned with the Consumer Protection Code's requirements for transparency, consumer protection, and fair treatment.",
+    "expected_pages": ["1", "2", "3", "4", "5", "10", "11", "12", "8", "9", "27", "7", "8", "9"],
     "expected_documents": [
       "olist_data_catalog.pdf",
       "webshoppers_report.pdf",

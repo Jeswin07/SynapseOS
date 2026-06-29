@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import time
 from collections import defaultdict
-
+import hashlib
 from src.ml.knowledge.bm25 import BM25Retriever
 from src.ml.knowledge.retrieval_models import (
     RetrievedChunk,
@@ -120,7 +120,7 @@ class HybridRetriever:
 
         chunks: dict[str, RetrievedChunk] = {}
 
-        # Dense
+    # Dense Retrieval
         for rank, point in enumerate(dense_results):
 
             payload = point.payload
@@ -138,7 +138,7 @@ class HybridRetriever:
                 rrf_score=rrf_score,
             )
 
-        # BM25
+    # BM25 Retrieval
         for rank, doc in enumerate(bm25_results):
 
             payload = doc["payload"]
@@ -157,6 +157,7 @@ class HybridRetriever:
                     bm25_score=doc["bm25_score"],
                     rrf_score=rrf_score,
                 )
+
             else:
 
                 chunks[chunk_id].bm25_score = doc["bm25_score"]
@@ -169,6 +170,8 @@ class HybridRetriever:
 
         results: list[RetrievedChunk] = []
 
+        seen: set[tuple[str, int | None, str]] = set()
+
         for chunk_id, rrf_score in ranked:
 
             chunk = chunks[chunk_id]
@@ -179,6 +182,19 @@ class HybridRetriever:
                 chunk.score = chunk.dense_score
             else:
                 chunk.score = 0.0
+
+            payload = chunk.payload
+
+            text = payload.get("text", "").strip()
+
+            dedup_key = hashlib.sha1(
+                text.encode("utf-8")
+            ).hexdigest()
+
+            if dedup_key in seen:
+                continue
+
+            seen.add(dedup_key)
 
             results.append(chunk)
 

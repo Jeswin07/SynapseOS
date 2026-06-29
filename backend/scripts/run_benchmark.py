@@ -1,8 +1,9 @@
-"""Runs the complete retrieval benchmark."""
+"""Runs the Knowledge Retrieval benchmark."""
 
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from pathlib import Path
 
 from src.ml.knowledge.evaluation.benchmark_loader import (
@@ -12,12 +13,24 @@ from src.ml.knowledge.evaluation.evaluator import (
     KnowledgeEvaluator,
 )
 
+# ---------------------------------------------------------
+# Benchmark Configuration
+# ---------------------------------------------------------
+
+PIPELINE_NAME = "Hybrid + CrossEncoder"
+
+BENCHMARK_VERSION = "v1"
+
+COLLECTION_NAME = "enterprise_docs_v5"
+
+DOCUMENT_COUNT = 3
+
 BENCHMARK_DIR = Path(
-    "datasets/knowledge/benchmark/v1"
+    "datasets/knowledge/benchmark/v1",
 )
 
 OUTPUT_DIR = Path(
-    "artifacts/evaluation"
+    "artifacts/evaluation",
 )
 
 OUTPUT_DIR.mkdir(
@@ -34,101 +47,114 @@ BENCHMARK_FILES = [
 
 
 def main() -> None:
+    """
+    Execute the complete retrieval benchmark.
+    """
 
     loader = BenchmarkLoader()
+
     evaluator = KnowledgeEvaluator()
 
     overall_results = []
 
-    precision = []
-    recall = []
-    hit_rate = []
-    mrr = []
-    similarity = []
-    latency = []
+    precision_scores = []
+
+    recall_scores = []
+
+    hit_rates = []
+
+    mrr_scores = []
+
+    similarities = []
+
+    latencies = []
 
     for benchmark in BENCHMARK_FILES:
 
         benchmark_path = BENCHMARK_DIR / benchmark
 
-        cases = loader.load(benchmark_path)
-
         print(f"\nRunning {benchmark}")
+
+        cases = loader.load(benchmark_path)
 
         for case in cases:
 
             result = evaluator.evaluate(case)
 
             overall_results.append(
-                result.model_dump()
+                result.model_dump(),
             )
 
-            precision.append(
-                result.metrics.precision_at_k
+            precision_scores.append(
+                result.metrics.precision_at_k,
             )
 
-            recall.append(
-                result.metrics.recall_at_k
+            recall_scores.append(
+                result.metrics.recall_at_k,
             )
 
-            hit_rate.append(
-                result.metrics.hit_rate
+            hit_rates.append(
+                result.metrics.hit_rate,
             )
 
-            mrr.append(
-                result.metrics.mrr
+            mrr_scores.append(
+                result.metrics.mrr,
             )
 
-            similarity.append(
-                result.metrics.average_similarity
+            similarities.append(
+                result.metrics.average_similarity,
             )
 
-            latency.append(
-                result.metrics.retrieval_latency_ms
+            latencies.append(
+                result.metrics.retrieval_latency_ms,
             )
 
-            print(
-                f"✓ {case.id}"
-            )
+            print(f"✓ {case.id}")
 
     report = {
-        "retriever": "dense",
-        "collection": "enterprise_docs_v3",
-        "documents": 3,
+        "benchmark_version": BENCHMARK_VERSION,
+        "created_at": datetime.now().isoformat(),
+        "pipeline": PIPELINE_NAME,
+        "collection": COLLECTION_NAME,
+        "documents": DOCUMENT_COUNT,
         "questions": len(overall_results),
         "precision_at_k": round(
-            sum(precision) / len(precision),
+            sum(precision_scores) / len(precision_scores),
             4,
         ),
         "recall_at_k": round(
-            sum(recall) / len(recall),
+            sum(recall_scores) / len(recall_scores),
             4,
         ),
         "hit_rate": round(
-            sum(hit_rate) / len(hit_rate),
+            sum(hit_rates) / len(hit_rates),
             4,
         ),
         "mrr": round(
-            sum(mrr) / len(mrr),
+            sum(mrr_scores) / len(mrr_scores),
             4,
         ),
         "average_similarity": round(
-            sum(similarity) / len(similarity),
+            sum(similarities) / len(similarities),
             4,
         ),
         "average_latency_ms": round(
-            sum(latency) / len(latency),
+            sum(latencies) / len(latencies),
             2,
         ),
         "results": overall_results,
     }
 
-    output = OUTPUT_DIR / "basic_rag_v1.json"
+    output_file = (
+        OUTPUT_DIR
+        / "hybrid_reranker_v1.json"
+    )
 
-    with output.open(
+    with output_file.open(
         "w",
         encoding="utf-8",
     ) as file:
+
         json.dump(
             report,
             file,
@@ -136,16 +162,22 @@ def main() -> None:
         )
 
     print("\n===================================")
-    print("Benchmark Complete")
+    print("Knowledge Benchmark Complete")
     print("===================================")
+    print(f"Pipeline             : {PIPELINE_NAME}")
+    print(f"Collection           : {COLLECTION_NAME}")
     print(f"Questions            : {len(overall_results)}")
     print(f"Precision@K          : {report['precision_at_k']}")
     print(f"Recall@K             : {report['recall_at_k']}")
     print(f"Hit Rate             : {report['hit_rate']}")
     print(f"MRR                  : {report['mrr']}")
-    print(f"Average Similarity   : {report['average_similarity']}")
-    print(f"Average Latency (ms) : {report['average_latency_ms']}")
-    print(f"\nSaved to {output}")
+    print(
+        f"Average Similarity   : {report['average_similarity']}"
+    )
+    print(
+        f"Average Latency (ms) : {report['average_latency_ms']}"
+    )
+    print(f"\nSaved to {output_file}")
 
 
 if __name__ == "__main__":

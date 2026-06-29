@@ -1,0 +1,71 @@
+{
+    "pipeline": "Generation Evaluation",
+    "questions": 4,
+    "faithfulness": 0.6,
+    "answer_correctness": 0.8,
+    "answer_relevancy": 1.0,
+    "semantic_similarity": 0.8379,
+    "context_recall": 0.3,
+    "results": [
+        {
+            "id": "DATA_001",
+            "question": "Which dataset contains customer reviews?",
+            "metrics": {
+                "faithfulness": 1.0,
+                "answer_correctness": 0.9,
+                "answer_relevancy": 1.0,
+                "semantic_similarity": 0.8611,
+                "context_recall": 0.0,
+                "faithfulness_reason": "Every factual claim in the generated answer is fully supported by the retrieved context.",
+                "correctness_reason": "The generated answer accurately identifies the dataset containing customer reviews as olist_order_reviews_dataset.csv and correctly describes its contents, including customer ratings and textual feedback. However, it lacks some details present in the reference answer, such as review creation date and seller response timestamp.",
+                "relevancy_reason": "The answer directly states that the olist_order_reviews_dataset.csv contains customer reviews, which is a clear and direct response to the user's question.",
+                "recall_reason": "The retrieved context does not explicitly mention a dataset named 'olist_order_reviews_dataset.csv' or any other specific dataset that contains customer reviews, although it describes the structure and content of reviews."
+            }
+        },
+        {
+            "id": "LEGAL_001",
+            "question": "What is the purpose of the Brazilian Consumer Protection Code?",
+            "metrics": {
+                "faithfulness": 0.6,
+                "answer_correctness": 0.8,
+                "answer_relevancy": 1.0,
+                "semantic_similarity": 0.8064,
+                "context_recall": 0.2,
+                "faithfulness_reason": "While the generated answer captures the general purpose of the Brazilian Consumer Protection Code, some claims are not fully supported by the retrieved context, such as the creation of Consumer Attendment Services and specific details about transforming the consumer into a citizen with rights and awareness.",
+                "correctness_reason": "The generated answer accurately captures the essence of the Brazilian Consumer Protection Code's purpose, including protecting consumer rights, promoting fairness, and transforming consumers into aware citizens. However, it lacks specific details about recognizing consumer vulnerability, defining principles for the National Consumer Relations Policy, and providing legal mechanisms for transparency and access to justice, as mentioned in the reference answer.",
+                "relevancy_reason": "The answer directly addresses the user's question by clearly stating the purpose of the Brazilian Consumer Protection Code.",
+                "recall_reason": "The retrieved context does not provide a clear and direct answer to the question about the purpose of the Brazilian Consumer Protection Code, lacking specific details on its objectives and principles."
+            }
+        },
+        {
+            "id": "IND_001",
+            "question": "What are the major trends shaping Brazilian e-commerce according to the Webshoppers Report?",
+            "metrics": {
+                "faithfulness": 0.0,
+                "answer_correctness": 0.6,
+                "answer_relevancy": 1.0,
+                "semantic_similarity": 0.808,
+                "context_recall": 0.2,
+                "faithfulness_reason": "The generated answer contains several factual claims that are not supported by the retrieved context, such as the growth of m-commerce, the market size of digital commerce, and the expected growth of the e-commerce market in 2018. The context only mentions the growth of digital commerce, the rise of marketplaces, and the number of consumers who made purchases online, but does not provide specific data or statistics to support the claims made in the generated answer.",
+                "correctness_reason": "The generated answer correctly identifies some major trends shaping Brazilian e-commerce, such as the growth of digital commerce, increasing adoption of m-commerce, and the rise of marketplaces. However, it misses other key trends mentioned in the reference answer, including strong double-digit market growth, growth of omnichannel retail, rising digital commerce beyond traditional retail, and continued expansion of online tourism and ticketing.",
+                "relevancy_reason": "The answer directly addresses the user's question by providing specific trends and data from the Webshoppers Report that are shaping Brazilian e-commerce.",
+                "recall_reason": "The retrieved context provides some general information about the Webshoppers report and Brazilian e-commerce, but it does not contain sufficient specific details to completely answer the question about the major trends shaping Brazilian e-commerce."
+            }
+        },
+        {
+            "id": "CROSS_001",
+            "question": "Which Olist datasets should be analyzed to investigate delivery delays mentioned in the Webshoppers Report?",
+            "metrics": {
+                "faithfulness": 0.8,
+                "answer_correctness": 0.9,
+                "answer_relevancy": 1.0,
+                "semantic_similarity": 0.8761,
+                "context_recall": 0.8,
+                "faithfulness_reason": "Most factual claims in the generated answer are supported by the retrieved context, such as the existence of order status, purchase timestamp, and delivery dates in olist_orders_dataset.csv. However, the context does not explicitly mention the Webshoppers Report or the specific columns order_delivered_customer_date and order_estimated_delivery_date, which reduces the score.",
+                "correctness_reason": "The generated answer correctly identifies the olist_orders_dataset.csv and olist_ml_dataset.csv as the primary datasets for investigating delivery delays, and provides relevant details about the columns and features in these datasets. However, it lacks specific mention of 'delivery_days', 'estimated_delivery_days', and 'delivery_delay' features in the olist_ml_dataset.csv, which are present in the reference answer.",
+                "relevancy_reason": "The answer directly addresses the user's question by specifying the Olist datasets (olist_orders_dataset.csv and olist_ml_dataset.csv) that should be analyzed to investigate delivery delays.",
+                "recall_reason": "The retrieved context provides information about the available datasets, their relationships, and important columns, which is relevant to investigating delivery delays. However, it does not explicitly mention the Webshoppers Report or the specific datasets required to analyze delivery delays, which are olist_orders_dataset.csv and olist_ml_dataset.csv."
+            }
+        }
+    ]
+}

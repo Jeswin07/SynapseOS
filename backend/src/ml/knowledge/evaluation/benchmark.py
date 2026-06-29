@@ -1,89 +1,178 @@
-"""Benchmark runner for Knowledge RAG."""
+"""Runs the retrieval benchmark."""
 
 from __future__ import annotations
 
-from src.ml.knowledge.evaluation.evaluator import KnowledgeEvaluator
-from src.ml.knowledge.evaluation.schemas import (
-    BenchmarkResult,
-    EvaluationCase,
-    EvaluationResult,
+import json
+from pathlib import Path
+
+from src.ml.knowledge.evaluation.benchmark_loader import (
+    BenchmarkLoader,
+)
+from src.ml.knowledge.evaluation.evaluator import (
+    KnowledgeEvaluator,
 )
 
+BENCHMARK_DIR = Path(
+    "datasets/knowledge/benchmark/v1"
+)
 
-class KnowledgeBenchmark:
-    """
-    Runs multiple evaluation cases and aggregates results.
-    """
+OUTPUT_DIR = Path(
+    "artifacts/evaluation"
+)
 
-    def __init__(self) -> None:
-        self.evaluator = KnowledgeEvaluator()
+OUTPUT_DIR.mkdir(
+    parents=True,
+    exist_ok=True,
+)
 
-    def run(
-        self,
-        cases: list[EvaluationCase],
-    ) -> BenchmarkResult:
+BENCHMARK_FILES = [
+    "dataset.json",
+    "legal.json",
+    "industry.json",
+    "cross_document.json",
+]
 
-        results: list[EvaluationResult] = []
 
-        if not cases:
-            return BenchmarkResult(
-                total_cases=0,
-                average_precision_at_k=0.0,
-                average_recall_at_k=0.0,
-                average_hit_rate=0.0,
-                average_mrr=0.0,
-                average_similarity=0.0,
-                average_latency_ms=0.0,
-                results=[],
-            )
+def main() -> None:
 
-        precision_scores = []
-        recall_scores = []
-        hit_rates = []
-        mrr_scores = []
-        similarities = []
-        latencies = []
+    loader = BenchmarkLoader()
+    evaluator = KnowledgeEvaluator()
+
+    overall_results = []
+
+    precision = []
+    recall = []
+    hit_rate = []
+    mrr = []
+    similarity = []
+    latency = []
+
+    for benchmark in BENCHMARK_FILES:
+
+        benchmark_path = BENCHMARK_DIR / benchmark
+
+        cases = loader.load(
+            benchmark_path,
+        )
+
+        print(f"\nRunning {benchmark}")
 
         for case in cases:
 
-            result = self.evaluator.evaluate(case)
+            result = evaluator.evaluate(case)
 
-            results.append(result)
+            overall_results.append(
+                result.model_dump()
+            )
 
-            metrics = result.metrics
+            precision.append(
+                result.metrics.precision_at_k
+            )
 
-            precision_scores.append(metrics.precision_at_k)
-            recall_scores.append(metrics.recall_at_k)
-            hit_rates.append(metrics.hit_rate)
-            mrr_scores.append(metrics.mrr)
-            similarities.append(metrics.average_similarity)
-            latencies.append(metrics.retrieval_latency_ms)
+            recall.append(
+                result.metrics.recall_at_k
+            )
 
-        return BenchmarkResult(
-            total_cases=len(results),
-            average_precision_at_k=round(
-                sum(precision_scores) / len(precision_scores),
-                4,
-            ),
-            average_recall_at_k=round(
-                sum(recall_scores) / len(recall_scores),
-                4,
-            ),
-            average_hit_rate=round(
-                sum(hit_rates) / len(hit_rates),
-                4,
-            ),
-            average_mrr=round(
-                sum(mrr_scores) / len(mrr_scores),
-                4,
-            ),
-            average_similarity=round(
-                sum(similarities) / len(similarities),
-                4,
-            ),
-            average_latency_ms=round(
-                sum(latencies) / len(latencies),
-                2,
-            ),
-            results=results,
+            hit_rate.append(
+                result.metrics.hit_rate
+            )
+
+            mrr.append(
+                result.metrics.mrr
+            )
+
+            similarity.append(
+                result.metrics.average_similarity
+            )
+
+            latency.append(
+                result.metrics.retrieval_latency_ms
+            )
+
+            print(
+                f"✓ {case.id}"
+            )
+
+    report = {
+        "pipeline": "Hybrid + CrossEncoder",
+        "collection": "enterprise_docs_v5",
+        "questions": len(overall_results),
+        "precision_at_k": round(
+            sum(precision) / len(precision),
+            4,
+        ),
+        "recall_at_k": round(
+            sum(recall) / len(recall),
+            4,
+        ),
+        "hit_rate": round(
+            sum(hit_rate) / len(hit_rate),
+            4,
+        ),
+        "mrr": round(
+            sum(mrr) / len(mrr),
+            4,
+        ),
+        "average_similarity": round(
+            sum(similarity) / len(similarity),
+            4,
+        ),
+        "average_latency_ms": round(
+            sum(latency) / len(latency),
+            2,
+        ),
+        "results": overall_results,
+    }
+
+    output = (
+        OUTPUT_DIR
+        / "hybrid_reranker_v1.json"
+    )
+
+    with output.open(
+        "w",
+        encoding="utf-8",
+    ) as file:
+
+        json.dump(
+            report,
+            file,
+            indent=4,
         )
+
+    print("\n===================================")
+    print("Knowledge Benchmark Complete")
+    print("===================================")
+    print(
+        f"Pipeline             : {report['pipeline']}"
+    )
+    print(
+        f"Collection           : {report['collection']}"
+    )
+    print(
+        f"Questions            : {report['questions']}"
+    )
+    print(
+        f"Precision@K          : {report['precision_at_k']}"
+    )
+    print(
+        f"Recall@K             : {report['recall_at_k']}"
+    )
+    print(
+        f"Hit Rate             : {report['hit_rate']}"
+    )
+    print(
+        f"MRR                  : {report['mrr']}"
+    )
+    print(
+        f"Average Similarity   : {report['average_similarity']}"
+    )
+    print(
+        f"Average Latency (ms) : {report['average_latency_ms']}"
+    )
+
+    print(f"\nSaved to {output}")
+
+
+if __name__ == "__main__":
+    main()

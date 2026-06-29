@@ -7,24 +7,19 @@ from pydantic import BaseModel, Field
 
 class EvaluationCase(BaseModel):
     """
-    One benchmark example.
+    One benchmark evaluation case.
     """
-
-    question: str = Field(...)
-
-    expected_documents: list[str] = Field(default_factory=list)
-
-    expected_pages: list[str] = Field(default_factory=list)
-
-    collection_name: str = Field(
-        default="enterprise_docs_v2",
+    id: str
+    difficulty: str
+    category: str
+    question: str
+    expected_documents: list[str]
+    expected_answer: str
+    collection_name: str = "enterprise_docs_v5"
+    top_k: int = 5
+    expected_pages: list[str] = Field(
+        default_factory=list,
     )
-
-    top_k: int = Field(
-        default=5,
-        ge=1,
-    )
-
 
 class EvaluationMetrics(BaseModel):
     """
@@ -55,13 +50,13 @@ class EvaluationResult(BaseModel):
 
     retrieved_documents: list[str]
 
-    retrieved_chunk_ids: list[str] = []
+    retrieved_chunk_ids: list[str] = Field(default_factory=list)
 
     retrieved_pages: list[str]
 
     metrics: EvaluationMetrics
 
-    similarities: list[float] = []
+    similarities: list[float] = Field(default_factory=list)
 
 
 class BenchmarkResult(BaseModel):
@@ -85,11 +80,3 @@ class BenchmarkResult(BaseModel):
 
     results: list[EvaluationResult]
 
-class EvaluationCase(BaseModel):
-    id: str
-    difficulty: str
-    category: str
-    question: str
-    expected_documents: list[str]
-    collection_name: str = "enterprise_docs_v3"
-    top_k: int = 5

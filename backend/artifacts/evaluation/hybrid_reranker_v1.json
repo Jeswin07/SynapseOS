@@ -1,0 +1,2413 @@
+{
+    "pipeline": "Hybrid + CrossEncoder",
+    "collection": "enterprise_docs_v5",
+    "questions": 60,
+    "precision_at_k": 0.1867,
+    "recall_at_k": 0.7694,
+    "hit_rate": 0.8833,
+    "mrr": 0.8667,
+    "average_similarity": -3.7758,
+    "average_latency_ms": 100.51,
+    "results": [
+        {
+            "question": "Which dataset contains customer reviews?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0004",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0003",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0006"
+            ],
+            "retrieved_pages": [
+                "13",
+                "5",
+                "4",
+                "1",
+                "7"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": 0.9316,
+                "highest_similarity": 4.7025,
+                "retrieval_latency_ms": 956.84
+            },
+            "similarities": [
+                4.702502250671387,
+                3.062424659729004,
+                0.5053306818008423,
+                -1.4115374088287354,
+                -2.200908660888672
+            ]
+        },
+        {
+            "question": "Which dataset stores payment information?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0003",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0002",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0001"
+            ],
+            "retrieved_pages": [
+                "13",
+                "4",
+                "1",
+                "3",
+                "2"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -0.7141,
+                "highest_similarity": 1.4777,
+                "retrieval_latency_ms": 56.85
+            },
+            "similarities": [
+                1.4776685237884521,
+                0.6593839526176453,
+                -0.8012081384658813,
+                -1.440903663635254,
+                -3.4652209281921387
+            ]
+        },
+        {
+            "question": "Which table contains seller information?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0002",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0008",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0007",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0004"
+            ],
+            "retrieved_pages": [
+                "3",
+                "13",
+                "9",
+                "8",
+                "5"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -2.6128,
+                "highest_similarity": -0.8582,
+                "retrieval_latency_ms": 96.45
+            },
+            "similarities": [
+                -0.8582323789596558,
+                -1.3332747220993042,
+                -1.4885767698287964,
+                -2.7695817947387695,
+                -6.614404678344727
+            ]
+        },
+        {
+            "question": "Which dataset contains product information?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0002",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0006",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0001",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0004"
+            ],
+            "retrieved_pages": [
+                "13",
+                "3",
+                "7",
+                "2",
+                "5"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -0.615,
+                "highest_similarity": 2.0626,
+                "retrieval_latency_ms": 91.2
+            },
+            "similarities": [
+                2.0626206398010254,
+                0.14774584770202637,
+                -1.094566822052002,
+                -1.133067011833191,
+                -3.0575504302978516
+            ]
+        },
+        {
+            "question": "How are customers linked to orders?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0006",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0001",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0003",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0002"
+            ],
+            "retrieved_pages": [
+                "7",
+                "2",
+                "13",
+                "4",
+                "3"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -3.1951,
+                "highest_similarity": 0.5404,
+                "retrieval_latency_ms": 90.58
+            },
+            "similarities": [
+                0.5403732657432556,
+                -3.0478155612945557,
+                -3.368734836578369,
+                -3.7428178787231445,
+                -6.356698513031006
+            ]
+        },
+        {
+            "question": "Which datasets are required to analyze delivery delays?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0001",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0002",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012"
+            ],
+            "retrieved_pages": [
+                "2",
+                "10",
+                "1",
+                "3",
+                "13"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -4.7842,
+                "highest_similarity": -0.5222,
+                "retrieval_latency_ms": 71.84
+            },
+            "similarities": [
+                -0.522187352180481,
+                -1.7940056324005127,
+                -4.526981353759766,
+                -8.171764373779297,
+                -8.906133651733398
+            ]
+        },
+        {
+            "question": "Which dataset contains review scores?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0004",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0003",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009"
+            ],
+            "retrieved_pages": [
+                "5",
+                "13",
+                "4",
+                "1",
+                "10"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -3.7116,
+                "highest_similarity": 2.4708,
+                "retrieval_latency_ms": 92.47
+            },
+            "similarities": [
+                2.470792531967163,
+                -1.1292716264724731,
+                -4.45445442199707,
+                -7.673022747039795,
+                -7.771998405456543
+            ]
+        },
+        {
+            "question": "What information is available about products?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0085",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0086",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0090",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0044",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0087"
+            ],
+            "retrieved_pages": [
+                "43",
+                "43",
+                "45",
+                "22",
+                "44"
+            ],
+            "metrics": {
+                "precision_at_k": 0.0,
+                "recall_at_k": 0.0,
+                "hit_rate": 0.0,
+                "mrr": 0.0,
+                "average_similarity": -3.0625,
+                "highest_similarity": -1.7323,
+                "retrieval_latency_ms": 83.47
+            },
+            "similarities": [
+                -1.7323107719421387,
+                -2.538057565689087,
+                -2.778977870941162,
+                -3.875490188598633,
+                -4.387827396392822
+            ]
+        },
+        {
+            "question": "Which datasets are commonly joined with the orders table?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0001",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0002"
+            ],
+            "retrieved_pages": [
+                "13",
+                "1",
+                "2",
+                "10",
+                "3"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -1.5441,
+                "highest_similarity": 0.4061,
+                "retrieval_latency_ms": 56.58
+            },
+            "similarities": [
+                0.4061274528503418,
+                -1.191329002380371,
+                -1.5014461278915405,
+                -2.415292978286743,
+                -3.018372058868408
+            ]
+        },
+        {
+            "question": "What business information is stored in the customers dataset?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0006",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0007"
+            ],
+            "retrieved_pages": [
+                "13",
+                "10",
+                "7",
+                "1",
+                "8"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -0.0906,
+                "highest_similarity": 1.2728,
+                "retrieval_latency_ms": 53.19
+            },
+            "similarities": [
+                1.2727863788604736,
+                0.15500977635383606,
+                0.09714145958423615,
+                -0.7250863313674927,
+                -1.2530181407928467
+            ]
+        },
+        {
+            "question": "Which datasets would you combine to analyze seller performance?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0008",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0002",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0004"
+            ],
+            "retrieved_pages": [
+                "9",
+                "3",
+                "10",
+                "13",
+                "5"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -0.1478,
+                "highest_similarity": 2.3656,
+                "retrieval_latency_ms": 115.24
+            },
+            "similarities": [
+                2.365586757659912,
+                0.1691271960735321,
+                -0.5726297497749329,
+                -1.2382124662399292,
+                -1.462937593460083
+            ]
+        },
+        {
+            "question": "Which datasets are needed to calculate customer lifetime value?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0003",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0006"
+            ],
+            "retrieved_pages": [
+                "1",
+                "10",
+                "13",
+                "4",
+                "7"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -6.6882,
+                "highest_similarity": -4.8778,
+                "retrieval_latency_ms": 96.22
+            },
+            "similarities": [
+                -4.877831935882568,
+                -6.083444595336914,
+                -6.309147834777832,
+                -7.259507179260254,
+                -8.911205291748047
+            ]
+        },
+        {
+            "question": "Which datasets should be used to investigate delayed deliveries and customer satisfaction?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0001",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0010",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0004"
+            ],
+            "retrieved_pages": [
+                "2",
+                "11",
+                "1",
+                "10",
+                "5"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -2.2611,
+                "highest_similarity": 0.932,
+                "retrieval_latency_ms": 105.01
+            },
+            "similarities": [
+                0.9320064187049866,
+                -2.579315423965454,
+                -2.8893556594848633,
+                -3.0125489234924316,
+                -3.756502151489258
+            ]
+        },
+        {
+            "question": "Which datasets contain information about freight costs?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0002",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0011",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000"
+            ],
+            "retrieved_pages": [
+                "3",
+                "12",
+                "13",
+                "10",
+                "1"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -3.5841,
+                "highest_similarity": 0.8317,
+                "retrieval_latency_ms": 91.47
+            },
+            "similarities": [
+                0.8316561579704285,
+                -2.60558819770813,
+                -4.33015251159668,
+                -5.665348529815674,
+                -6.151205062866211
+            ]
+        },
+        {
+            "question": "How would you identify repeat customers using the available datasets?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0001",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0007"
+            ],
+            "retrieved_pages": [
+                "13",
+                "1",
+                "10",
+                "2",
+                "8"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -6.4748,
+                "highest_similarity": -4.8083,
+                "retrieval_latency_ms": 93.12
+            },
+            "similarities": [
+                -4.808285713195801,
+                -4.90009880065918,
+                -6.529133319854736,
+                -7.906870365142822,
+                -8.229511260986328
+            ]
+        },
+        {
+            "question": "What is the purpose of the Brazilian Consumer Protection Code?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0060",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0113",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0003",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0132",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0059"
+            ],
+            "retrieved_pages": [
+                "30",
+                "57",
+                "3",
+                "66",
+                "30"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": 4.5757,
+                "highest_similarity": 6.0529,
+                "retrieval_latency_ms": 56.4
+            },
+            "similarities": [
+                6.052872180938721,
+                4.408066749572754,
+                4.212257385253906,
+                4.120272159576416,
+                4.085231781005859
+            ]
+        },
+        {
+            "question": "What does Article 39 prohibit?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0030",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0027",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0005",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0019",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0032"
+            ],
+            "retrieved_pages": [
+                "15",
+                "13",
+                "4",
+                "10",
+                "16"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -4.8786,
+                "highest_similarity": 1.2622,
+                "retrieval_latency_ms": 103.41
+            },
+            "similarities": [
+                1.2621710300445557,
+                -5.003996849060059,
+                -5.99990177154541,
+                -6.709409713745117,
+                -7.941763401031494
+            ]
+        },
+        {
+            "question": "What rights are guaranteed to consumers under the Consumer Protection Code?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0060",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0134",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0015",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0019",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0005"
+            ],
+            "retrieved_pages": [
+                "30",
+                "67",
+                "8",
+                "10",
+                "4"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": 4.163,
+                "highest_similarity": 5.0583,
+                "retrieval_latency_ms": 90.49
+            },
+            "similarities": [
+                5.058283805847168,
+                4.482516765594482,
+                3.8064494132995605,
+                3.7425661087036133,
+                3.725327253341675
+            ]
+        },
+        {
+            "question": "What is considered an abusive commercial practice?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0030",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0029",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0016",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0104",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0080"
+            ],
+            "retrieved_pages": [
+                "15",
+                "14",
+                "9",
+                "52",
+                "40"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -1.1649,
+                "highest_similarity": 3.5811,
+                "retrieval_latency_ms": 99.29
+            },
+            "similarities": [
+                3.5810723304748535,
+                0.33741846680641174,
+                -0.4306139647960663,
+                -2.5238993167877197,
+                -6.788512229919434
+            ]
+        },
+        {
+            "question": "What responsibilities do suppliers have towards consumers?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0107",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0013",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0110",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0116",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0046"
+            ],
+            "retrieved_pages": [
+                "54",
+                "7",
+                "55",
+                "58",
+                "23"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": 0.7921,
+                "highest_similarity": 2.1828,
+                "retrieval_latency_ms": 98.31
+            },
+            "similarities": [
+                2.182776927947998,
+                1.1685633659362793,
+                0.3368326425552368,
+                0.2647450566291809,
+                0.0076628997921943665
+            ]
+        },
+        {
+            "question": "How does the Consumer Protection Code address unfair pricing practices?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0121",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0030",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0060",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0028",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0105"
+            ],
+            "retrieved_pages": [
+                "60",
+                "15",
+                "30",
+                "14",
+                "53"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -0.4343,
+                "highest_similarity": 1.5301,
+                "retrieval_latency_ms": 113.75
+            },
+            "similarities": [
+                1.5300713777542114,
+                0.807402491569519,
+                -0.5112796425819397,
+                -1.5859665870666504,
+                -2.411884069442749
+            ]
+        },
+        {
+            "question": "What remedies are available to consumers in case of defective products?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0125",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0080",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0107",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0109",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0086"
+            ],
+            "retrieved_pages": [
+                "62",
+                "40",
+                "54",
+                "55",
+                "43"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -8.7224,
+                "highest_similarity": -5.1965,
+                "retrieval_latency_ms": 56.61
+            },
+            "similarities": [
+                -5.196521282196045,
+                -7.393171787261963,
+                -10.203763961791992,
+                -10.388863563537598,
+                -10.429559707641602
+            ]
+        },
+        {
+            "question": "How does the Consumer Protection Code promote consumer safety?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0060",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0125",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0022",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0028",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0003"
+            ],
+            "retrieved_pages": [
+                "30",
+                "62",
+                "11",
+                "14",
+                "3"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": 1.7011,
+                "highest_similarity": 2.7882,
+                "retrieval_latency_ms": 102.73
+            },
+            "similarities": [
+                2.788177490234375,
+                2.547091245651245,
+                1.6361197233200073,
+                0.9828590154647827,
+                0.5511062145233154
+            ]
+        },
+        {
+            "question": "What role does the judicial system play in consumer protection?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0134",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0131",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0118",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0112",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0051"
+            ],
+            "retrieved_pages": [
+                "67",
+                "65",
+                "59",
+                "56",
+                "26"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": 4.9908,
+                "highest_similarity": 6.6433,
+                "retrieval_latency_ms": 56.62
+            },
+            "similarities": [
+                6.643291473388672,
+                5.376827716827393,
+                4.8051438331604,
+                4.402468681335449,
+                3.72615122795105
+            ]
+        },
+        {
+            "question": "How does the law define consumer protection policy?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0134",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0030",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0040",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0005",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0041"
+            ],
+            "retrieved_pages": [
+                "67",
+                "15",
+                "20",
+                "4",
+                "21"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": 3.4957,
+                "highest_similarity": 4.5433,
+                "retrieval_latency_ms": 97.94
+            },
+            "similarities": [
+                4.543278694152832,
+                3.5630850791931152,
+                3.2216010093688965,
+                3.1000723838806152,
+                3.05063796043396
+            ]
+        },
+        {
+            "question": "How can businesses ensure compliance with Article 39 when setting prices?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0030",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0127",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0123",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0105",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0085"
+            ],
+            "retrieved_pages": [
+                "15",
+                "63",
+                "61",
+                "53",
+                "43"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -7.5158,
+                "highest_similarity": -2.9556,
+                "retrieval_latency_ms": 86.49
+            },
+            "similarities": [
+                -2.955598831176758,
+                -7.357852935791016,
+                -8.089298248291016,
+                -9.537230491638184,
+                -9.638933181762695
+            ]
+        },
+        {
+            "question": "Which consumer rights are most relevant to delayed deliveries in e-commerce?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "webshoppers_report.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0133",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0110",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0132",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0061",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0134"
+            ],
+            "retrieved_pages": [
+                "66",
+                "55",
+                "66",
+                "27",
+                "67"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -8.6254,
+                "highest_similarity": -8.0862,
+                "retrieval_latency_ms": 109.63
+            },
+            "similarities": [
+                -8.086197853088379,
+                -8.14941692352295,
+                -8.23548698425293,
+                -8.846338272094727,
+                -9.809447288513184
+            ]
+        },
+        {
+            "question": "How should an online marketplace respond to consumer complaints under the Consumer Protection Code?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0042",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0043",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0113",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0052",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0048"
+            ],
+            "retrieved_pages": [
+                "21",
+                "22",
+                "57",
+                "26",
+                "24"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -1.3813,
+                "highest_similarity": -0.1441,
+                "retrieval_latency_ms": 98.39
+            },
+            "similarities": [
+                -0.14407850801944733,
+                -1.077280044555664,
+                -1.4140037298202515,
+                -1.608811855316162,
+                -2.66215443611145
+            ]
+        },
+        {
+            "question": "What legal obligations do suppliers have regarding product information and transparency?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0044",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0107",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0125",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0043",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0085"
+            ],
+            "retrieved_pages": [
+                "22",
+                "54",
+                "62",
+                "22",
+                "43"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -2.0521,
+                "highest_similarity": 1.14,
+                "retrieval_latency_ms": 89.97
+            },
+            "similarities": [
+                1.1399624347686768,
+                -1.9871046543121338,
+                -2.2783517837524414,
+                -2.5182790756225586,
+                -4.616728782653809
+            ]
+        },
+        {
+            "question": "How does the Consumer Protection Code balance consumer rights and supplier responsibilities?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0102",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0060",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0019",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0018",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0132"
+            ],
+            "retrieved_pages": [
+                "51",
+                "30",
+                "10",
+                "10",
+                "66"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": 1.6085,
+                "highest_similarity": 3.1236,
+                "retrieval_latency_ms": 86.4
+            },
+            "similarities": [
+                3.1235861778259277,
+                1.9462875127792358,
+                1.7788811922073364,
+                1.1855473518371582,
+                0.00821927934885025
+            ]
+        },
+        {
+            "question": "What are the major trends shaping Brazilian e-commerce according to the Webshoppers Report?",
+            "retrieved_documents": [
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0003",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0001",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0015",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0013",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0012"
+            ],
+            "retrieved_pages": [
+                "4",
+                "2",
+                "9",
+                "8",
+                "8"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -5.1368,
+                "highest_similarity": -3.4331,
+                "retrieval_latency_ms": 78.08
+            },
+            "similarities": [
+                -3.433114528656006,
+                -4.117480278015137,
+                -4.322281837463379,
+                -5.466495513916016,
+                -8.344679832458496
+            ]
+        },
+        {
+            "question": "How has online shopping evolved in Brazil?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "webshoppers_report.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0062",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0013",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0003",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0003",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0048"
+            ],
+            "retrieved_pages": [
+                "31",
+                "8",
+                "4",
+                "3",
+                "22"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 0.5,
+                "average_similarity": -7.3758,
+                "highest_similarity": -5.9502,
+                "retrieval_latency_ms": 48.93
+            },
+            "similarities": [
+                -5.950151443481445,
+                -6.0700178146362305,
+                -7.2450361251831055,
+                -7.943125247955322,
+                -9.67061996459961
+            ]
+        },
+        {
+            "question": "What factors are driving the growth of Brazilian e-commerce?",
+            "retrieved_documents": [
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "webshoppers_report.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0018",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0048",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0050",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0107",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0003"
+            ],
+            "retrieved_pages": [
+                "10",
+                "22",
+                "23",
+                "54",
+                "4"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -8.5678,
+                "highest_similarity": -7.6896,
+                "retrieval_latency_ms": 52.0
+            },
+            "similarities": [
+                -7.689587116241455,
+                -8.374155044555664,
+                -8.587430000305176,
+                -9.077980041503906,
+                -9.109643936157227
+            ]
+        },
+        {
+            "question": "Which product categories experienced significant growth?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0010",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0005",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0053",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0090",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0089"
+            ],
+            "retrieved_pages": [
+                "6",
+                "6",
+                "27",
+                "45",
+                "45"
+            ],
+            "metrics": {
+                "precision_at_k": 0.0,
+                "recall_at_k": 0.0,
+                "hit_rate": 0.0,
+                "mrr": 0.0,
+                "average_similarity": -9.9241,
+                "highest_similarity": -9.4754,
+                "retrieval_latency_ms": 128.99
+            },
+            "similarities": [
+                -9.475414276123047,
+                -9.670053482055664,
+                -10.080172538757324,
+                -10.09730052947998,
+                -10.297524452209473
+            ]
+        },
+        {
+            "question": "What logistics challenges are highlighted in the Webshoppers Report?",
+            "retrieved_documents": [
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0000",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0001",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0061",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0053",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0112"
+            ],
+            "retrieved_pages": [
+                "1",
+                "2",
+                "27",
+                "27",
+                "56"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -8.372,
+                "highest_similarity": -3.314,
+                "retrieval_latency_ms": 93.07
+            },
+            "similarities": [
+                -3.3139901161193848,
+                -6.588890075683594,
+                -10.588155746459961,
+                -10.626802444458008,
+                -10.742242813110352
+            ]
+        },
+        {
+            "question": "How do customer expectations influence e-commerce businesses?",
+            "retrieved_documents": [
+                "webshoppers_report.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf",
+                "webshoppers_report.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0018",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0085",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0015",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0086"
+            ],
+            "retrieved_pages": [
+                "10",
+                "43",
+                "1",
+                "9",
+                "43"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -8.8698,
+                "highest_similarity": -7.6839,
+                "retrieval_latency_ms": 53.27
+            },
+            "similarities": [
+                -7.683864116668701,
+                -7.6846513748168945,
+                -8.308916091918945,
+                -10.223968505859375,
+                -10.4476957321167
+            ]
+        },
+        {
+            "question": "What role does mobile commerce play in the Brazilian e-commerce market?",
+            "retrieved_documents": [
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0050",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0048",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0132",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0013",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0022"
+            ],
+            "retrieved_pages": [
+                "23",
+                "22",
+                "66",
+                "8",
+                "12"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -5.9875,
+                "highest_similarity": -5.0653,
+                "retrieval_latency_ms": 66.19
+            },
+            "similarities": [
+                -5.065275192260742,
+                -5.5296807289123535,
+                -5.9585418701171875,
+                -6.505614280700684,
+                -6.87862491607666
+            ]
+        },
+        {
+            "question": "What purchasing behaviors are discussed in the report?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0007",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0121",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0087",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0086",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0128"
+            ],
+            "retrieved_pages": [
+                "8",
+                "60",
+                "44",
+                "43",
+                "64"
+            ],
+            "metrics": {
+                "precision_at_k": 0.0,
+                "recall_at_k": 0.0,
+                "hit_rate": 0.0,
+                "mrr": 0.0,
+                "average_similarity": -7.7282,
+                "highest_similarity": -4.6067,
+                "retrieval_latency_ms": 86.84
+            },
+            "similarities": [
+                -4.606651782989502,
+                -7.655632019042969,
+                -7.901686668395996,
+                -8.256851196289062,
+                -10.220308303833008
+            ]
+        },
+        {
+            "question": "How does delivery performance affect customer satisfaction?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0010",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0004",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0001",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009"
+            ],
+            "retrieved_pages": [
+                "11",
+                "5",
+                "2",
+                "1",
+                "10"
+            ],
+            "metrics": {
+                "precision_at_k": 0.0,
+                "recall_at_k": 0.0,
+                "hit_rate": 0.0,
+                "mrr": 0.0,
+                "average_similarity": -8.3536,
+                "highest_similarity": -4.5199,
+                "retrieval_latency_ms": 107.78
+            },
+            "similarities": [
+                -4.519927978515625,
+                -7.800246238708496,
+                -9.135007858276367,
+                -10.072093963623047,
+                -10.240727424621582
+            ]
+        },
+        {
+            "question": "What opportunities exist for online marketplaces according to the report?",
+            "retrieved_documents": [
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0013",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0047",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0049",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0018",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0010"
+            ],
+            "retrieved_pages": [
+                "8",
+                "22",
+                "23",
+                "10",
+                "6"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -9.1154,
+                "highest_similarity": -7.6305,
+                "retrieval_latency_ms": 92.02
+            },
+            "similarities": [
+                -7.630544662475586,
+                -7.99608850479126,
+                -8.9353609085083,
+                -10.179645538330078,
+                -10.83536148071289
+            ]
+        },
+        {
+            "question": "Which strategies can improve customer experience in e-commerce?",
+            "retrieved_documents": [
+                "webshoppers_report.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf",
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0018",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0080",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0048",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0041"
+            ],
+            "retrieved_pages": [
+                "10",
+                "40",
+                "1",
+                "22",
+                "19"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -8.0864,
+                "highest_similarity": -6.5817,
+                "retrieval_latency_ms": 97.62
+            },
+            "similarities": [
+                -6.581716060638428,
+                -7.87819766998291,
+                -8.199028015136719,
+                -8.570926666259766,
+                -9.2022123336792
+            ]
+        },
+        {
+            "question": "How can sellers improve their competitiveness in the Brazilian marketplace?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0104",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0008",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0106",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0103",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0113"
+            ],
+            "retrieved_pages": [
+                "52",
+                "9",
+                "53",
+                "52",
+                "57"
+            ],
+            "metrics": {
+                "precision_at_k": 0.0,
+                "recall_at_k": 0.0,
+                "hit_rate": 0.0,
+                "mrr": 0.0,
+                "average_similarity": -4.1728,
+                "highest_similarity": 2.6315,
+                "retrieval_latency_ms": 90.17
+            },
+            "similarities": [
+                2.6315174102783203,
+                -5.210721492767334,
+                -5.456737518310547,
+                -5.919833660125732,
+                -6.9082746505737305
+            ]
+        },
+        {
+            "question": "What business risks are associated with poor logistics performance?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0069",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0053",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0071",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0126",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0054"
+            ],
+            "retrieved_pages": [
+                "35",
+                "27",
+                "36",
+                "63",
+                "27"
+            ],
+            "metrics": {
+                "precision_at_k": 0.0,
+                "recall_at_k": 0.0,
+                "hit_rate": 0.0,
+                "mrr": 0.0,
+                "average_similarity": -9.2711,
+                "highest_similarity": -8.5287,
+                "retrieval_latency_ms": 91.54
+            },
+            "similarities": [
+                -8.528741836547852,
+                -8.74804401397705,
+                -8.914620399475098,
+                -9.851531982421875,
+                -10.312427520751953
+            ]
+        },
+        {
+            "question": "How can organizations use market trends to improve business decision-making?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0104",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0077",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0021",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0094",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0086"
+            ],
+            "retrieved_pages": [
+                "52",
+                "39",
+                "11",
+                "47",
+                "43"
+            ],
+            "metrics": {
+                "precision_at_k": 0.0,
+                "recall_at_k": 0.0,
+                "hit_rate": 0.0,
+                "mrr": 0.0,
+                "average_similarity": -5.9441,
+                "highest_similarity": -4.9489,
+                "retrieval_latency_ms": 93.92
+            },
+            "similarities": [
+                -4.948916912078857,
+                -5.439779281616211,
+                -5.65239143371582,
+                -6.0336384773254395,
+                -7.64553689956665
+            ]
+        },
+        {
+            "question": "According to the Webshoppers Report, which business areas should companies prioritize for long-term growth?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "webshoppers_report.pdf",
+                "webshoppers_report.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0113",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0003",
+                "aecf321e-cfca-4c2d-a6c0-db868f2fe8e9_chunk_0013",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0133",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0129"
+            ],
+            "retrieved_pages": [
+                "57",
+                "4",
+                "8",
+                "66",
+                "64"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 0.5,
+                "average_similarity": -9.827,
+                "highest_similarity": -8.2631,
+                "retrieval_latency_ms": 64.26
+            },
+            "similarities": [
+                -8.263093948364258,
+                -9.525771141052246,
+                -10.338016510009766,
+                -10.391942977905273,
+                -10.616287231445312
+            ]
+        },
+        {
+            "question": "Which Olist datasets should be analyzed to investigate delivery delays mentioned in the Webshoppers Report?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0001",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0002"
+            ],
+            "retrieved_pages": [
+                "10",
+                "2",
+                "1",
+                "13",
+                "3"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -2.2047,
+                "highest_similarity": -0.5777,
+                "retrieval_latency_ms": 69.88
+            },
+            "similarities": [
+                -0.5776624083518982,
+                -0.6691877841949463,
+                -1.7413703203201294,
+                -3.1735312938690186,
+                -4.8616180419921875
+            ]
+        },
+        {
+            "question": "Which Olist datasets can be used to validate customer behavior trends discussed in the Webshoppers Report?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0004",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0003"
+            ],
+            "retrieved_pages": [
+                "13",
+                "10",
+                "1",
+                "5",
+                "4"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -0.1979,
+                "highest_similarity": 1.0453,
+                "retrieval_latency_ms": 77.46
+            },
+            "similarities": [
+                1.0452706813812256,
+                0.5811537504196167,
+                0.491562157869339,
+                -0.4911143183708191,
+                -2.6164066791534424
+            ]
+        },
+        {
+            "question": "Which datasets should be combined to study customer satisfaction alongside industry trends?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0004",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0003"
+            ],
+            "retrieved_pages": [
+                "5",
+                "13",
+                "10",
+                "1",
+                "4"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -5.4359,
+                "highest_similarity": -2.6765,
+                "retrieval_latency_ms": 59.31
+            },
+            "similarities": [
+                -2.6765079498291016,
+                -3.6367263793945312,
+                -5.8178253173828125,
+                -6.511479377746582,
+                -8.536989212036133
+            ]
+        },
+        {
+            "question": "Which Olist datasets are most relevant for analyzing logistics performance discussed in the industry report?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0001",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0002"
+            ],
+            "retrieved_pages": [
+                "13",
+                "10",
+                "2",
+                "1",
+                "3"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": 0.3276,
+                "highest_similarity": 2.0734,
+                "retrieval_latency_ms": 95.4
+            },
+            "similarities": [
+                2.0733652114868164,
+                2.003666400909424,
+                0.023675110191106796,
+                -0.5263267159461975,
+                -1.9364385604858398
+            ]
+        },
+        {
+            "question": "Which consumer rights should Olist consider when delivery delays occur?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0011",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0107",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0133",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009"
+            ],
+            "retrieved_pages": [
+                "6",
+                "1",
+                "54",
+                "66",
+                "10"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -7.5698,
+                "highest_similarity": -6.1577,
+                "retrieval_latency_ms": 91.55
+            },
+            "similarities": [
+                -6.157706260681152,
+                -6.568480491638184,
+                -8.152517318725586,
+                -8.423086166381836,
+                -8.54726791381836
+            ]
+        },
+        {
+            "question": "How do logistics challenges discussed in the Webshoppers Report relate to consumer protection regulations?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0105",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0112",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0053",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0052",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0118"
+            ],
+            "retrieved_pages": [
+                "53",
+                "56",
+                "27",
+                "26",
+                "59"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -2.5637,
+                "highest_similarity": -0.6237,
+                "retrieval_latency_ms": 90.16
+            },
+            "similarities": [
+                -0.623701274394989,
+                -0.6426857709884644,
+                -3.103922128677368,
+                -3.7936034202575684,
+                -4.654617786407471
+            ]
+        },
+        {
+            "question": "Which Olist datasets should be analyzed to monitor compliance with consumer protection laws for delayed deliveries?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0001",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0003"
+            ],
+            "retrieved_pages": [
+                "2",
+                "10",
+                "1",
+                "13",
+                "4"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -2.5284,
+                "highest_similarity": 0.6152,
+                "retrieval_latency_ms": 108.6
+            },
+            "similarities": [
+                0.615195631980896,
+                -2.0350019931793213,
+                -2.1036972999572754,
+                -2.94315767288208,
+                -6.175228595733643
+            ]
+        },
+        {
+            "question": "How can customer review data help evaluate issues discussed in the Consumer Protection Code?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0113",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0112",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0043",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0052",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0063"
+            ],
+            "retrieved_pages": [
+                "57",
+                "56",
+                "22",
+                "26",
+                "32"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -2.4136,
+                "highest_similarity": 0.3324,
+                "retrieval_latency_ms": 88.53
+            },
+            "similarities": [
+                0.3324488401412964,
+                -2.35762619972229,
+                -3.1173510551452637,
+                -3.4229111671447754,
+                -3.5025715827941895
+            ]
+        },
+        {
+            "question": "Which datasets should management analyze to understand the relationship between delivery performance and customer complaints?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0004",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0003"
+            ],
+            "retrieved_pages": [
+                "10",
+                "1",
+                "13",
+                "5",
+                "4"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.3333,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -5.9422,
+                "highest_similarity": -3.8917,
+                "retrieval_latency_ms": 89.32
+            },
+            "similarities": [
+                -3.8916544914245605,
+                -4.624965667724609,
+                -5.011256217956543,
+                -7.1340484619140625,
+                -9.04916763305664
+            ]
+        },
+        {
+            "question": "How can Olist improve customer satisfaction while remaining compliant with consumer protection regulations?",
+            "retrieved_documents": [
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0107",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0104",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0109",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0108",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000"
+            ],
+            "retrieved_pages": [
+                "54",
+                "52",
+                "55",
+                "54",
+                "1"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -4.5244,
+                "highest_similarity": -3.0877,
+                "retrieval_latency_ms": 52.72
+            },
+            "similarities": [
+                -3.0876755714416504,
+                -4.034763336181641,
+                -4.709289073944092,
+                -5.101283073425293,
+                -5.689164161682129
+            ]
+        },
+        {
+            "question": "Which datasets and business indicators should be monitored to reduce delivery-related complaints?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0001",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0011",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0044"
+            ],
+            "retrieved_pages": [
+                "2",
+                "10",
+                "1",
+                "12",
+                "22"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -6.8902,
+                "highest_similarity": -2.9755,
+                "retrieval_latency_ms": 95.62
+            },
+            "similarities": [
+                -2.975459098815918,
+                -6.0666823387146,
+                -8.22918701171875,
+                -8.436858177185059,
+                -8.742849349975586
+            ]
+        },
+        {
+            "question": "How can Olist combine business data and legal requirements to improve customer trust?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0006",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0127"
+            ],
+            "retrieved_pages": [
+                "13",
+                "1",
+                "10",
+                "7",
+                "63"
+            ],
+            "metrics": {
+                "precision_at_k": 0.4,
+                "recall_at_k": 1.0,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -5.4684,
+                "highest_similarity": -1.9641,
+                "retrieval_latency_ms": 94.29
+            },
+            "similarities": [
+                -1.964096188545227,
+                -3.922881841659546,
+                -4.033923149108887,
+                -6.795740127563477,
+                -10.625312805175781
+            ]
+        },
+        {
+            "question": "How can industry trends be validated using Olist's operational datasets?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf",
+                "olist_data_catalog.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0009",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0004",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0003"
+            ],
+            "retrieved_pages": [
+                "1",
+                "13",
+                "10",
+                "5",
+                "4"
+            ],
+            "metrics": {
+                "precision_at_k": 0.2,
+                "recall_at_k": 0.5,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -1.9632,
+                "highest_similarity": -0.177,
+                "retrieval_latency_ms": 72.99
+            },
+            "similarities": [
+                -0.17697998881340027,
+                -0.46016156673431396,
+                -0.4858369529247284,
+                -3.6741905212402344,
+                -5.018835544586182
+            ]
+        },
+        {
+            "question": "What business decisions can Olist make by combining operational data, industry insights, and consumer protection regulations?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "olist_data_catalog.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0012",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0072",
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0105",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0051"
+            ],
+            "retrieved_pages": [
+                "13",
+                "36",
+                "1",
+                "53",
+                "26"
+            ],
+            "metrics": {
+                "precision_at_k": 0.4,
+                "recall_at_k": 0.6667,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -3.9954,
+                "highest_similarity": -2.3727,
+                "retrieval_latency_ms": 106.01
+            },
+            "similarities": [
+                -2.372668981552124,
+                -3.700882911682129,
+                -4.457354545593262,
+                -4.473172187805176,
+                -4.972975254058838
+            ]
+        },
+        {
+            "question": "Based on the Data Catalog, Webshoppers Report, and Consumer Protection Code, what information should executives review before improving the delivery experience?",
+            "retrieved_documents": [
+                "olist_data_catalog.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf",
+                "brazilian_cdc_law_8078.pdf"
+            ],
+            "retrieved_chunk_ids": [
+                "3e12ac65-ab3c-4d8c-a04e-e39870934565_chunk_0000",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0003",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0043",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0105",
+                "c8c891c6-3c8b-4715-8806-11ea56a14654_chunk_0085"
+            ],
+            "retrieved_pages": [
+                "1",
+                "3",
+                "22",
+                "53",
+                "43"
+            ],
+            "metrics": {
+                "precision_at_k": 0.4,
+                "recall_at_k": 0.6667,
+                "hit_rate": 1.0,
+                "mrr": 1.0,
+                "average_similarity": -6.4414,
+                "highest_similarity": -5.6091,
+                "retrieval_latency_ms": 97.34
+            },
+            "similarities": [
+                -5.609129905700684,
+                -6.211524963378906,
+                -6.504735469818115,
+                -6.786721706390381,
+                -7.094768524169922
+            ]
+        }
+    ]
+}

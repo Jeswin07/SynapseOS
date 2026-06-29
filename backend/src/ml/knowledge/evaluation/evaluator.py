@@ -20,12 +20,13 @@ from src.core.config import settings
 from src.ml.knowledge.hybrid_retriever import HybridRetriever
 from src.ml.knowledge.reranker import CrossEncoderReranker
 
+
 class KnowledgeEvaluator:
     """
-    Evaluates retrieval quality.
+    Evaluates retrieval quality using the production
+    retrieval pipeline.
 
-    Only evaluates retrieval.
-    Does NOT evaluate LLM generation.
+    Generation quality is not evaluated.
     """
 
     def __init__(self) -> None:
@@ -123,5 +124,5 @@ class KnowledgeEvaluator:
             retrieved_chunk_ids=retrieved_chunk_ids,
             retrieved_pages=retrieved_pages,
             metrics=metrics,
-            similarities=similarities
+            similarities=similarities,
         )
