@@ -1,6 +1,7 @@
 """Pydantic schemas for Knowledge Intelligence API contracts."""
 
 from pydantic import BaseModel, Field
+
 from src.core.config import settings
 
 

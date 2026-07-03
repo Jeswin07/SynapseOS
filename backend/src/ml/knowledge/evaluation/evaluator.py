@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from src.core.config import settings
 from src.ml.knowledge.evaluation.metrics import (
     average_similarity,
     highest_similarity,
@@ -16,7 +17,6 @@ from src.ml.knowledge.evaluation.schemas import (
     EvaluationMetrics,
     EvaluationResult,
 )
-from src.core.config import settings
 from src.ml.knowledge.hybrid_retriever import HybridRetriever
 from src.ml.knowledge.reranker import CrossEncoderReranker
 

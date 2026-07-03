@@ -376,3 +376,24 @@ class KnowledgeService:
                 highest_similarity=hybrid.highest_similarity,
             ),
         )
+
+    
+    def answer(
+        self,
+        query: str,
+        collection_name: str = settings.knowledge_collection,
+        top_k: int | None = None,
+        ) -> QueryResponse:
+        """
+        Convenience method for AI agents.
+
+        Keeps the Agent layer independent from API schemas.
+        """
+
+        request = QueryRequest(
+            query=query,
+            collection_name=collection_name,
+            top_k=top_k or settings.rag_top_k,
+        )
+
+        return self.query_knowledge_base(request)

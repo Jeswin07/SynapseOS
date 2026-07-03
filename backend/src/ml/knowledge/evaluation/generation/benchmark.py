@@ -1,8 +1,9 @@
 """Runs generation benchmark evaluation."""
 
 from __future__ import annotations
-import time
+
 import json
+import time
 from pathlib import Path
 
 from src.ml.knowledge.evaluation.benchmark_loader import (
@@ -11,10 +12,10 @@ from src.ml.knowledge.evaluation.benchmark_loader import (
 from src.ml.knowledge.generation_evaluator import (
     GenerationEvaluator,
 )
+from src.modules.knowledge.schemas import QueryRequest
 from src.modules.knowledge.service import (
     KnowledgeService,
 )
-from src.modules.knowledge.schemas import QueryRequest
 
 BENCHMARK_DIR = Path(
     "datasets/knowledge/benchmark/v1",

@@ -6,7 +6,6 @@ from groq import Groq
 
 from src.core.config import settings
 
-
 SYSTEM_PROMPT = """
 You are SynapseOS, an Enterprise Decision Intelligence Platform.
 

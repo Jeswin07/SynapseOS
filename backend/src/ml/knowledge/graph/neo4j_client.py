@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from neo4j import GraphDatabase
-from neo4j import Driver
+from neo4j import Driver, GraphDatabase
 
 from src.core.config import settings
 

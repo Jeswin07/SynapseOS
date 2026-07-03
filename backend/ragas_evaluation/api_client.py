@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import requests
-
 from config import API_URL, TOP_K
 
 

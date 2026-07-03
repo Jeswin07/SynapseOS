@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from rank_bm25 import BM25Okapi
 import re
-import nltk
 
+import nltk
 from nltk.tokenize import word_tokenize
+from rank_bm25 import BM25Okapi
 
 
 class BM25Retriever:

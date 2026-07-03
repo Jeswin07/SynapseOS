@@ -6,8 +6,8 @@ import time
 
 from src.ml.knowledge.embeddings import EmbeddingEngine
 from src.ml.knowledge.retrieval_models import (
-    RetrievedChunk,
     RetrievalResult,
+    RetrievedChunk,
 )
 from src.modules.knowledge.repository import QdrantRepository
 

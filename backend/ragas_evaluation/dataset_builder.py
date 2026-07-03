@@ -4,15 +4,13 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from datasets import Dataset
-
 from api_client import KnowledgeApiClient
 from config import BENCHMARK_DIR
 
+from datasets import Dataset
 from src.ml.knowledge.evaluation.benchmark_loader import (
     BenchmarkLoader,
 )
-
 
 BENCHMARK_FILES = [
     "dataset.json",

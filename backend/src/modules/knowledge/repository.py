@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import uuid
-from src.core.config import settings
+
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from qdrant_client.models import ScoredPoint
+
+from src.core.config import settings
 
 
 class QdrantRepository:

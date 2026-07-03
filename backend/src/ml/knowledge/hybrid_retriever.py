@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
+import hashlib
 import time
 from collections import defaultdict
-import hashlib
+
 from src.ml.knowledge.bm25 import BM25Retriever
 from src.ml.knowledge.retrieval_models import (
-    RetrievedChunk,
     RetrievalResult,
+    RetrievedChunk,
 )
 from src.ml.knowledge.retriever import Retriever
 from src.modules.knowledge.repository import QdrantRepository

@@ -7,9 +7,10 @@ from typing import Any
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core.schema import Document
 from sentence_transformers import SentenceTransformer
+
 from src.core.config import settings
-from src.shared.logging import logger
 from src.ml.knowledge.loaders import DocumentLoader
+from src.shared.logging import logger
 
 
 class EmbeddingEngine:

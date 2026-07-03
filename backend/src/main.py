@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from src.core.storage.storage_service import StorageService
+from src.modules.assistant.router import router as assistant_router
 from src.modules.auth.admin_routes import (
     router as admin_router,
 )
@@ -46,3 +47,4 @@ app.include_router(admin_router)
 app.include_router(forecast_router)
 app.include_router(risk_router)
 app.include_router(knowledge_router)
+app.include_router(assistant_router)

@@ -67,3 +67,17 @@ def get_current_user(
         )
 
     return user
+
+
+def get_current_tenant_id(
+    current_user=Depends(
+        get_current_user,
+    ),
+) -> uuid.UUID:
+    """
+    Retrieve tenant id of the authenticated user.
+
+    Used by tenant-scoped services.
+    """
+
+    return current_user.tenant_id
