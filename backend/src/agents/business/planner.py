@@ -1,148 +1,125 @@
-"""Business request planner."""
+"""LLM based business agent planner."""
 
 from __future__ import annotations
 
-import re
+import json
 
-from src.agents.business.models import ExecutionPlan
-from src.agents.types import AgentType
+from src.agents.business.models import (
+    ExecutionPlan,
+)
+
+from src.agents.common.llm import (
+    LLMClient,
+)
+
+from src.agents.types import (
+    AgentType,
+)
+from src.agents.common.json_parser import (
+    parse_llm_json,
+)
 
 
 class BusinessPlanner:
     """
-    Creates execution plans for incoming business requests.
-
-    The current implementation uses lightweight rule-based
-    intent detection. It is intentionally designed so that
-    it can later be replaced by an LLM-powered planner
-    without affecting the rest of the architecture.
+    Uses LLM reasoning to select specialist agents.
     """
 
-    def plan(
+
+    def __init__(
+        self,
+    ) -> None:
+
+        self.llm = LLMClient()
+
+
+    async def plan(
         self,
         query: str,
     ) -> ExecutionPlan:
         """
-        Returns an execution plan for the given query.
+        Create agent execution plan.
         """
 
-        query = query.lower().strip()
 
-        # --------------------------------------------------
-        # Scenario Simulation
-        # --------------------------------------------------
+        prompt = f"""
+You are SynapseOS Business Orchestrator.
 
-        if self._is_simulation(query):
+Your job:
+Select which AI agents should answer the user.
 
-            return ExecutionPlan(
-                agents=[
-                    AgentType.SIMULATION,
-                    AgentType.ENTERPRISE
-                ],
-                reasoning="Scenario evaluation requires enterprise analysis.",
-            )
+Available agents:
 
-        # --------------------------------------------------
-        # Enterprise Intelligence
-        # --------------------------------------------------
+knowledge:
+Use for:
+- uploaded documents
+- company policies
+- contracts
+- manuals
+- document Q&A
 
-        if self._is_enterprise(query):
 
-            return ExecutionPlan(
-                agents=[
-                    AgentType.ENTERPRISE,
-                ],
-                reasoning="Structured enterprise analysis requested.",
-            )
+intelligence:
+Use for:
+- business analytics
+- revenue
+- sales
+- customers
+- products
+- reviews
+- operations
+- KPIs
+- forecasting
+- predictions
 
-        # --------------------------------------------------
-        # Knowledge
-        # --------------------------------------------------
 
-        if self._needs_business_context(query):
+scenario:
+Use for:
+- simulations
+- what-if analysis
+- business impact analysis
 
-            return ExecutionPlan(
-                agents=[
-                    AgentType.KNOWLEDGE,
-                    AgentType.ENTERPRISE,
-                ],
-                parallel=True,
-                reasoning=(
-                    "Knowledge retrieval and enterprise analysis required."
-                ),
-            )
+
+User request:
+
+{query}
+
+
+Return ONLY JSON.
+
+Example:
+
+{{
+ "agents":["intelligence"],
+ "parallel":false,
+ "reasoning":"Requires business metrics."
+}}
+"""
+
+
+        response = await self.llm.generate(
+            prompt,
+        )
+        
+        print(response)
+
+        data = parse_llm_json(
+            response,
+        )
+
 
         return ExecutionPlan(
             agents=[
-                AgentType.KNOWLEDGE,
+                AgentType(agent)
+                for agent in data[
+                    "agents"
+                ]
             ],
-        )
-
-    @staticmethod
-    def _is_simulation(
-        query: str,
-    ) -> bool:
-
-        patterns = [
-            r"\bwhat if\b",
-            r"\bif\b",
-            r"\bincrease\b",
-            r"\bdecrease\b",
-            r"\bimpact\b",
-            r"\bscenario\b",
-        ]
-
-        return any(
-            re.search(pattern, query)
-            for pattern in patterns
-        )
-
-    @staticmethod
-    def _is_enterprise(
-        query: str,
-    ) -> bool:
-
-        keywords = {
-            "forecast",
-            "predict",
-            "prediction",
-            "analytics",
-            "dashboard",
-            "risk",
-            "train",
-            "model",
-            "shap",
-            "kpi",
-            "revenue",
-            "sales",
-            "orders",
-        }
-
-        return any(
-            keyword in query
-            for keyword in keywords
-        )
-
-    
-    @staticmethod
-    def _needs_business_context(
-        query: str,
-    ) -> bool:
-
-        keywords = {
-            "why",
-            "trend",
-            "performance",
-            "increase",
-            "decrease",
-            "delay",
-            "growth",
-            "compare",
-            "recommend",
-            "improve",
-        }
-
-        return any(
-            keyword in query
-            for keyword in keywords
+            parallel=data.get(
+                "parallel",
+                False,
+            ),
+            reasoning=data.get(
+                "reasoning",
+            ),
         )

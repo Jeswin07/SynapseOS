@@ -65,15 +65,40 @@ class DatasetDetailResponse(DatasetResponse):
     tags: list[str] | None
 
 class DatasetVersionItem(BaseModel):
-    version_id: UUID
+    """
+    Dataset version response.
+    """
+
+    id: UUID
 
     version: int
 
-    original_filename: str
-
-    file_size: int
+    status: str
 
     created_at: datetime
+
+
+    model_config = {
+        "from_attributes": True,
+    }
+
+class DatasetFileResponse(BaseModel):
+    """
+    Dataset file inside a dataset version.
+    """
+
+    id: UUID
+
+    logical_name: str
+
+    original_filename: str
+
+    rows_count: int | None
+
+    columns_count: int | None
+
+    created_at: datetime
+
 
     model_config = {
         "from_attributes": True,

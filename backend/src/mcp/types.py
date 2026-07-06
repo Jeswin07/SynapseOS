@@ -23,3 +23,9 @@ class MCPTool(StrEnum):
     FORECAST_GENERATE = "forecast.generate"
 
     RISK_ANALYZE = "risk.analyze"
+
+    ANALYTICS = "analytics"
+
+    KNOWLEDGE = "knowledge"
+
+    FORECAST = "forecast"

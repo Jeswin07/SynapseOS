@@ -41,6 +41,10 @@ class AgentInput(BaseModel):
         default_factory=dict,
     )
 
+    metadata: dict = Field(
+        default_factory=dict,
+    )
+
 
 class AgentOutput(BaseModel):
     """

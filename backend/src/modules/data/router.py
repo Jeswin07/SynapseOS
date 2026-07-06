@@ -7,6 +7,7 @@ from fastapi import (
     HTTPException,
     UploadFile,
 )
+from typing import Annotated
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
@@ -20,11 +21,13 @@ from src.modules.data.schemas import (
     DatasetResponse,
     DatasetVersionItem,
     DatasetVersionResponse,
+    DatasetFileResponse,
 )
 from src.modules.data.service import DatasetService
 from src.shared.exceptions.dataset import (
     DatasetException,
 )
+
 
 router = APIRouter(
     prefix="/datasets",
@@ -80,7 +83,10 @@ def create_dataset(
 )
 async def upload_dataset_version(
     dataset_id: UUID,
-    file: UploadFile = File(...),
+    files: Annotated[
+        list[UploadFile],
+        File(media_type="multipart/form-data",),
+    ],
     current_user=Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
@@ -96,7 +102,7 @@ async def upload_dataset_version(
             dataset_id=dataset_id,
             tenant_id=current_user.tenant_id,
             uploaded_by=current_user.id,
-            file=file,
+            files=files,
         )
 
         return DatasetVersionResponse(
@@ -181,13 +187,22 @@ def list_dataset_versions(
 
     service = DatasetService(db)
 
-    return service.get_dataset_versions(
-        dataset_id,
-    )
+    try:
+        return service.get_dataset_versions(
+            dataset_id,
+        )
 
-@router.get("/{dataset_id}/download")
-def download_dataset(
-    dataset_id: UUID,
+    except DatasetException as exc:
+        raise HTTPException(
+            status_code=404,
+            detail=str(exc),
+        )
+
+@router.get(
+    "/files/{file_id}/download",
+)
+def download_dataset_file(
+    file_id: UUID,
     current_user=Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
@@ -195,16 +210,52 @@ def download_dataset(
     service = DatasetService(db)
 
     file_stream, filename = (
-        service.download_dataset(
-            dataset_id,
+        service.download_dataset_file(
+            file_id,
         )
     )
 
     return StreamingResponse(
         file_stream,
-        media_type="text/csv",
+        media_type="application/octet-stream",
         headers={
             "Content-Disposition":
             f'attachment; filename="{filename}"'
         },
+    )
+
+@router.delete(
+    "/{dataset_id}",
+    status_code=204,
+)
+def delete_dataset(
+    dataset_id: UUID,
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+
+    service = DatasetService(db)
+
+    service.delete_dataset(
+        dataset_id=dataset_id,
+        tenant_id=current_user.tenant_id,
+    )
+
+@router.get(
+    "/versions/{version_id}/files",
+    response_model=list[DatasetFileResponse],
+)
+def list_dataset_files(
+    version_id: UUID,
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """
+    List files inside a dataset version.
+    """
+
+    service = DatasetService(db)
+
+    return service.get_dataset_files(
+        version_id,
     )

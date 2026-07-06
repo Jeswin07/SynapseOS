@@ -1,3 +1,7 @@
+"""Dataset profile model."""
+
+from __future__ import annotations
+
 import uuid
 from datetime import datetime
 
@@ -11,12 +15,17 @@ from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import (
     Mapped,
     mapped_column,
+    relationship,
 )
 
 from src.db.base import Base
 
 
 class DatasetProfile(Base):
+    """
+    Stores profiling information for a dataset file.
+    """
+
     __tablename__ = "dataset_profiles"
 
     id: Mapped[uuid.UUID] = mapped_column(
@@ -24,8 +33,10 @@ class DatasetProfile(Base):
         default=uuid.uuid4,
     )
 
-    dataset_version_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("dataset_versions.id"),
+    dataset_file_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey(
+            "dataset_files.id",
+        ),
         nullable=False,
         unique=True,
         index=True,
@@ -46,7 +57,7 @@ class DatasetProfile(Base):
         server_default=func.now(),
     )
 
-    profile_version: Mapped[int] = mapped_column(
-        default=1,
-        nullable=False,
+    file = relationship(
+        "DatasetFile",
+        back_populates="profile",
     )

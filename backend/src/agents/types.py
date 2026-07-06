@@ -14,6 +14,6 @@ class AgentType(StrEnum):
 
     KNOWLEDGE = "knowledge"
 
-    ENTERPRISE = "enterprise"
+    INTELLIGENCE = "intelligence"
 
-    SIMULATION = "simulation"
+    SCENARIO = "scenario"

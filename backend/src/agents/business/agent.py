@@ -3,30 +3,35 @@
 from __future__ import annotations
 
 from src.agents.base import BaseAgent
-from src.agents.business.aggregator import BusinessAggregator
-from src.agents.business.planner import BusinessPlanner
+
+from src.agents.business.aggregator import (
+    BusinessAggregator,
+)
+
+from src.agents.business.planner import (
+    BusinessPlanner,
+)
+
 from src.agents.models import (
     AgentInput,
     AgentOutput,
 )
-from src.agents.registry import AgentRegistry
-from src.agents.types import AgentType
-from src.orchestration.executor import WorkflowExecutor
+
+from src.agents.registry import (
+    AgentRegistry,
+)
+
+from src.agents.types import (
+    AgentType,
+)
 
 
 class BusinessAgent(BaseAgent):
     """
-    Supervisor agent responsible for orchestrating
-    enterprise AI workflows.
-
-    Responsibilities
-    ----------------
-
-    - Understand user requests
-    - Create execution plans
-    - Coordinate specialized agents
-    - Aggregate responses
+    Supervisor agent responsible for
+    orchestrating specialist agents.
     """
+
 
     def __init__(
         self,
@@ -38,30 +43,48 @@ class BusinessAgent(BaseAgent):
             agent_name="Business Agent",
         )
 
+
+        self.registry = registry
+
         self.planner = BusinessPlanner()
 
-        self.executor = WorkflowExecutor(
-            registry,
-        )
-
         self.aggregator = BusinessAggregator()
+
 
     async def _execute(
         self,
         request: AgentInput,
     ) -> AgentOutput:
-        """
-        Executes an enterprise AI workflow.
-        """
 
-        plan = self.planner.plan(
+
+        plan = await self.planner.plan(
             request.query,
         )
 
-        outputs = await self.executor.execute(
-            plan,
-            request,
-        )
+
+        outputs: dict[
+            AgentType,
+            AgentOutput,
+        ] = {}
+
+
+        for agent_type in plan.agents:
+
+
+            agent = self.registry.get(
+                agent_type,
+            )
+
+
+            response = await agent.invoke(
+                request,
+            )
+
+
+            outputs[
+                agent_type
+            ] = response
+
 
         return self.aggregator.aggregate(
             outputs,

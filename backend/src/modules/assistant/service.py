@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from uuid import UUID
-
+from sqlalchemy.orm import Session
 from src.agents.models import AgentInput
 from src.bootstrap.agents import create_business_agent
 from src.modules.assistant.schemas import (
@@ -17,9 +17,9 @@ class AssistantService:
     Entry point for user interaction with SynapseOS AI.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, db: Session) -> None:
 
-        self.agent = create_business_agent()
+        self.agent = create_business_agent(db,)
 
     async def chat(
         self,
@@ -31,6 +31,7 @@ class AssistantService:
             AgentInput(
                 query=request.message,
                 tenant_id=tenant_id,
+                metadata=request.metadata,
             ),
         )
 

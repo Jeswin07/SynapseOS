@@ -2,17 +2,17 @@ import uuid
 from datetime import datetime
 
 from sqlalchemy import (
-    BigInteger,
     DateTime,
     Enum,
     ForeignKey,
     Integer,
-    String,
     func,
 )
+
 from sqlalchemy.orm import (
     Mapped,
     mapped_column,
+    relationship
 )
 
 from src.db.base import Base
@@ -33,39 +33,15 @@ class DatasetVersion(Base):
         index=True,
     )
 
+    files = relationship(
+        "DatasetFile",
+        back_populates="version",
+        cascade="all, delete-orphan",
+    )
+
     version: Mapped[int] = mapped_column(
         Integer,
         nullable=False,
-    )
-
-    storage_path: Mapped[str] = mapped_column(
-        String(500),
-        nullable=False,
-    )
-
-    original_filename: Mapped[str] = mapped_column(
-        String(255),
-        nullable=False,
-    )
-
-    file_size: Mapped[int] = mapped_column(
-        BigInteger,
-        nullable=False,
-    )
-
-    checksum: Mapped[str] = mapped_column(
-        String(64),
-        nullable=False,
-    )
-
-    rows_count: Mapped[int | None] = mapped_column(
-        BigInteger,
-        nullable=True,
-    )
-
-    columns_count: Mapped[int | None] = mapped_column(
-        Integer,
-        nullable=True,
     )
 
     status: Mapped[DatasetStatus] = mapped_column(
@@ -84,12 +60,6 @@ class DatasetVersion(Base):
         server_default=func.now(),
     )
 
-    mime_type: Mapped[str] = mapped_column(
-        String(100),
-        nullable=False,
-    )
-
     processing_duration_ms: Mapped[int | None] = mapped_column(
         nullable=True,
     )
-

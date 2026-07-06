@@ -27,8 +27,11 @@ from src.modules.tenants.router import (
 from src.modules.users.router import (
     router as users_router,
 )
+from src.modules.analytics.router import (
+    router as analytics_router,
+)
 
-app = FastAPI(title="SynapseOS API", version="1.0.0")
+app = FastAPI(title="SynapseOS API", version="1.0.0", openapi_version="3.0.3",)
 
 
 @app.get("/")
@@ -48,3 +51,4 @@ app.include_router(forecast_router)
 app.include_router(risk_router)
 app.include_router(knowledge_router)
 app.include_router(assistant_router)
+app.include_router(analytics_router)

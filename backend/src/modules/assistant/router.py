@@ -14,14 +14,15 @@ from src.modules.assistant.service import AssistantService
 from src.modules.auth.dependencies import (
     get_current_tenant_id,
 )
+from sqlalchemy.orm import Session
+
+from src.db.session import get_db
+
 
 router = APIRouter(
     prefix="/assistant",
     tags=["AI Assistant"],
 )
-
-
-service = AssistantService()
 
 
 @router.post(
@@ -30,6 +31,9 @@ service = AssistantService()
 )
 async def chat(
     request: AssistantChatRequest,
+    db: Session = Depends(
+        get_db,
+    ),
     tenant_id: UUID = Depends(
         get_current_tenant_id,
     ),
@@ -37,6 +41,10 @@ async def chat(
     """
     Chat with SynapseOS Business AI Assistant.
     """
+
+    service = AssistantService(
+        db,
+    )
 
     return await service.chat(
         request=request,

@@ -15,6 +15,10 @@ class AssistantChatRequest(BaseModel):
 
     message: str
 
+    metadata: dict = Field(
+        default_factory=dict,
+    )
+
 
 class AssistantChatResponse(BaseModel):
     """

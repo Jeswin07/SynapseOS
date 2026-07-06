@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 from src.models.dataset import Dataset
 from src.models.dataset_profile import DatasetProfile
 from src.models.dataset_version import DatasetVersion
-
+from src.models.dataset_file import DatasetFile
 
 class DatasetRepository:
     """
@@ -193,28 +193,71 @@ class DatasetRepository:
 
         return (latest or 0) + 1
 
-    def list_versions(
+
+        # -------------------------------------------------------------------------
+    # Dataset File
+    # -------------------------------------------------------------------------
+
+    def create_dataset_file(
         self,
-        dataset_id: uuid.UUID,
-    ) -> list[DatasetVersion]:
+        dataset_file: DatasetFile,
+    ) -> DatasetFile:
         """
-        Retrieve all versions of a dataset.
-
-        Args:
-            dataset_id: Dataset UUID.
-
-        Returns:
-            List of dataset versions.
+        Persist a dataset file.
         """
+
+        self.db.add(
+            dataset_file,
+        )
+
+        return dataset_file
+
+
+    def list_dataset_files(
+        self,
+        dataset_version_id: uuid.UUID,
+    ) -> list[DatasetFile]:
+        """
+        Retrieve all files belonging to a dataset version.
+        """
+
         return (
-            self.db.query(DatasetVersion)
-            .filter(
-                DatasetVersion.dataset_id == dataset_id,
+            self.db.query(
+                DatasetFile,
             )
-            .order_by(
-                DatasetVersion.version.desc(),
+            .filter(
+                DatasetFile.dataset_version_id
+                == dataset_version_id,
             )
             .all()
+        )
+
+
+    def get_dataset_file_by_logical_name(
+        self,
+        dataset_version_id: uuid.UUID,
+        logical_name: str,
+    ) -> DatasetFile | None:
+        """
+        Retrieve a dataset file by logical name.
+
+        Example:
+            orders
+            customers
+            payments
+        """
+
+        return (
+            self.db.query(
+                DatasetFile,
+            )
+            .filter(
+                DatasetFile.dataset_version_id
+                == dataset_version_id,
+                DatasetFile.logical_name
+                == logical_name,
+            )
+            .first()
         )
 
     # -------------------------------------------------------------------------
@@ -240,22 +283,19 @@ class DatasetRepository:
 
     def get_dataset_profile(
         self,
-        dataset_version_id: uuid.UUID,
+        dataset_file_id: uuid.UUID,
     ) -> DatasetProfile | None:
         """
-        Retrieve profile for a dataset version.
-
-        Args:
-            dataset_version_id: DatasetVersion UUID.
-
-        Returns:
-            DatasetProfile if found.
+        Retrieve profile for a dataset file.
         """
+
         return (
-            self.db.query(DatasetProfile)
+            self.db.query(
+                DatasetProfile,
+            )
             .filter(
-                DatasetProfile.dataset_version_id
-                == dataset_version_id,
+                DatasetProfile.dataset_file_id
+                == dataset_file_id,
             )
             .first()
         )
@@ -319,6 +359,71 @@ class DatasetRepository:
             )
             .order_by(
                 DatasetVersion.version.desc(),
+            )
+            .first()
+        )
+    
+    def get_dataset_file_by_id(
+        self,
+        dataset_file_id: uuid.UUID,
+    ) -> DatasetFile | None:
+        """
+        Retrieve dataset file by ID.
+        """
+
+        return (
+            self.db.query(DatasetFile)
+            .filter(
+                DatasetFile.id == dataset_file_id,
+            )
+            .first()
+        )
+    
+
+    def delete_dataset(
+        self,
+        dataset: Dataset,
+    ) -> Dataset:
+        """
+        Soft delete dataset.
+        """
+
+        dataset.is_active = False
+
+        return dataset
+    
+    def get_dataset_version(
+        self,
+        version_id: uuid.UUID,
+    ) -> DatasetVersion | None:
+
+        return (
+            self.db.query(
+                DatasetVersion,
+            )
+            .filter(
+                DatasetVersion.id == version_id,
+            )
+            .first()
+        )
+    
+    def get_dataset(
+        self,
+        dataset_id: uuid.UUID,
+    ) -> Dataset | None:
+        """
+        Retrieve dataset by ID.
+
+        Used internally by analytics,
+        ML, forecasting pipelines.
+        """
+
+        return (
+            self.db.query(
+                Dataset,
+            )
+            .filter(
+                Dataset.id == dataset_id,
             )
             .first()
         )

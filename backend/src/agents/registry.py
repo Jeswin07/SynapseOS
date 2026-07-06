@@ -1,4 +1,4 @@
-"""Registry for AI agents."""
+"""Agent registry."""
 
 from __future__ import annotations
 
@@ -11,18 +11,18 @@ from src.agents.types import AgentType
 
 class AgentRegistry:
     """
-    Stores all registered AI agents.
-
-    The Business Agent uses the registry to locate
-    specialized agents at runtime.
+    Registry containing available agents.
     """
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+    ) -> None:
 
         self._agents: dict[
             AgentType,
             BaseAgent,
         ] = {}
+
 
     def register(
         self,
@@ -33,33 +33,19 @@ class AgentRegistry:
             agent.agent_type
         ] = agent
 
+
     def get(
         self,
         agent_type: AgentType,
     ) -> BaseAgent:
-        """
-        Returns a registered AI agent.
 
-        Raises:
-            AgentNotRegisteredError:
-                If the requested agent has not been registered.
-        """
+        if agent_type not in self._agents:
 
-        agent = self._agents.get(agent_type)
-
-        if agent is None:
             raise AgentNotRegisteredError(
-                (
-                    f"Agent '{agent_type.value}' "
-                    "has not been registered."
-                ),
+                f"Agent '{agent_type.value}' "
+                "has not been registered."
             )
 
-        return agent
-
-    def exists(
-        self,
-        agent_type: AgentType,
-    ) -> bool:
-
-        return agent_type in self._agents
+        return self._agents[
+            agent_type
+        ]

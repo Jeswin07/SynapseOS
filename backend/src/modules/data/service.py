@@ -19,6 +19,10 @@ from src.modules.data.repository import DatasetRepository
 from src.shared.exceptions.dataset import (
     DatasetException,
 )
+from src.modules.data.logical_detector import (
+    LogicalNameDetector,
+)
+from src.models.dataset_file import DatasetFile
 from src.shared.logging import logger
 from src.shared.utils.checksum import (
     calculate_sha256,
@@ -222,17 +226,19 @@ class DatasetService:
         dataset_id: uuid.UUID,
         tenant_id: uuid.UUID,
         uploaded_by: uuid.UUID,
-        file: UploadFile,
+        files: list[UploadFile],
     ) -> DatasetVersion:
         """
-        Upload a new dataset version.
+        Upload a new dataset version containing multiple files.
         """
 
         try:
 
-            dataset = self.repository.get_dataset_by_id_and_tenant(
-                dataset_id=dataset_id,
-                tenant_id=tenant_id,
+            dataset = (
+                self.repository.get_dataset_by_id_and_tenant(
+                    dataset_id=dataset_id,
+                    tenant_id=tenant_id,
+                )
             )
 
             if dataset is None:
@@ -240,66 +246,17 @@ class DatasetService:
                     "Dataset not found."
                 )
 
-            version = self.repository.get_next_version(
-                dataset_id,
-            )
-
-            checksum = calculate_sha256(
-                file.file,
-            )
-
-            if file.filename is None:
-                raise ValueError("Filename is required")
-
-            filename = file.filename
-
-            object_path = generate_dataset_object_path(
-                tenant_id=tenant_id,
-                dataset_id=dataset.id,
-                version=version,
-                filename=filename,
-            )
-
-            file.file.seek(0)
-
-            file.file.seek(
-                0,
-                2,
-            )
-
-            file_size = file.file.tell()
-
-            file.file.seek(0)
-
-            self.storage.upload_file(
-                object_name=object_path,
-                file=file.file,
-                file_size=file_size,
-                content_type=file.content_type
-                or "application/octet-stream",
-            )
-
-            file.file.seek(0)
-
-            file_bytes = file.file.read()
-
-            profiler = DatasetProfiler()
-
-            profile = profiler.profile(
-                file_bytes,
+            version_number = (
+                self.repository.get_next_version(
+                    dataset_id,
+                )
             )
 
             dataset_version = DatasetVersion(
                 dataset_id=dataset.id,
-                version=version,
-                storage_path=object_path,
-                original_filename=file.filename,
-                mime_type=file.content_type
-                or "application/octet-stream",
-                file_size=file_size,
-                checksum=checksum,
+                version=version_number,
                 uploaded_by=uploaded_by,
-                )
+            )
 
             self.repository.create_dataset_version(
                 dataset_version,
@@ -307,17 +264,95 @@ class DatasetService:
 
             self.repository.db.flush()
 
-            print("Dataset Version ID:", dataset_version.id)
+            profiler = DatasetProfiler()
 
-            dataset_profile = DatasetProfile(
-                dataset_version_id=dataset_version.id,
-                profile=profile,
-                quality_score=None,
-            )
+            for file in files:
 
-            self.repository.create_dataset_profile(
-                dataset_profile,
-            )
+                if file.filename is None:
+                    raise DatasetException(
+                        "Filename missing."
+                    )
+
+                checksum = calculate_sha256(
+                    file.file,
+                )
+
+                object_path = (
+                    generate_dataset_object_path(
+                        tenant_id=tenant_id,
+                        dataset_id=dataset.id,
+                        version=version_number,
+                        filename=file.filename,
+                    )
+                )
+
+                file.file.seek(0)
+
+                file.file.seek(
+                    0,
+                    2,
+                )
+
+                file_size = file.file.tell()
+
+                file.file.seek(0)
+
+                self.storage.upload_file(
+                    object_name=object_path,
+                    file=file.file,
+                    file_size=file_size,
+                    content_type=(
+                        file.content_type
+                        or "application/octet-stream"
+                    ),
+                )
+
+                file.file.seek(0)
+
+                file_bytes = file.file.read()
+
+                profile = profiler.profile(
+                    file_bytes,
+                )
+
+                logical_name = LogicalNameDetector.detect(
+                    file.filename,
+                )
+
+                dataset_file = DatasetFile(
+                    dataset_version_id=dataset_version.id,
+                    logical_name=logical_name,
+                    original_filename=file.filename,
+                    storage_path=object_path,
+                    mime_type=(
+                        file.content_type
+                        or "application/octet-stream"
+                    ),
+                    file_size=file_size,
+                    checksum=checksum,
+                    rows_count=profile["row_count"],
+                    columns_count=profile["column_count"],
+                    schema={
+                        "columns": profile["columns"],
+                        "dtypes": profile["dtypes"],
+                    },
+                )
+
+                self.repository.create_dataset_file(
+                    dataset_file,
+                )
+
+                self.repository.db.flush()
+
+                dataset_profile = DatasetProfile(
+                    dataset_file_id=dataset_file.id,
+                    profile=profile,
+                    quality_score=None,
+                )
+
+                self.repository.create_dataset_profile(
+                    dataset_profile,
+                )
 
             self.repository.commit()
 
@@ -329,7 +364,8 @@ class DatasetService:
                 "Dataset version uploaded.",
                 extra={
                     "dataset_id": str(dataset.id),
-                    "version": version,
+                    "version": version_number,
+                    "files": len(files),
                 },
             )
 
@@ -363,26 +399,65 @@ class DatasetService:
         )
     
 
-    def download_dataset(
+    def download_dataset_file(
         self,
-        dataset_id: uuid.UUID,
+        dataset_file_id: uuid.UUID,
     ):
         """
-        Download latest dataset version.
+        Download a specific dataset file.
         """
 
-        version = self.repository.get_latest_version(
-            dataset_id,
+        dataset_file = (
+            self.repository.get_dataset_file_by_id(
+                dataset_file_id,
+            )
         )
 
-        if version is None:
+        if dataset_file is None:
             raise DatasetException(
-                "Dataset version not found."
+                "Dataset file not found."
             )
 
         return (
             self.storage.download_file(
-                version.storage_path,
+                dataset_file.storage_path,
             ),
-            version.original_filename,
+            dataset_file.original_filename,
+        )
+    
+
+    def delete_dataset(
+        self,
+        dataset_id: uuid.UUID,
+        tenant_id: uuid.UUID,
+    ) -> None:
+
+        dataset = (
+            self.repository.get_dataset_by_id_and_tenant(
+                dataset_id,
+                tenant_id,
+            )
+        )
+
+        if dataset is None:
+            raise DatasetException(
+                "Dataset not found."
+            )
+
+        self.repository.delete_dataset(
+            dataset,
+        )
+
+        self.repository.commit()
+
+    
+    def get_dataset_files(
+        self,
+        dataset_version_id: uuid.UUID,
+    ):
+
+        return (
+            self.repository.list_dataset_files(
+                dataset_version_id,
+            )
         )
