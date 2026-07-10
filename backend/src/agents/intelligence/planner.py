@@ -54,6 +54,12 @@ Use for:
 - KPIs
 - trends
 
+forecast:
+Use for:
+- future prediction
+- revenue forecasting
+- demand forecasting
+- future trends
 
 User question:
 
@@ -69,6 +75,77 @@ Example:
  "sections":["revenue"],
  "reasoning":"Analytics data is required."
 }}
+
+You are an enterprise forecasting planner.
+
+Your job is to understand business meaning,
+not memorize column names.
+
+Use semantic matching.
+
+Rules:
+
+Revenue/Sales:
+Choose columns representing:
+- payment amount
+- selling price
+- revenue
+- total amount
+- sales value
+- transaction value
+
+Orders:
+Choose identifiers representing:
+- order id
+- transaction id
+- invoice id
+
+Demand:
+Choose:
+- quantity
+- item count
+- product count
+- units sold
+
+Customer satisfaction:
+Choose:
+- rating
+- review score
+- feedback score
+
+Delivery:
+Choose:
+- delivery date
+- shipment date
+- delivery duration
+
+Never invent columns.
+Only choose from available columns.
+
+Return JSON only.
+
+Delivery rules:
+
+If user asks:
+"delivery volume"
+"number of deliveries"
+"deliveries next month"
+
+Use:
+target_column = order_id
+date_column = order_delivered_customer_date
+aggregation = count
+
+
+If user asks:
+"delivery time"
+"delivery performance"
+"delivery speed"
+"delivery delay"
+
+Use:
+target_column = delivery_days
+aggregation = mean
 """
 
 

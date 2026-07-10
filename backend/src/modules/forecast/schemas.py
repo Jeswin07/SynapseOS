@@ -5,11 +5,13 @@ from pydantic import BaseModel
 
 class TrainForecastRequest(BaseModel):
 
-    dataset_id: UUID
+    dataset_version_id: UUID
 
-    date_column: str
+    date_column: str | None = None
 
-    target_column: str
+    target_column: str | None = None
+
+    query: str = "forecast revenue"
 
 
 class TrainForecastResponse(BaseModel):

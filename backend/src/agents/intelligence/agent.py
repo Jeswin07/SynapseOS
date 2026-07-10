@@ -76,6 +76,8 @@ class IntelligenceAgent(BaseAgent):
             response = await self.mcp.execute(
                 tool=tool,
                 tenant_id=request.tenant_id,
+                user_id=request.user_id,
+                query=request.query,
                 dataset_version_id=request.metadata.get(
                     "dataset_version_id",
                 ),

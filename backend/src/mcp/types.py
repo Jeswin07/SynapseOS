@@ -1,31 +1,18 @@
-"""Shared enums for the MCP layer."""
+"""MCP types."""
 
-from __future__ import annotations
-
-from enum import StrEnum
+from enum import Enum
 
 
-class MCPTool(StrEnum):
-    """
-    Supported MCP tools exposed by SynapseOS.
-    """
+class MCPTool(
+    Enum,
+):
 
-    KNOWLEDGE_SEARCH = "knowledge.search"
-
-    ANALYTICS_SUMMARY = "analytics.summary"
-
-    ML_TRAIN = "ml.train"
-
-    ML_PREDICT = "ml.predict"
-
-    ML_EXPLAIN = "ml.explain"
-
-    FORECAST_GENERATE = "forecast.generate"
-
-    RISK_ANALYZE = "risk.analyze"
+    KNOWLEDGE_SEARCH = "knowledge_search"
 
     ANALYTICS = "analytics"
 
-    KNOWLEDGE = "knowledge"
-
     FORECAST = "forecast"
+
+    PREDICTION = "prediction"
+
+    RISK = "risk"

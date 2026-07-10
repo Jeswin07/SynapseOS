@@ -29,8 +29,11 @@ class MCPService:
 
     async def execute(
         self,
+        *,
         tool: MCPTool,
         tenant_id: UUID,
+        user_id: UUID,
+        query: str = "",
         **parameters: Any,
     ) -> MCPToolResponse:
         """
@@ -40,6 +43,8 @@ class MCPService:
         request = MCPToolRequest(
             tool=tool,
             tenant_id=tenant_id,
+            user_id=user_id,
+            query=query,
             parameters=parameters,
         )
 

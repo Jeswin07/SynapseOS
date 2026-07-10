@@ -12,18 +12,25 @@ from src.ml.features.commerce import (
     CommerceFeatureBuilder,
 )
 
+from src.ml.features.generic import (
+    GenericFeatureBuilder,
+)
+
 
 class FeatureBuilderRegistry:
     """
     Selects feature builder by domain.
     """
 
+
     BUILDERS = {
+
         BusinessDomain.ECOMMERCE:
             CommerceFeatureBuilder,
 
         BusinessDomain.RETAIL:
             CommerceFeatureBuilder,
+
     }
 
 
@@ -34,15 +41,13 @@ class FeatureBuilderRegistry:
     ) -> BaseFeatureBuilder:
 
 
-        builder = cls.BUILDERS.get(
-            domain,
-        )
-
-
-        if builder is None:
-            raise ValueError(
-                f"No feature builder for {domain}"
+        builder = (
+            cls.BUILDERS
+            .get(
+                domain,
+                GenericFeatureBuilder,
             )
+        )
 
 
         return builder()

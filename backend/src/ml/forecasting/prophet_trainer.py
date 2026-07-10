@@ -23,16 +23,34 @@ class ProphetTrainer:
         Train a Prophet forecasting model.
         """
 
-        df = (
-            dataframe
-            .select(
-                [
-                    date_column,
-                    target_column,
-                ]
+        if isinstance(
+            dataframe,
+            pl.DataFrame,
+        ):
+
+            df = (
+                dataframe
+                .select(
+                    [
+                        date_column,
+                        target_column,
+                    ]
+                )
+                .to_pandas()
             )
-            .to_pandas()
-        )
+
+
+        else:
+
+            df = (
+                dataframe[
+                    [
+                        date_column,
+                        target_column,
+                    ]
+                ]
+                .copy()
+            )
         print(dataframe.columns)
         print(date_column)
 
@@ -78,6 +96,24 @@ class ProphetTrainer:
         )
 
         model = Prophet()
+
+        df["y"] = pd.to_numeric(
+            df["y"],
+            errors="coerce",
+        )
+
+
+        df = df.dropna(
+            subset=[
+                "y",
+            ],
+        )
+
+
+        if df.empty:
+            raise ValueError(
+                "No numeric values available for forecasting."
+            )
 
         model.fit(
             df,

@@ -38,15 +38,15 @@ class ForecastPredictor:
                     "%Y-%m-%d",
                 ),
                 "prediction": round(
-                    float(row.yhat),
+                    max(float(row.yhat),0),
                     2,
                 ),
                 "lower": round(
-                    float(row.yhat_lower),
+                    max(float(row.yhat_lower),0),
                     2,
                 ),
                 "upper": round(
-                    float(row.yhat_upper),
+                    max(float(row.yhat_upper),0),
                     2,
                 ),
             }

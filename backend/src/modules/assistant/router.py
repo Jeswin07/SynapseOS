@@ -3,7 +3,11 @@
 from __future__ import annotations
 
 from uuid import UUID
+from src.models.user import User
 
+from src.modules.auth.dependencies import (
+    get_current_user,
+)
 from fastapi import APIRouter, Depends
 
 from src.modules.assistant.schemas import (
@@ -34,8 +38,8 @@ async def chat(
     db: Session = Depends(
         get_db,
     ),
-    tenant_id: UUID = Depends(
-        get_current_tenant_id,
+    current_user: User = Depends(
+        get_current_user,
     ),
 ) -> AssistantChatResponse:
     """
@@ -48,5 +52,6 @@ async def chat(
 
     return await service.chat(
         request=request,
-        tenant_id=tenant_id,
+        tenant_id=current_user.tenant_id,
+        user_id=current_user.id,
     )

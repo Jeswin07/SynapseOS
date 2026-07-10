@@ -25,12 +25,14 @@ class AssistantService:
         self,
         request: AssistantChatRequest,
         tenant_id: UUID,
+        user_id: UUID,
     ) -> AssistantChatResponse:
 
         response = await self.agent.invoke(
             AgentInput(
                 query=request.message,
                 tenant_id=tenant_id,
+                user_id=user_id,
                 metadata=request.metadata,
             ),
         )

@@ -68,6 +68,34 @@ Instructions:
 - Explain business impact.
 - Provide recommendations if useful.
 - Do not invent missing data.
+
+Forecast response contains:
+
+forecast_config.metric tells what is predicted.
+
+Do not assume all forecasts are revenue.
+
+Examples:
+- metric=revenue → discuss sales/revenue
+- metric=product_count → discuss demand/orders
+- metric=review_score → discuss satisfaction trend
+
+Use total_expected_value and average_daily_value with the correct business meaning.
+Formatting rules:
+
+If aggregation=count:
+- Values represent counts.
+- Never show decimal places.
+- Example:
+  1200 orders
+  40 deliveries/day
+
+If aggregation=sum:
+- Values represent totals.
+- Use money format only for revenue metrics.
+
+Never call order forecasts revenue.
+Never call delivery forecasts sales.
 """
 
 

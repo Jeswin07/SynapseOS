@@ -19,9 +19,13 @@ class MCPToolRequest(BaseModel):
 
     tenant_id: UUID
 
+    user_id: UUID
+
     parameters: dict[str, Any] = Field(
         default_factory=dict,
     )
+
+    query: str = ""
 
 
 class MCPToolResponse(BaseModel):

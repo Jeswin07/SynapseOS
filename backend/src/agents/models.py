@@ -31,7 +31,7 @@ class AgentInput(BaseModel):
 
     tenant_id: UUID
 
-    user_id: UUID | None = None
+    user_id: UUID 
 
     session_id: str | None = None
 

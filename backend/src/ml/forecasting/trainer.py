@@ -7,6 +7,9 @@ from src.ml.forecasting.prophet_trainer import (
 from src.ml.preprocessing.loader import (
     DatasetLoader,
 )
+from src.ml.forecasting.detector import (
+    ForecastColumnDetector,
+)
 
 
 class ForecastTrainer:
@@ -20,14 +23,16 @@ class ForecastTrainer:
 
         self.trainer = ProphetTrainer()
 
+        self.detector = ForecastColumnDetector()
+
     def train(
         self,
         *,
-        storage_path: str,
-        date_column: str,
-        target_column: str,
+        dataframe,
         forecast_id: UUID,
-        aggregation: str
+        aggregation: str,
+        date_column: str | None = None,
+        target_column: str | None = None,
     ) -> str:
         """
         Train a forecasting model.
@@ -36,9 +41,24 @@ class ForecastTrainer:
             Artifact path.
         """
 
-        dataframe = self.loader.load_csv(
-            storage_path,
-        )
+        if (
+            date_column is None
+            or target_column is None
+        ):
+
+            columns = self.detector.detect(
+                dataframe
+            )
+
+            date_column = (
+                date_column
+                or columns["date_column"]
+            )
+
+            target_column = (
+                target_column
+                or columns["target_column"]
+            )
 
         model = self.trainer.train(
             dataframe,
@@ -64,3 +84,5 @@ class ForecastTrainer:
         )
 
         return artifact_path
+
+

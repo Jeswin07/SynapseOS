@@ -9,7 +9,7 @@ from src.mcp.server import MCPServer
 from src.mcp.service import MCPService
 from src.mcp.tools.knowledge import KnowledgeTool
 from src.mcp.tools.analytics_tool import AnalyticsTool
-
+from src.mcp.tools.forecast import ForecastTool
 
 def create_mcp_service(
         db:Session
@@ -38,6 +38,10 @@ def create_mcp_service(
 
     registry.register(
         AnalyticsTool(db)
+    )
+
+    registry.register(
+        ForecastTool(db)
     )
 
     server = MCPServer(

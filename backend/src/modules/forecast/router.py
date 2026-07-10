@@ -32,7 +32,7 @@ router = APIRouter(
     response_model=TrainForecastResponse,
     status_code=status.HTTP_201_CREATED,
 )
-def train_forecast(
+async def train_forecast(
     payload: TrainForecastRequest,
     current_user=Depends(get_current_user),
     db: Session = Depends(get_db),
@@ -45,12 +45,13 @@ def train_forecast(
 
         service = ForecastService(db)
 
-        forecast = service.train(
-            dataset_id=payload.dataset_id,
-            created_by=current_user.id,
-            date_column=payload.date_column,
-            target_column=payload.target_column,
-        )
+        forecast = await service.train(
+        dataset_version_id=payload.dataset_version_id,
+        created_by=current_user.id,
+        query=(
+            payload.query or "forecast revenue"
+        ),
+    )
 
         return TrainForecastResponse(
             forecast_id=forecast.id,
