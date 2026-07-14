@@ -3,22 +3,14 @@
 from __future__ import annotations
 
 from src.agents.base import BaseAgent
-
-from src.agents.intelligence.aggregator import (
-    IntelligenceAggregator,
-)
-
 from src.agents.intelligence.planner import (
     IntelligencePlanner,
 )
-
 from src.agents.models import (
     AgentInput,
     AgentOutput,
 )
-
 from src.agents.types import AgentType
-
 from src.mcp.service import (
     MCPService,
 )
@@ -49,8 +41,6 @@ class IntelligenceAgent(BaseAgent):
 
         self.planner = IntelligencePlanner()
 
-        self.aggregator = IntelligenceAggregator()
-
 
     async def _execute(
         self,
@@ -61,10 +51,36 @@ class IntelligenceAgent(BaseAgent):
         """
 
 
-        # LLM decides required tools
-        plan = await self.planner.plan(
-            request.query,
+        forced_tools = request.metadata.get(
+            "forced_tools",
         )
+
+        if forced_tools:
+
+            class ForcedPlan:
+
+                def __init__(self, tools):
+                    self.tools = tools
+
+                def model_dump(self):
+                    return {
+                        "tools": [
+                            tool.value
+                            for tool in self.tools
+                        ],
+                        "reasoning": "Forced by Scenario Agent.",
+                    }
+
+            plan = ForcedPlan(
+                forced_tools,
+            )
+
+        else:
+
+            plan = await self.planner.plan(
+                request.query,
+            )
+            print("PLAN:", plan.model_dump())
 
 
         results = {}
@@ -92,15 +108,11 @@ class IntelligenceAgent(BaseAgent):
             )
 
 
-        # Generate final intelligence answer
-        answer = await self.aggregator.aggregate(
-            query=request.query,
-            plan=plan,
-            results=results,
-        )
-
-
         return AgentOutput(
-            answer=answer,
-            data=results,
+            answer="",
+            data={
+                "query": request.query,
+                "plan": plan.model_dump(),
+                "results": results,
+            },
         )

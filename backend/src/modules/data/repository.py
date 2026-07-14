@@ -8,9 +8,10 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from src.models.dataset import Dataset
+from src.models.dataset_file import DatasetFile
 from src.models.dataset_profile import DatasetProfile
 from src.models.dataset_version import DatasetVersion
-from src.models.dataset_file import DatasetFile
+
 
 class DatasetRepository:
     """

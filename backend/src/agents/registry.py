@@ -22,6 +22,7 @@ class AgentRegistry:
             AgentType,
             BaseAgent,
         ] = {}
+        
 
 
     def register(

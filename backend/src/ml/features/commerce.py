@@ -127,6 +127,9 @@ class CommerceFeatureBuilder(BaseFeatureBuilder):
             payment_col = self.find_column(
                 payments,
                 [
+                    "payment_value",
+                    "order_total",
+                    "total_amount",
                     "payment",
                     "amount",
                     "price",
@@ -519,17 +522,30 @@ class CommerceFeatureBuilder(BaseFeatureBuilder):
             return None
 
 
-        for col in df.columns:
+        columns = {
+            col.lower(): col
+            for col in df.columns
+        }
 
-            name = col.lower()
+
+    # exact priority first
+        for keyword in keywords:
+
+            for lower, original in columns.items():
+
+                if lower == keyword:
+
+                    return original
 
 
-            if any(
-                key in name
-                for key in keywords
-            ):
+    # partial fallback
+        for keyword in keywords:
 
-                return col
+            for lower, original in columns.items():
+
+                if keyword in lower:
+
+                    return original
 
 
         return None

@@ -1,15 +1,18 @@
 """Bootstrap MCP infrastructure."""
 
 from __future__ import annotations
+
 from sqlalchemy.orm import Session
 
 from src.mcp.client import MCPClient
 from src.mcp.registry import MCPRegistry
 from src.mcp.server import MCPServer
 from src.mcp.service import MCPService
-from src.mcp.tools.knowledge import KnowledgeTool
 from src.mcp.tools.analytics_tool import AnalyticsTool
 from src.mcp.tools.forecast import ForecastTool
+from src.mcp.tools.knowledge import KnowledgeTool
+from src.mcp.tools.predict import PredictTool
+from src.mcp.tools.risk import RiskTool
 
 def create_mcp_service(
         db:Session
@@ -42,6 +45,14 @@ def create_mcp_service(
 
     registry.register(
         ForecastTool(db)
+    )
+
+    registry.register(
+        PredictTool(db)
+    )
+
+    registry.register(
+        RiskTool(db)
     )
 
     server = MCPServer(

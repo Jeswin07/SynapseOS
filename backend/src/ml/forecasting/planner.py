@@ -5,12 +5,11 @@ from __future__ import annotations
 import json
 
 from src.agents.common.llm import LLMClient
-
-from src.ml.forecasting.schemas import (
-    ForecastPlan,
-)
 from src.ml.features.semantic_resolver import (
     SemanticColumnResolver,
+)
+from src.ml.forecasting.schemas import (
+    ForecastPlan,
 )
 
 

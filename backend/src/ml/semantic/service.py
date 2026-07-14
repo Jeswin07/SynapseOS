@@ -6,6 +6,9 @@ import uuid
 
 from sqlalchemy.orm import Session
 
+from src.ml.features.service import (
+    FeatureService,
+)
 from src.ml.semantic.mapper import (
     SemanticMapper,
 )
@@ -15,13 +18,8 @@ from src.ml.semantic.profiler import (
 from src.ml.semantic.repository import (
     SemanticRepository,
 )
-
 from src.models.dataset_semantic_model import (
     DatasetSemanticModel,
-)
-
-from src.ml.features.service import (
-    FeatureService,
 )
 
 

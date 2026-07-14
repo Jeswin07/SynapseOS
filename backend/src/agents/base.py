@@ -45,6 +45,7 @@ class BaseAgent(ABC):
     async def invoke(
         self,
         request: AgentInput,
+        **kwargs,
     ) -> AgentOutput:
         """
         Executes the agent lifecycle.
@@ -54,7 +55,7 @@ class BaseAgent(ABC):
 
         start = time.perf_counter()
 
-        response = await self._execute(request)
+        response = await self._execute(request,  **kwargs,)
 
         elapsed = (
             time.perf_counter() - start

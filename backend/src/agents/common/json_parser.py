@@ -46,6 +46,8 @@ def parse_llm_json(
         )
 
 
-    return json.loads(
-        match.group(),
-    )
+    decoder = json.JSONDecoder()
+
+    obj, _ = decoder.raw_decode(match.group())
+
+    return obj

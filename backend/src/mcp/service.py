@@ -45,7 +45,10 @@ class MCPService:
             tenant_id=tenant_id,
             user_id=user_id,
             query=query,
-            parameters=parameters,
+            parameters={
+                "query": query,
+                **parameters,
+            },
         )
 
         return await self.client.invoke(

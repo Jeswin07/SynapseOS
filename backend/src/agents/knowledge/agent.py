@@ -40,13 +40,15 @@ class KnowledgeAgent(BaseAgent):
         response = await self.mcp.execute(
             tool=MCPTool.KNOWLEDGE_SEARCH,
             tenant_id=request.tenant_id,
+            user_id=request.user_id,
             query=request.query,
         )
 
         return AgentOutput(
-            answer=response.data["answer"],
-            sources=response.data["sources"],
-            data={
-                "metrics": response.data["metrics"],
-            },
+            answer="",
+            sources=response.data.get(
+                "sources",
+                [],
+            ),
+            data=response.data,
         )

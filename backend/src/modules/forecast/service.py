@@ -1,17 +1,21 @@
 import uuid
+
 import pandas as pd
 from sqlalchemy.orm import Session
 
+from src.ml.features.service import FeatureService
+from src.ml.forecasting.planner import ForecastPlanner
 from src.ml.forecasting.trainer import ForecastTrainer
+from src.ml.semantic.service import SemanticService
 from src.models.forecast_model import ForecastModel
 from src.modules.forecast.predictor import (
     ForecastPredictor,
 )
 from src.modules.forecast.repository import ForecastRepository
 from src.shared.logging import logger
-from src.ml.features.service import FeatureService
-from src.ml.forecasting.planner import ForecastPlanner
-from src.ml.semantic.service import SemanticService
+from src.ml.cache.forecast_cache import (
+    ForecastCache,
+)
 
 
 class ForecastService:
@@ -337,6 +341,19 @@ class ForecastService:
                 "Dataset version not found."
             )
 
+        cache_key = (
+            f"{dataset_version_id}:"
+            f"{query}:"
+            f"{periods}"
+        )
+
+        cached = ForecastCache.get(
+            cache_key,
+        )
+
+        if cached is not None:
+            return cached
+
 
     # build features only for planning
         features = (
@@ -480,7 +497,7 @@ class ForecastService:
         ]
 
 
-        return {
+        result = {
 
             "forecast_id": str(
                 forecast.id,
@@ -551,6 +568,13 @@ class ForecastService:
             "sample_prediction":
             sample_predictions,
         }
+
+        ForecastCache.set(
+            cache_key,
+            result,
+        )
+
+        return result
     
     def _is_numeric_column(
         self,

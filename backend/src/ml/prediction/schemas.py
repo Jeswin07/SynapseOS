@@ -1,4 +1,4 @@
-"""Schemas for ML prediction intelligence."""
+"""Prediction intelligence schemas."""
 
 from __future__ import annotations
 
@@ -8,54 +8,39 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 
-class PredictionType(
-    str,
-    Enum,
-):
-    """
-    Supported business prediction workflows.
-    """
+class PredictionType(str, Enum):
+    """Supported prediction workflows."""
 
     CUSTOMER_CHURN = "customer_churn"
-
     DELIVERY_DELAY = "delivery_delay"
 
 
-class PredictionLevel(
-    str,
-    Enum,
-):
-    """
-    Business friendly prediction severity.
-    """
+class PredictionLevel(str, Enum):
+    """Prediction severity."""
 
     LOW = "LOW"
-
     MEDIUM = "MEDIUM"
-
     HIGH = "HIGH"
 
 
 class EntityPrediction(BaseModel):
-    """
-    Single entity prediction result.
-    """
+    """Single entity prediction."""
 
-    entity_id: str | None = None
+    entity_id: str
 
     probability: float
 
     level: PredictionLevel
 
-    drivers: list[str] = Field(
-        default_factory=list,
+    drivers: list[str]
+
+    metrics: dict[str, Any] = Field(
+        default_factory=dict,
     )
 
 
 class PredictionSummary(BaseModel):
-    """
-    Aggregated prediction overview.
-    """
+    """Prediction summary."""
 
     total_entities: int
 
@@ -63,32 +48,29 @@ class PredictionSummary(BaseModel):
 
     average_probability: float
 
+    business_impact: dict[str, Any] = Field(
+        default_factory=dict,
+    )
+
 
 class PredictionResult(BaseModel):
     """
-    Final prediction response.
+    Prediction output contract.
 
-    Designed for:
-    - MCP
-    - Risk engine
-    - Scenario simulations
+    Used by:
+    - Intelligence Agent
+    - Risk Tool
+    - Scenario Agent
     """
 
     prediction_type: PredictionType
 
     summary: PredictionSummary
 
-    predictions: list[
-        EntityPrediction
-    ]
+    predictions: list[EntityPrediction]
 
-    recommendations: list[str] = Field(
-        default_factory=list,
-    )
+    recommendations: list[str]
 
-    metadata: dict[
-        str,
-        Any,
-    ] = Field(
+    metadata: dict[str, Any] = Field(
         default_factory=dict,
     )

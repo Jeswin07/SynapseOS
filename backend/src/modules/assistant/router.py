@@ -2,26 +2,19 @@
 
 from __future__ import annotations
 
-from uuid import UUID
-from src.models.user import User
-
-from src.modules.auth.dependencies import (
-    get_current_user,
-)
 from fastapi import APIRouter, Depends
-
+from sqlalchemy.orm import Session
+from fastapi.responses import StreamingResponse
+from src.db.session import get_db
+from src.models.user import User
 from src.modules.assistant.schemas import (
     AssistantChatRequest,
     AssistantChatResponse,
 )
 from src.modules.assistant.service import AssistantService
 from src.modules.auth.dependencies import (
-    get_current_tenant_id,
+    get_current_user,
 )
-from sqlalchemy.orm import Session
-
-from src.db.session import get_db
-
 
 router = APIRouter(
     prefix="/assistant",
@@ -54,4 +47,22 @@ async def chat(
         request=request,
         tenant_id=current_user.tenant_id,
         user_id=current_user.id,
+    )
+
+@router.post("/chat/stream")
+async def chat_stream(
+    request: AssistantChatRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+
+    service = AssistantService(db)
+
+    return StreamingResponse(
+        service.chat_stream(
+            request=request,
+            tenant_id=current_user.tenant_id,
+            user_id=current_user.id,
+        ),
+        media_type="text/event-stream",
     )

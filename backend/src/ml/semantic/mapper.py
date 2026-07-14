@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 
 from src.agents.common.llm import LLMClient
-
 from src.ml.semantic.schemas import (
     SemanticMapping,
     SemanticProfile,

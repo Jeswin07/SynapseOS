@@ -1,14 +1,14 @@
 from pathlib import Path
 from uuid import UUID
 
+from src.ml.forecasting.detector import (
+    ForecastColumnDetector,
+)
 from src.ml.forecasting.prophet_trainer import (
     ProphetTrainer,
 )
 from src.ml.preprocessing.loader import (
     DatasetLoader,
-)
-from src.ml.forecasting.detector import (
-    ForecastColumnDetector,
 )
 
 

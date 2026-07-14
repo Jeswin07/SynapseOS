@@ -10,17 +10,19 @@ from sqlalchemy.orm import Session
 from src.ml.data.dataset_loader import (
     DatasetLoader,
 )
-
-from src.ml.features.registry import (
-    FeatureBuilderRegistry,
-)
-
-from src.modules.data.repository import (
-    DatasetRepository,
-)
 from src.ml.data.version_resolver import (
     DatasetVersionResolver,
 )
+from src.ml.features.registry import (
+    FeatureBuilderRegistry,
+)
+from src.modules.data.repository import (
+    DatasetRepository,
+)
+from src.ml.cache.feature_cache import (
+    FeatureCache,
+)
+
 
 class FeatureService:
     """
@@ -55,7 +57,6 @@ class FeatureService:
         mode: str = "single",
     ) -> pd.DataFrame:
 
-
         versions = self.resolver.resolve(
             dataset_id=dataset_id,
             version_id=dataset_version_id,
@@ -63,9 +64,26 @@ class FeatureService:
             mode=mode,
         )
 
+        cache_key = "|".join(
+            sorted(
+                str(
+                    version.id,
+                )
+                for version in versions
+            )
+        )
 
-        combined = {}
+        cached = FeatureCache.get(
+            cache_key,
+        )
 
+        if cached is not None:
+
+            return cached.copy(
+                deep=False,
+            )
+
+        combined: dict[str, list[pd.DataFrame]] = {}
 
         for version in versions:
 
@@ -73,45 +91,49 @@ class FeatureService:
                 version.id,
             )
 
-
             for name, frame in datasets.items():
 
-                if name not in combined:
-                    combined[name] = []
-
-                combined[name].append(
+                combined.setdefault(
+                    name,
+                    [],
+                ).append(
                     frame,
                 )
 
-
         final_datasets = {
+
             name: pd.concat(
                 frames,
                 ignore_index=True,
             )
+
             for name, frames in combined.items()
+
         }
 
-
-        dataset = (
-            self.repository.get_dataset(
-                versions[0].dataset_id,
-            )
+        dataset = self.repository.get_dataset(
+            versions[0].dataset_id,
         )
 
         if dataset is None:
+
             raise ValueError(
-                "Dataset not found."
+                "Dataset not found.",
             )
-        
-        builder = (
-            FeatureBuilderRegistry
-            .get_builder(
-                dataset.business_domain,
-            )
+
+        builder = FeatureBuilderRegistry.get_builder(
+            dataset.business_domain,
         )
 
-
-        return builder.build(
+        features = builder.build(
             final_datasets,
         )
+
+        FeatureCache.set(
+            cache_key,
+            features,
+        )
+
+        return features.copy(
+            deep=False,
+        )   

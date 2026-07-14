@@ -1,19 +1,16 @@
 """Feature builder registry."""
 
-from src.models.dataset_enums import (
-    BusinessDomain,
-)
-
 from src.ml.features.base import (
     BaseFeatureBuilder,
 )
-
 from src.ml.features.commerce import (
     CommerceFeatureBuilder,
 )
-
 from src.ml.features.generic import (
     GenericFeatureBuilder,
+)
+from src.models.dataset_enums import (
+    BusinessDomain,
 )
 
 

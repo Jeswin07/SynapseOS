@@ -6,23 +6,18 @@ from fastapi import (
     APIRouter,
     Depends,
 )
-
 from sqlalchemy.orm import Session
 
 from src.db.session import get_db
-
 from src.modules.analytics.schemas import (
     AnalyticsRequest,
 )
-
 from src.modules.analytics.service import (
     AnalyticsService,
 )
-
 from src.modules.auth.dependencies import (
     get_current_user,
 )
-
 
 router = APIRouter(
     prefix="/analytics",

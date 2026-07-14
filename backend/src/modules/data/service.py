@@ -12,20 +12,23 @@ from src.models.dataset_enums import (
     BusinessDomain,
     DatasetType,
 )
+from src.models.dataset_file import DatasetFile
 from src.models.dataset_profile import DatasetProfile
 from src.models.dataset_version import DatasetVersion
+from src.modules.data.logical_detector import (
+    LogicalNameDetector,
+)
 from src.modules.data.profiling.profiler import DatasetProfiler
 from src.modules.data.repository import DatasetRepository
 from src.shared.exceptions.dataset import (
     DatasetException,
 )
-from src.modules.data.logical_detector import (
-    LogicalNameDetector,
-)
-from src.models.dataset_file import DatasetFile
 from src.shared.logging import logger
 from src.shared.utils.checksum import (
     calculate_sha256,
+)
+from src.ml.cache.feature_cache import (
+    FeatureCache,
 )
 
 
@@ -355,6 +358,7 @@ class DatasetService:
                 )
 
             self.repository.commit()
+            FeatureCache.clear()
 
             self.repository.refresh(
                 dataset_version,

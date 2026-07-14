@@ -1,5 +1,4 @@
 import uuid
-from pathlib import Path
 
 
 def generate_dataset_object_path(
