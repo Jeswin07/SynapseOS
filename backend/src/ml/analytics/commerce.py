@@ -13,6 +13,27 @@ class CommerceAnalyticsEngine:
     """
 
 
+    def _col(
+        self,
+        df: pd.DataFrame,
+        canonical: str,
+        *fallbacks: str,
+    ) -> str | None:
+    
+        """
+        Resolve canonical column first.
+        Falls back to legacy Olist names.
+        """
+
+        if canonical in df.columns:
+            return canonical
+
+        for col in fallbacks:
+            if col in df.columns:
+                return col
+
+        return None
+    
     def analyze(
         self,
         data: pd.DataFrame,
@@ -43,8 +64,69 @@ class CommerceAnalyticsEngine:
     ):
 
         return {
+
             "total_records": len(data),
+
             "columns": len(data.columns),
+
+            "missing_values": int(
+                data.isna().sum().sum()
+            ),
+
+            "duplicate_records": int(
+                data.duplicated().sum()
+            ),
+
+            "available_metrics": {
+
+                "revenue": self._col(
+                    data,
+                    "revenue",
+                    "payment_value",
+                )
+                is not None,
+
+                "customers": self._col(
+                    data,
+                    "customer_id",
+                    "customer_unique_id",
+                )
+                is not None,
+
+                "categories": self._col(
+                    data,
+                    "category",
+                    "product_category_name",
+                )
+                is not None,
+
+                "reviews": self._col(
+                    data,
+                    "review_score",
+                    "rating",
+                )
+                is not None,
+
+                "geography": self._col(
+                    data,
+                    "state",
+                    "customer_state",
+                )
+                is not None,
+
+                "delivery": (
+                    "delivery_days" in data.columns
+                    or
+                    (
+                        self._col(
+                            data,
+                            "delivery_date",
+                            "order_delivered_customer_date",
+                        )
+                        is not None
+                    )
+                ),
+            },
         }
 
 
@@ -58,10 +140,12 @@ class CommerceAnalyticsEngine:
     ):
 
 
-        column = (
-            "revenue"
-            if "revenue" in data.columns
-            else "payment_value"
+        column = self._col(
+            data,
+            "revenue",
+            "payment_value",
+            "selling_price",
+            "amount",
         )
 
 
@@ -93,54 +177,28 @@ class CommerceAnalyticsEngine:
         data: pd.DataFrame,
     ):
 
-        customer_column = None
-
-
-        if "customer_unique_id" in data.columns:
-
-            customer_column = "customer_unique_id"
-
-
-        elif "customer_id" in data.columns:
-
-            customer_column = "customer_id"
-
-
-        if customer_column is None:
-
-            return {}
-
-
-        orders = (
-            data.groupby(
-                customer_column,
-            )
-            .size()
+        customer_col = self._col(
+            data,
+            "customer_id",
+            "customer_unique_id",
         )
 
+        if customer_col is None:
+            return {}
+
+        orders = data.groupby(customer_col).size()
+
+        repeat = int((orders > 1).sum())
+
+        total = int(orders.count())
 
         return {
-            "total_customers": int(
-                orders.count()
-            ),
-
-            "repeat_customers": int(
-                (
-                    orders > 1
-                ).sum()
-            ),
-
+            "total_customers": total,
+            "repeat_customers": repeat,
             "repeat_customer_rate": round(
-                float(
-                    (
-                        (orders > 1).sum()
-                        /
-                        orders.count()
-                    )
-                    * 100
-                ),
+                (repeat / total) * 100,
                 2,
-            ),
+            ) if total else 0,
         }
 
 
@@ -153,60 +211,57 @@ class CommerceAnalyticsEngine:
         data: pd.DataFrame,
     ):
 
+        category_col = self._col(
+            data,
+            "category",
+            "product_category_name",
+        )
 
-        if "product_category_name" not in data:
-
+        if category_col is None:
             return {}
 
-
         result = {
-            "top_categories_by_orders":
-                data[
-                    "product_category_name"
-                ]
+            "top_categories_by_orders": (
+                data[category_col]
                 .value_counts()
                 .head(10)
                 .to_dict()
+            )
         }
 
+        revenue_col = self._col(
+            data,
+            "revenue",
+            "payment_value",
+            "selling_price",
+            "amount",
+        )
 
-        if "revenue" in data.columns:
+        if revenue_col:
 
-            result[
-                "top_categories_by_revenue"
-            ] = (
-                data.groupby(
-                    "product_category_name"
-                )[
-                    "revenue"
-                ]
+            result["top_categories_by_revenue"] = (
+                data.groupby(category_col)[revenue_col]
                 .sum()
-                .sort_values(
-                    ascending=False,
-                )
+                .sort_values(ascending=False)
                 .head(10)
                 .to_dict()
             )
 
+        rating_col = self._col(
+            data,
+            "review_score",
+            "rating",
+        )
 
-        if "review_score" in data.columns:
+        if rating_col:
 
-            result[
-                "top_categories_by_rating"
-            ] = (
-                data.groupby(
-                    "product_category_name"
-                )[
-                    "review_score"
-                ]
+            result["top_categories_by_rating"] = (
+                data.groupby(category_col)[rating_col]
                 .mean()
-                .sort_values(
-                    ascending=False,
-                )
+                .sort_values(ascending=False)
                 .head(10)
                 .to_dict()
             )
-
 
         return result
 
@@ -339,59 +394,48 @@ class CommerceAnalyticsEngine:
         data: pd.DataFrame,
     ):
 
+        if "delivery_days" in data.columns:
 
-        result = {}
+            return {
+                "average_delivery_days": float(
+                    data["delivery_days"].mean()
+                ),
+                "late_orders": int(
+                    (data["delivery_days"] > 15).sum()
+                ),
+            }
 
+        purchase_col = self._col(
+            data,
+            "order_date",
+            "order_purchase_timestamp",
+        )
 
-        if (
-            "order_delivered_customer_date"
-            in data
-            and
-            "order_purchase_timestamp"
-            in data
-        ):
+        delivery_col = self._col(
+            data,
+            "delivery_date",
+            "order_delivered_customer_date",
+        )
 
+        if not purchase_col or not delivery_col:
+            return {}
 
-            delivered = pd.to_datetime(
-                data[
-                    "order_delivered_customer_date"
-                ],
-                errors="coerce",
-            )
+        delivered = pd.to_datetime(
+            data[delivery_col],
+            errors="coerce",
+        )
 
+        purchased = pd.to_datetime(
+            data[purchase_col],
+            errors="coerce",
+        )
 
-            purchased = pd.to_datetime(
-                data[
-                    "order_purchase_timestamp"
-                ],
-                errors="coerce",
-            )
+        days = (delivered - purchased).dt.days
 
-
-            days = (
-                delivered
-                -
-                purchased
-            ).dt.days
-
-
-            result[
-                "average_delivery_days"
-            ] = float(
-                days.mean()
-            )
-
-
-            result[
-                "late_orders"
-            ] = int(
-                (
-                    days > 15
-                ).sum()
-            )
-
-
-        return result
+        return {
+            "average_delivery_days": float(days.mean()),
+            "late_orders": int((days > 15).sum()),
+        }
 
 
     # -----------------------------
@@ -403,19 +447,22 @@ class CommerceAnalyticsEngine:
         data: pd.DataFrame,
     ):
 
+        state_col = self._col(
+            data,
+            "state",
+            "customer_state",
+        )
 
-        if "customer_state" not in data:
+        if state_col is None:
             return {}
 
-
         return {
-            "top_regions":
-                data[
-                    "customer_state"
-                ]
+            "top_regions": (
+                data[state_col]
                 .value_counts()
                 .head(10)
                 .to_dict()
+            )
         }
 
 
@@ -428,41 +475,38 @@ class CommerceAnalyticsEngine:
         data: pd.DataFrame,
     ):
 
+        date_col = self._col(
+            data,
+            "order_date",
+            "order_purchase_timestamp",
+        )
 
-        if (
-            "order_purchase_timestamp"
-            not in data
-            or
-            "revenue"
-            not in data
-        ):
+        revenue_col = self._col(
+            data,
+            "revenue",
+            "payment_value",
+            "selling_price",
+            "amount",
+        )
+
+        if not date_col or not revenue_col:
             return {}
-
 
         temp = data.copy()
 
-
         temp["month"] = (
             pd.to_datetime(
-                temp[
-                    "order_purchase_timestamp"
-                ]
+                temp[date_col],
+                errors="coerce",
             )
-            .dt
-            .to_period("M")
+            .dt.to_period("M")
             .astype(str)
         )
 
-
         revenue = (
-            temp.groupby(
-                "month"
-            )[
-                "revenue"
-            ]
+            temp.groupby("month")[revenue_col]
             .sum()
         )
-
 
         growth = (
             revenue
@@ -471,16 +515,9 @@ class CommerceAnalyticsEngine:
             * 100
         )
 
-
         return {
-            "monthly_revenue":
-                revenue.to_dict(),
-
-            "monthly_growth_percentage":
-                growth.round(
-                    2,
-                )
-                .to_dict(),
+            "monthly_revenue": revenue.to_dict(),
+            "monthly_growth_percentage": growth.round(2).to_dict(),
         }
 
 
@@ -493,65 +530,65 @@ class CommerceAnalyticsEngine:
         data: pd.DataFrame,
     ) -> list[str]:
 
+        insights: list[str] = []
 
-        insights = []
+        rating_col = self._col(
+            data,
+            "review_score",
+            "rating",
+        )
 
+        if rating_col:
 
-        if "review_score" in data:
-
-
-            rating = (
-                data[
-                    "review_score"
-                ]
-                .mean()
-            )
-
+            rating = data[rating_col].mean()
 
             if rating >= 4:
-
                 insights.append(
                     "Customer satisfaction is healthy."
                 )
-
             else:
-
                 insights.append(
                     "Customer satisfaction requires improvement."
                 )
 
+        if "delivery_days" in data.columns:
 
-        if (
-            "order_delivered_customer_date"
-            in data
-            and
-            "order_purchase_timestamp"
-            in data
-        ):
-
-
-            delivery_days = (
-                pd.to_datetime(
-                    data[
-                        "order_delivered_customer_date"
-                    ],
-                    errors="coerce",
-                )
-                -
-                pd.to_datetime(
-                    data[
-                        "order_purchase_timestamp"
-                    ],
-                    errors="coerce",
-                )
-            ).dt.days
-
-
-            if delivery_days.mean() > 10:
-
+            if data["delivery_days"].mean() > 10:
                 insights.append(
                     "Delivery time optimization opportunity detected."
                 )
 
+        else:
+
+            purchase_col = self._col(
+                data,
+                "order_date",
+                "order_purchase_timestamp",
+            )
+
+            delivery_col = self._col(
+                data,
+                "delivery_date",
+                "order_delivered_customer_date",
+            )
+
+            if purchase_col and delivery_col:
+
+                delivery_days = (
+                    pd.to_datetime(
+                        data[delivery_col],
+                        errors="coerce",
+                    )
+                    -
+                    pd.to_datetime(
+                        data[purchase_col],
+                        errors="coerce",
+                    )
+                ).dt.days
+
+                if delivery_days.mean() > 10:
+                    insights.append(
+                        "Delivery time optimization opportunity detected."
+                    )
 
         return insights

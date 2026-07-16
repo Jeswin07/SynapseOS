@@ -29,12 +29,13 @@ class CommerceFeatureBuilder(BaseFeatureBuilder):
 
             if len(datasets) == 1:
 
-                return (
-                    list(
-                        datasets.values()
-                    )[0]
-                    .copy()
-                )
+                features = list(datasets.values())[0].copy()
+
+                features = self._apply_canonical_columns(features)
+
+                features = self._engineer_common_features(features)
+
+                return features
 
 
     # ----------------------------
@@ -74,12 +75,13 @@ class CommerceFeatureBuilder(BaseFeatureBuilder):
 
             else:
 
-                return (
-                    list(
-                        datasets.values()
-                    )[0]
-                    .copy()
-                )
+                features = list(datasets.values())[0].copy()
+
+                features = self._apply_canonical_columns(features)
+
+                features = self._engineer_common_features(features)
+
+                return features
 
 
         features = (
@@ -251,7 +253,7 @@ class CommerceFeatureBuilder(BaseFeatureBuilder):
             if product_col:
 
                 agg_rules[
-                    "product_count"
+                    "quantity"
                 ] = (
                     product_col,
                     "count",
@@ -506,7 +508,12 @@ class CommerceFeatureBuilder(BaseFeatureBuilder):
                 )
             ).dt.days
 
+        features = self._apply_canonical_columns(features)
 
+        features = self._engineer_common_features(features)
+        print(features[["revenue"]].head())
+        print(features["revenue"].dtype)
+        print(features.columns.tolist())
         return features
 
 
@@ -549,3 +556,186 @@ class CommerceFeatureBuilder(BaseFeatureBuilder):
 
 
         return None
+
+
+    def _apply_canonical_columns(
+        self,
+        dataframe: pd.DataFrame,
+    ) -> pd.DataFrame:
+        """
+        Add enterprise canonical columns without removing
+        original dataset columns.
+
+        Existing code continues to work while newer modules
+        can rely on standardized names.
+        """
+
+        aliases = {
+
+            "revenue": [
+                "payment_value",
+                "selling_price",
+                "sale_price",
+                "price",
+                "amount",
+                "sales",
+                "revenue",
+                "total_amount",
+            ],
+
+            "customer_id": [
+                "customer_unique_id",
+                "customer_id",
+                "buyer_id",
+                "user_id",
+            ],
+
+            "seller_id": [
+                "seller_id",
+                "merchant_id",
+                "vendor_id",
+            ],
+
+            "category": [
+                "product_category_name",
+                "category",
+                "product_category",
+                "vertical",
+            ],
+
+            "brand": [
+                "brand",
+                "manufacturer",
+            ],
+
+            "order_date": [
+                "order_purchase_timestamp",
+                "purchase_date",
+                "order_date",
+                "created_at",
+                "date",
+            ],
+
+            "delivery_date": [
+                "order_delivered_customer_date",
+                "delivery_date",
+            ],
+
+            "estimated_delivery_date": [
+                "order_estimated_delivery_date",
+                "estimated_delivery_date",
+            ],
+
+            "review_score": [
+                "review_score",
+                "rating",
+                "stars",
+            ],
+
+            "state": [
+                "customer_state",
+                "state",
+                "province",
+            ],
+
+            "city": [
+                "customer_city",
+                "city",
+            ],
+
+            "quantity": [
+                "quantity",
+                "qty",
+            ],
+
+            "discount": [
+                "discount",
+                "discount_amount",
+            ],
+        }
+
+        lower = {
+            c.lower(): c
+            for c in dataframe.columns
+        }
+
+        for canonical, possible in aliases.items():
+
+            if canonical in dataframe.columns:
+                continue
+
+            for alias in possible:
+
+                real = lower.get(alias.lower())
+
+                if real:
+
+                    dataframe[canonical] = dataframe[real]
+
+                    break
+
+        return dataframe
+    
+    def _engineer_common_features(
+        self,
+        dataframe: pd.DataFrame,
+    ) -> pd.DataFrame:
+
+        if "order_date" in dataframe.columns:
+
+            dates = pd.to_datetime(
+                dataframe["order_date"],
+                errors="coerce",
+            )
+
+            dataframe["year"] = dates.dt.year
+
+            dataframe["month"] = dates.dt.month
+
+            dataframe["quarter"] = dates.dt.quarter
+
+            dataframe["weekday"] = dates.dt.day_name()
+
+            dataframe["week"] = dates.dt.isocalendar().week.astype("Int64")
+
+        if (
+            "delivery_date" in dataframe.columns
+            and
+            "order_date" in dataframe.columns
+        ):
+
+            delivery = pd.to_datetime(
+                dataframe["delivery_date"],
+                errors="coerce",
+            )
+
+            purchase = pd.to_datetime(
+                dataframe["order_date"],
+                errors="coerce",
+            )
+
+            dataframe["delivery_days"] = (
+                delivery - purchase
+            ).dt.days
+
+        if (
+            "estimated_delivery_date" in dataframe.columns
+            and
+            "delivery_date" in dataframe.columns
+        ):
+
+            estimated = pd.to_datetime(
+                dataframe["estimated_delivery_date"],
+                errors="coerce",
+            )
+
+            delivered = pd.to_datetime(
+                dataframe["delivery_date"],
+                errors="coerce",
+            )
+
+            dataframe["delivery_delay_days"] = (
+                delivered - estimated
+            ).dt.days
+
+        return dataframe

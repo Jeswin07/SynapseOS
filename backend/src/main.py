@@ -30,9 +30,20 @@ from src.modules.users.router import (
 from src.modules.risk.router import (
     router as risk_router,
 )
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI(title="SynapseOS API", version="1.0.0", openapi_version="3.0.3",)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def root():

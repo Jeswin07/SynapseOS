@@ -13,6 +13,7 @@ from src.modules.assistant.schemas import (
     AssistantChatRequest,
     AssistantChatResponse,
 )
+from fastapi.encoders import jsonable_encoder
 
 
 class AssistantService:
@@ -91,24 +92,24 @@ class AssistantService:
 
         response = await response_task
 
+        payload = {
+            "type": "final",
+            "response": {
+                "answer": response.answer,
+                "sources": response.sources,
+                "recommendations": response.recommendations,
+                "data": response.data,
+                "agent": (
+                    response.metadata.agent_name
+                    if response.metadata
+                    else None
+                ),
+                "tenant_id": str(tenant_id),
+            },
+        }
+
         yield (
             "data: "
-            + json.dumps(
-                {
-                    "type": "final",
-                    "response": {
-                        "answer": response.answer,
-                        "sources": response.sources,
-                        "recommendations": response.recommendations,
-                        "data": response.data,
-                        "agent": (
-                            response.metadata.agent_name
-                            if response.metadata
-                            else None
-                        ),
-                        "tenant_id": str(tenant_id),
-                    },
-                }
-            )
+            + json.dumps(jsonable_encoder(payload))
             + "\n\n"
         )
