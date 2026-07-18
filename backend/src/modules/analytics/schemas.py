@@ -5,6 +5,7 @@ from __future__ import annotations
 import uuid
 
 from pydantic import BaseModel
+from src.ml.core.filtering.schemas import DatasetFilters
 
 
 class AnalyticsRequest(BaseModel):
@@ -13,6 +14,7 @@ class AnalyticsRequest(BaseModel):
     """
 
     dataset_version_id: uuid.UUID
+    filters: DatasetFilters | None = None
 
 
 class AnalyticsMetric(BaseModel):

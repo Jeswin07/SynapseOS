@@ -1,7 +1,7 @@
 """Analytics routes."""
 
 from __future__ import annotations
-
+from uuid import UUID
 from fastapi import (
     APIRouter,
     Depends,
@@ -46,5 +46,20 @@ def run_analytics(
 
 
     return service.analyze(
-        request.dataset_version_id,
+        dataset_version_id=request.dataset_version_id,
+        filters=request.filters,
+    )
+
+@router.get(
+    "/{dataset_version_id}/filter-options",
+)
+def get_filter_options(
+    dataset_version_id: UUID,
+    db: Session = Depends(get_db),
+):
+
+    service = AnalyticsService(db)
+
+    return service.get_filter_options(
+        dataset_version_id,
     )

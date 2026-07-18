@@ -14,13 +14,13 @@ import { ChartSkeleton } from "@/components/common/LoadingSkeleton";
 import { ForecastChart } from "@/features/forecasting/components/ForecastChart";
 import { useTrainForecast, usePredictForecast } from "@/hooks/useForecast";
 import { ApiError } from "@/services/apiClient";
+import { ForecastSummaryCards } from "@/features/forecasting/components/ForecastSummaryCards";
 
 export default function ForecastingPage() {
   const [searchParams] = useSearchParams();
   const [datasetId, setDatasetId] = useState<string | null>(null);
   const [versionId, setVersionId] = useState<string | null>(searchParams.get("dataset_version_id"));
-  const [dateColumn, setDateColumn] = useState("");
-  const [targetColumn, setTargetColumn] = useState("");
+  const [query, setQuery] = useState("forecast revenue");
   const [periods, setPeriods] = useState(30);
   const [forecastId, setForecastId] = useState<string | null>(null);
 
@@ -34,19 +34,23 @@ export default function ForecastingPage() {
 
   function handleTrain() {
     if (!versionId) return;
+
     trainForecast.mutate(
       {
         dataset_version_id: versionId,
-        date_column: dateColumn || undefined,
-        target_column: targetColumn || undefined,
+        query,
       },
       {
         onSuccess: (data) => {
           setForecastId(data.forecast_id);
-          toast.success("Forecast model trained. Generate predictions below.");
+          toast.success("Forecast model trained successfully.");
         },
         onError: (err) => {
-          toast.error(err instanceof ApiError ? err.detail : "Training failed.");
+          toast.error(
+            err instanceof ApiError
+              ? err.detail
+              : "Forecast training failed."
+          );
         },
       }
     );
@@ -92,26 +96,23 @@ export default function ForecastingPage() {
               }}
             />
             <div className="space-y-1.5">
-              <Label htmlFor="date_column">Date column (optional)</Label>
+              <Label htmlFor="query">Business Question</Label>
+
               <Input
-                id="date_column"
-                placeholder="e.g. order_date"
-                value={dateColumn}
-                onChange={(e) => setDateColumn(e.target.value)}
+                id="query"
+                placeholder="Forecast monthly revenue"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
               />
-            </div>
-            <div className="space-y-1.5">
-              <Label htmlFor="target_column">Target column (optional)</Label>
-              <Input
-                id="target_column"
-                placeholder="e.g. revenue"
-                value={targetColumn}
-                onChange={(e) => setTargetColumn(e.target.value)}
-              />
+
+              <p className="text-xs text-muted-foreground">
+                Examples: Forecast revenue, Forecast daily orders,
+                Forecast monthly payment value.
+              </p>
             </div>
             <Button className="w-full" onClick={handleTrain} disabled={!versionId || trainForecast.isPending}>
               {trainForecast.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-              Train forecast model
+              Build forecast model
             </Button>
           </CardContent>
         </Card>
@@ -124,14 +125,17 @@ export default function ForecastingPage() {
           <CardContent className="space-y-4">
             <div className="space-y-1.5">
               <Label htmlFor="periods">Periods to forecast</Label>
-              <Input
-                id="periods"
-                type="number"
-                min={1}
-                max={365}
+              <select
+                className="w-full rounded-md border bg-background px-3 py-2"
                 value={periods}
                 onChange={(e) => setPeriods(Number(e.target.value))}
-              />
+              >
+                <option value={7}>7 Days</option>
+                <option value={30}>30 Days</option>
+                <option value={90}>90 Days</option>
+                <option value={180}>180 Days</option>
+                <option value={365}>365 Days</option>
+              </select>
             </div>
             <Button
               className="w-full"
@@ -140,7 +144,7 @@ export default function ForecastingPage() {
               disabled={!forecastId || predictForecast.isPending}
             >
               {predictForecast.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <TrendingUp className="h-4 w-4" />}
-              Generate predictions
+              Generate Forecast
             </Button>
             {!forecastId && (
               <p className="text-xs text-muted-foreground">Train a model first to enable predictions.</p>
@@ -157,7 +161,18 @@ export default function ForecastingPage() {
         ) : predictForecast.isError ? (
           <ErrorState onRetry={handlePredict} />
         ) : predictForecast.data ? (
-          <ForecastChart points={predictForecast.data.forecast} />
+          <>
+            <ForecastSummaryCards
+              summary={predictForecast.data.summary}
+              evaluation={predictForecast.data.evaluation}
+            />
+
+            <div className="mt-6">
+              <ForecastChart
+                points={predictForecast.data.forecast}
+              />
+            </div>
+          </>
         ) : (
           <EmptyState
             icon={TrendingUp}

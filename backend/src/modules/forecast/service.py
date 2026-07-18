@@ -16,7 +16,7 @@ from src.shared.logging import logger
 from src.ml.cache.forecast_cache import (
     ForecastCache,
 )
-
+from src.ml.forecasting.evaluator import ForecastEvaluator
 
 class ForecastService:
     """
@@ -39,6 +39,8 @@ class ForecastService:
         self.planner = ForecastPlanner()
 
         self.semantic_service = SemanticService(db)
+
+        self.evaluator = ForecastEvaluator()
 
     async def train(
         self,
@@ -239,28 +241,38 @@ class ForecastService:
                 forecast,
             )
 
-            artifact_path = (
-                self.trainer.train(
-                    dataframe=features,
-                    forecast_id=forecast.id,
-                    date_column=final_date_column,
-                    target_column=final_target_column,
-                    aggregation=final_aggregation or "sum",
-                )
+            artifact_path = self.trainer.train(
+                dataframe=features,
+                forecast_id=forecast.id,
+                date_column=final_date_column,
+                target_column=final_target_column,
+                aggregation=final_aggregation or "sum",
+                frequency=plan.frequency,
             )
 
+            forecast.artifact_path = artifact_path
 
-            forecast.artifact_path = (
-                artifact_path
+# ------------------------------------
+# Evaluate model
+# ------------------------------------
+
+            evaluation = self.evaluator.evaluate(
+                dataframe=features,
+                date_column=final_date_column,
+                target_column=final_target_column,
+                aggregation=final_aggregation or "sum",
+                frequency=plan.frequency,
             )
 
+            forecast.performance_score = evaluation["performance_score"]
+            forecast.performance_label = evaluation["performance_label"]
+
+            forecast.mae = evaluation["mae"]
+            forecast.rmse = evaluation["rmse"]
+            forecast.mape = evaluation["mape"]
 
             self.repository.commit()
-
-
-            self.repository.refresh(
-                forecast,
-            )
+            self.repository.refresh(forecast)
 
 
             logger.info(
@@ -314,10 +326,21 @@ class ForecastService:
                 "Forecast model not found."
             )
 
-        return self.predictor.predict(
+        prediction = self.predictor.predict(
             artifact_path=forecast.artifact_path,
             periods=periods,
+            frequency=forecast.frequency,
         )
+
+        result = self._build_summary(
+            forecast=forecast,
+            prediction=prediction,
+        )
+
+        return {
+            "forecast": prediction,
+            **result,
+        }
     
     async def auto_forecast(
         self,
@@ -409,164 +432,21 @@ class ForecastService:
             )
 
 
-        prediction = self.predict(
+        predict_result = self.predict(
             forecast_id=forecast.id,
             periods=periods,
         )
 
 
-        values = [
-            item["prediction"]
-            for item in prediction
-        ]
-
-        is_count_metric = (
-            forecast.aggregation
-            ==
-            "count"
-        )
-
-        total_value = sum(values)
-
-        average_value = (
-            total_value
-            /
-            len(values)
-        )
-
-
-        if is_count_metric:
-
-            total_value = round(
-                total_value
-            )
-
-            average_value = round(
-                average_value
-            )
-
-        else:
-
-            total_value = round(
-                total_value,
-                2,
-            )
-
-            average_value = round(
-                average_value,
-                2,
-            )
-
-
-        positive_predictions = [
-            item
-            for item in prediction
-            if item["prediction"] > 0
-        ]
-
-
-        if not positive_predictions:
-
-            positive_predictions = prediction
-
-
-        confidence_ranges = [
-            item["upper"]
-            -
-            item["lower"]
-            for item in prediction
-        ]
-
-
-        average_uncertainty = round(
-            sum(confidence_ranges)
-            /
-            len(confidence_ranges),
-            2,
-        )
-
-
-        sample_predictions = [
-            prediction[0],
-            prediction[
-                len(prediction)
-                //
-                2
-            ],
-            prediction[-1],
-        ]
-
-
         result = {
-
-            "forecast_id": str(
-                forecast.id,
-            ),
-
-
+            "forecast_id": str(forecast.id),
             "forecast_config": {
-
-                "metric":
-                forecast.target_column,
-
-                "date_column":
-                forecast.date_column,
-
-                "aggregation":
-                forecast.aggregation,
-
-                "frequency":
-                forecast.frequency,
-
+                "metric": forecast.target_column,
+                "date_column": forecast.date_column,
+                "aggregation": forecast.aggregation,
+                "frequency": forecast.frequency,
             },
-
-
-            "summary": {
-
-
-                "forecast_days":
-                len(prediction),
-
-
-                "total_expected_value":
-                total_value,
-
-
-                "average_daily_value":
-                average_value,
-
-
-                "highest_period":
-                max(
-                    prediction,
-                    key=lambda x:
-                    x["prediction"],
-                ),
-
-
-                "lowest_expected_period":
-                min(
-                    positive_predictions,
-                    key=lambda x:
-                    x["prediction"],
-                ),
-
-
-                "confidence": {
-
-                    "average_uncertainty_range":
-                    average_uncertainty,
-
-                    "interpretation":
-                    (
-                        "Lower uncertainty means more stable forecast."
-                    ),
-                },
-            },
-
-
-            "sample_prediction":
-            sample_predictions,
+            **predict_result,
         }
 
         ForecastCache.set(
@@ -627,3 +507,85 @@ class ForecastService:
                     return column
 
         return None
+
+    def _build_summary(
+        self,
+        *,
+        forecast: ForecastModel,
+        prediction: list[dict],
+    ) -> dict:
+        """
+        Build business summary and evaluation
+        from forecast predictions.
+        """
+
+        values = [
+            item["prediction"]
+            for item in prediction
+        ]
+
+        is_count_metric = (
+            forecast.aggregation == "count"
+        )
+
+        total_value = sum(values)
+
+        average_value = (
+            total_value / len(values)
+            if values
+            else 0
+        )
+
+        if is_count_metric:
+            total_value = round(total_value)
+            average_value = round(average_value)
+        else:
+            total_value = round(total_value, 2)
+            average_value = round(average_value, 2)
+
+        positive_predictions = [
+            item
+            for item in prediction
+            if item["prediction"] > 0
+        ]
+
+        if not positive_predictions:
+            positive_predictions = prediction
+
+        confidence_ranges = [
+            item["upper"] - item["lower"]
+            for item in prediction
+        ]
+
+        average_uncertainty = round(
+            sum(confidence_ranges) / len(confidence_ranges),
+            2,
+        )
+
+        return {
+            "summary": {
+                "forecast_days": len(prediction),
+                "total_expected_value": total_value,
+                "average_daily_value": average_value,
+                "highest_period": max(
+                    prediction,
+                    key=lambda x: x["prediction"],
+                ),
+                "lowest_expected_period": min(
+                    positive_predictions,
+                    key=lambda x: x["prediction"],
+                ),
+                "confidence": {
+                    "average_uncertainty_range": average_uncertainty,
+                    "interpretation":
+                        "Lower uncertainty means more stable forecast.",
+                },
+            },
+            "evaluation": {
+                "performance_score": forecast.performance_score,
+                "performance_label": forecast.performance_label,
+                "mae": forecast.mae,
+                "rmse": forecast.rmse,
+                "mape": forecast.mape,
+            },
+        }
