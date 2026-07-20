@@ -16,7 +16,9 @@ from src.ml.prediction.trainer import (
     PredictionTrainer,
 )
 from src.ml.cache.model_cache import ModelCache
-
+from src.ml.prediction.delivery_features import (
+    DeliveryFeatureBuilder,
+)
 
 class PredictionEngine:
     """Business prediction engine."""
@@ -25,6 +27,7 @@ class PredictionEngine:
     def __init__(self):
 
         self.builder = CustomerFeatureBuilder()
+        self.delivery_builder = DeliveryFeatureBuilder()
         self.trainer = PredictionTrainer()
         self.predictor = PredictionExecutor()
         self.explainer = PredictionExplainer()
@@ -36,38 +39,44 @@ class PredictionEngine:
         prediction_type,
     ):
 
-        customers = self.builder.build(
-            data,
-        )
+        if prediction_type == PredictionType.CUSTOMER_CHURN:
+            records = self.builder.build(data)
+
+        else:
+            records = self.delivery_builder.build(data)
 
 
         cache_key = (
             prediction_type.value
-            + "_"
+            + "__"
             + str(
-                len(customers),
+                len(records),
             )
         )
 
-        model = ModelCache.get(
+        cached = ModelCache.get(
             cache_key,
         )
 
-        if model is None:
+        if cached is None:
 
-            model = self.trainer.train(
-                customers,
+            model, evaluation = self.trainer.train(
+                records,
                 prediction_type,
-            )
+                )
 
             ModelCache.set(
                 cache_key,
-                model,
+                (model, evaluation),
             )
+
+        else:
+            model, evaluation = cached
 
 
         features = self.trainer.prepare_features(
-            customers,
+            records,
+            prediction_type
         )
 
 
@@ -77,10 +86,10 @@ class PredictionEngine:
         )
 
 
-        customers["_risk"] = probabilities
+        records["_risk"] = probabilities
 
 
-        ranked = customers.sort_values(
+        ranked = records.sort_values(
             "_risk",
             ascending=False,
         )
@@ -88,8 +97,12 @@ class PredictionEngine:
 
         predictions = []
 
-
-        for _, row in ranked.head(20).iterrows():
+        top_n = min(
+            max(int(len(records) * 0.05), 20),
+            100,
+        )
+        
+        for _, row in ranked.head(top_n).iterrows():
 
             probability = float(row["_risk"])
 
@@ -139,16 +152,11 @@ class PredictionEngine:
         return PredictionResult(
             prediction_type=prediction_type,
             summary=PredictionSummary(
-                total_entities=len(customers),
+                total_entities=len(records),
                 high_risk_entities=high,
-                average_probability=sum(
-                    probabilities,
-                )
-                /
-                len(probabilities),
+                average_probability=sum(probabilities) / len(probabilities),
                 business_impact={
-                    "revenue_at_risk":
-                        revenue_at_risk,
+                    "revenue_at_risk": revenue_at_risk,
                 },
             ),
             predictions=predictions,
@@ -156,6 +164,7 @@ class PredictionEngine:
                 "Launch retention campaigns for high-risk customers.",
                 "Improve satisfaction and delivery performance.",
             ],
+            metadata=evaluation
         )
 
 
@@ -164,10 +173,10 @@ class PredictionEngine:
         probability,
     ):
 
-        if probability >= 0.7:
+        if probability >= 0.80:
             return PredictionLevel.HIGH
 
-        if probability >= 0.4:
+        if probability >= 0.60:
             return PredictionLevel.MEDIUM
 
         return PredictionLevel.LOW

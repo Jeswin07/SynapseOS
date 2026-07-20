@@ -12,7 +12,7 @@ from src.ml.knowledge.retrieval_models import (
     RetrievedChunk,
 )
 from src.ml.knowledge.retriever import Retriever
-from src.modules.knowledge.repository import QdrantRepository
+from src.modules.knowledge.qdrant_repository import QdrantRepository
 
 
 class HybridRetriever:
@@ -124,9 +124,11 @@ class HybridRetriever:
     # Dense Retrieval
         for rank, point in enumerate(dense_results):
 
-            payload = point.payload
+            payload = point.payload or {}
 
-            chunk_id = payload["chunk_id"]
+            chunk_id = payload.get("chunk_id")
+            if chunk_id is None:
+                continue
 
             rrf_score = 1 / (k + rank + 1)
 
@@ -144,7 +146,9 @@ class HybridRetriever:
 
             payload = doc["payload"]
 
-            chunk_id = payload["chunk_id"]
+            chunk_id = payload.get("chunk_id")
+            if chunk_id is None:
+                continue
 
             rrf_score = 1 / (k + rank + 1)
 
@@ -171,7 +175,7 @@ class HybridRetriever:
 
         results: list[RetrievedChunk] = []
 
-        seen: set[tuple[str, int | None, str]] = set()
+        seen: set[str] = set()
 
         for chunk_id, rrf_score in ranked:
 

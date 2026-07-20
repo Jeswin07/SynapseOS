@@ -122,4 +122,9 @@ Use only the supplied information.
             ],
         )
 
-        return response.choices[0].message.content.strip()
+        content = response.choices[0].message.content
+
+        if content is None:
+            return "The language model did not return a response."
+
+        return content.strip()

@@ -176,10 +176,49 @@ export interface QueryResponse {
   metrics: QueryMetrics;
 }
 
+export interface KnowledgeDocumentResponse {
+  id: string;
+  tenant_id: string;
+  uploaded_by: string;
+  filename: string;
+  file_type: string;
+  document_id: string;
+  chunk_count: number;
+  status: "UPLOADING" | "PROCESSING" | "READY" | "FAILED";
+  created_at: string;
+}
+
+export interface KnowledgeDocumentListResponse {
+  documents: KnowledgeDocumentResponse[];
+}
+
+export interface DeleteDocumentResponse {
+  message: string;
+}
+
 // ---- Analytics (modules/analytics/schemas.py + ml/analytics/commerce.py) ---
+
+export interface DatasetFilters {
+  states?: string[];
+  city?: string[];
+  categories?: string[];
+  brands?: string[];
+  seller_id?: string[];
+  customer_id?: string[];
+
+  min_revenue?: number;
+  max_revenue?: number;
+
+  min_review_score?: number;
+  max_review_score?: number;
+
+  date_from?: string;
+  date_to?: string;
+}
 
 export interface AnalyticsRequest {
   dataset_version_id: string;
+  filters?: DatasetFilters;
 }
 
 export interface AnalyticsResult {
@@ -207,8 +246,6 @@ export interface AnalyticsResult {
 
 export interface TrainForecastRequest {
   dataset_version_id: string;
-  date_column?: string | null;
-  target_column?: string | null;
   query?: string;
 }
 
@@ -229,8 +266,34 @@ export interface ForecastPoint {
   upper: number;
 }
 
+export interface ForecastEvaluation {
+  performance_score: number;
+  performance_label: string;
+  mae: number;
+  rmse: number;
+  mape: number;
+}
+
+export interface ForecastSummary {
+  forecast_days: number;
+  total_expected_value: number;
+  average_daily_value: number;
+
+  highest_period: ForecastPoint;
+  lowest_expected_period: ForecastPoint;
+
+  confidence: {
+    average_uncertainty_range: number;
+    interpretation: string;
+  };
+}
+
 export interface ForecastPredictResponse {
   forecast: ForecastPoint[];
+
+  summary?: ForecastSummary;
+
+  evaluation?: ForecastEvaluation;
 }
 
 // ---- Prediction (modules/prediction/schemas.py + ml/prediction/schemas.py) -
@@ -260,7 +323,20 @@ export interface PredictionResult {
   summary: PredictionSummary;
   predictions: EntityPrediction[];
   recommendations: string[];
-  metadata: Record<string, unknown>;
+  metadata: {
+    metrics?: {
+      accuracy: number;
+      precision: number;
+      recall: number;
+      f1_score: number;
+      roc_auc: number;
+    };
+
+    feature_importance?: {
+      feature: string;
+      importance: number;
+    }[];
+  };
 }
 
 export interface PredictionHistoryItem {

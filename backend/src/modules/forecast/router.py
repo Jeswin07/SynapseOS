@@ -77,7 +77,7 @@ def predict_forecast(
 
     service = ForecastService(db)
 
-    forecast = service.predict(
+    result = service.predict(
         forecast_id=payload.forecast_id,
         periods=payload.periods,
     )
@@ -85,6 +85,8 @@ def predict_forecast(
     return ForecastPredictResponse(
         forecast=[
             ForecastPoint(**point)
-            for point in forecast
-        ]
+            for point in result["forecast"]
+        ],
+        summary=result["summary"],
+        evaluation=result["evaluation"],
     )

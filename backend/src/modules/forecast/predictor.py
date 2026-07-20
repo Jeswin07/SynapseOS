@@ -13,6 +13,7 @@ class ForecastPredictor:
         *,
         artifact_path: str,
         periods: int,
+        frequency: str = "D",
     ) -> list[dict]:
 
         model: Prophet = joblib.load(
@@ -21,7 +22,7 @@ class ForecastPredictor:
 
         future = model.make_future_dataframe(
             periods=periods,
-            freq="D",
+            freq=frequency,
         )
 
         forecast = model.predict(
@@ -31,6 +32,7 @@ class ForecastPredictor:
         future_rows = forecast.tail(
             periods,
         )
+        print(future_rows[["ds", "yhat", "yhat_lower", "yhat_upper"]])
 
         return [
             {

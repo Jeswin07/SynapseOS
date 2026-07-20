@@ -93,3 +93,40 @@ class StorageService:
         data.seek(0)
 
         return data
+
+    def delete_file(
+        self,
+        object_name: str,
+    ) -> None:
+        """
+        Delete an object from MinIO.
+
+        Args:
+            object_name: Object storage path.
+
+        Raises:
+            UploadFailedError:
+                If deletion fails.
+        """
+
+        try:
+            client.remove_object(
+                bucket_name=settings.minio_bucket_name,
+                object_name=object_name,
+            )
+
+            logger.info(
+                "File deleted successfully.",
+                extra={
+                    "object_name": object_name,
+                },
+            )
+
+        except S3Error as exc:
+            logger.exception(
+                "File deletion failed.",
+            )
+
+            raise UploadFailedError(
+                str(exc),
+            ) from exc

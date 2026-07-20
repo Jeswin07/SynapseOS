@@ -39,10 +39,16 @@ class GraphBuilder:
 
         self.neo4j.execute(
             """
-            MERGE (d:Document {name:$file_name})
+            MERGE (d:Document {document_id:$document_id})
+
+            SET
+                d.name = $file_name,
+                d.tenant_id = $tenant_id
             """,
             {
+                "document_id": chunks[0]["document_id"],
                 "file_name": file_name,
+                "tenant_id": chunks[0]["tenant_id"],
             },
         )
 
@@ -82,17 +88,17 @@ class GraphBuilder:
             # -------------------------------------------------
 
             self.neo4j.execute(
-                """
-                MATCH (d:Document {name:$file_name})
-                MATCH (c:Chunk {chunk_id:$chunk_id})
+            """
+            MATCH (d:Document {document_id:$document_id})
+            MATCH (c:Chunk {chunk_id:$chunk_id})
 
-                MERGE (d)-[:HAS_CHUNK]->(c)
-                """,
-                {
-                    "file_name": file_name,
-                    "chunk_id": chunk_id,
-                },
-            )
+            MERGE (d)-[:HAS_CHUNK]->(c)
+            """,
+            {
+                "document_id": chunk["document_id"],
+                "chunk_id": chunk_id,
+            },
+        )
 
             # -------------------------------------------------
             # Entity -> Chunk
@@ -142,3 +148,38 @@ class GraphBuilder:
         """Close Neo4j connection."""
 
         self.neo4j.close()
+
+    def delete_document(
+        self,
+        document_id: str,
+    ) -> None:
+        """
+        Delete a document and all of its chunks while
+        preserving entities referenced by other documents.
+        """
+
+        self.neo4j.execute(
+            """
+            MATCH (d:Document {document_id:$document_id})
+
+            OPTIONAL MATCH (d)-[:HAS_CHUNK]->(c:Chunk)
+
+            DETACH DELETE
+                d,
+                c
+            """,
+            {
+                "document_id": document_id,
+            },
+        )
+
+        self.neo4j.execute(
+            """
+            MATCH (e:Entity)
+
+            WHERE NOT (e)-[:MENTIONED_IN]->(:Chunk)
+
+            DETACH DELETE e
+            """,
+            {},
+        )

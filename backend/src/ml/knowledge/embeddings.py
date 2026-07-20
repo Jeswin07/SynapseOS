@@ -42,9 +42,26 @@ class EmbeddingEngine:
                 settings.embedding_model,
             )
 
-            cls._instance._model = SentenceTransformer(
-                settings.embedding_model
-            )
+            try:
+
+                cls._instance._model = SentenceTransformer(
+                    settings.embedding_model,
+                    local_files_only=True,
+                )
+
+                logger.info(
+                    "Loaded embedding model from local cache.",
+                )
+
+            except Exception:
+
+                logger.warning(
+                    "Local embedding model not found. Downloading from Hugging Face..."
+                )
+
+                cls._instance._model = SentenceTransformer(
+                    settings.embedding_model,
+                )
 
             cls._instance._splitter = SentenceSplitter(
                 chunk_size=settings.knowledge_chunk_size,
@@ -126,8 +143,8 @@ class EmbeddingEngine:
 
     @property
     def embedding_dimension(self) -> int:
-        return self._model.get_sentence_embedding_dimension()
+        return settings.embedding_dimension
 
     @property
     def model_name(self) -> str:
-        return self.MODEL_NAME
+        return settings.embedding_model

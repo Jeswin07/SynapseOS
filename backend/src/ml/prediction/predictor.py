@@ -43,22 +43,11 @@ class PredictionExecutor:
             )
 
 
-        probabilities = (
-            probabilities
-            *
-            0.85
-            +
-            0.05
-        )
+        if hasattr(model, "predict_proba"):
+            probabilities = model.predict_proba(features)[:, 1]
+        else:
+            probabilities = model.predict(features).astype(float)
 
+        probabilities = np.clip(probabilities, 0.0, 1.0)
 
-        probabilities = np.clip(
-            probabilities,
-            0.05,
-            0.95,
-        )
-
-
-        return probabilities.round(
-            2,
-        )
+        return probabilities.round(3)

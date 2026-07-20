@@ -46,6 +46,14 @@ class CustomerFeatureBuilder:
                 "mean",
             ]
 
+        if "order_date" in frame.columns:
+            frame["order_date"] = pd.to_datetime(
+                frame["order_date"],
+                errors="coerce",
+            )
+
+            aggregations["order_date"] = "max"
+
 
         if "review_score" in frame.columns:
 
@@ -110,9 +118,12 @@ class CustomerFeatureBuilder:
 
                     "delivery_delay_days_<lambda_0>":
                         "late_deliveries",
+
+                    "order_date_max": "last_order_date",
                 }
             )
         )
+        print(customers.columns)
 
 
         orders = (
@@ -157,7 +168,9 @@ class CustomerFeatureBuilder:
 
                 customers[column] = value
 
-
+        print(customers.head())
+        print(customers.columns)
+        
         return customers.fillna(
             0,
         )

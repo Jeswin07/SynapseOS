@@ -6,6 +6,7 @@ from sentence_transformers import CrossEncoder
 
 from src.core.config import settings
 from src.ml.knowledge.retrieval_models import RetrievedChunk
+from src.shared.logging import logger
 
 
 class CrossEncoderReranker:
@@ -24,10 +25,38 @@ class CrossEncoderReranker:
     ) -> None:
 
         if CrossEncoderReranker._model is None:
-            CrossEncoderReranker._model = CrossEncoder(
+
+            logger.info(
+                "Loading reranker model '%s'.",
                 model_name,
-                trust_remote_code=True,
             )
+
+            try:
+
+                CrossEncoderReranker._model = CrossEncoder(
+                    model_name,
+                    trust_remote_code=True,
+                    local_files_only=True,
+                )
+
+                logger.info(
+                    "Loaded reranker model from local cache.",
+                )
+
+            except Exception:
+
+                logger.warning(
+                    "Local reranker model not found. Downloading from Hugging Face..."
+                )
+
+                CrossEncoderReranker._model = CrossEncoder(
+                    model_name,
+                    trust_remote_code=True,
+                )
+
+                logger.info(
+                    "Downloaded reranker model successfully.",
+                )
 
         self.model = CrossEncoderReranker._model
 
@@ -56,27 +85,39 @@ class CrossEncoderReranker:
             for chunk in candidates
         ]
 
-        reranker_scores = self.model.predict(sentence_pairs)
+        reranker_scores = self.model.predict(
+            sentence_pairs,
+        )
 
         ranked = sorted(
-            zip(candidates, reranker_scores),
+            zip(
+                candidates,
+                reranker_scores,
+            ),
             key=lambda x: x[1],
             reverse=True,
         )
 
-        results: list[RetrievedChunk] = []
+        results: list[
+            RetrievedChunk
+        ] = []
 
         for chunk, reranker_score in ranked[:top_k]:
 
-            # Store reranker score internally
-            chunk.reranker_score = float(reranker_score)
+            chunk.reranker_score = float(
+                reranker_score,
+            )
 
-            # Preserve dense similarity for API output
             if chunk.dense_score is not None:
+
                 chunk.score = chunk.dense_score
+
             elif chunk.score is None:
+
                 chunk.score = 0.0
 
-            results.append(chunk)
+            results.append(
+                chunk,
+            )
 
         return results

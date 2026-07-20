@@ -31,6 +31,7 @@ class ForecastTrainer:
         dataframe,
         forecast_id: UUID,
         aggregation: str,
+        frequency: str = "D",
         date_column: str | None = None,
         target_column: str | None = None,
     ) -> str:
@@ -65,6 +66,7 @@ class ForecastTrainer:
             date_column=date_column,
             target_column=target_column,
             aggregation=aggregation,
+            frequency=frequency,
         )
 
         Path(

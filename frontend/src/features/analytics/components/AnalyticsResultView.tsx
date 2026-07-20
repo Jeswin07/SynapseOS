@@ -46,12 +46,12 @@ export function AnalyticsResultView({ result }: { result: AnalyticsResult }) {
           <MetricCard label="Total customers" value={formatCompactNumber(result.customers.total_customers)} icon={Users} />
         )}
         {result.reviews && (
-          <MetricCard label="Average rating" value={result.reviews.average_rating.toFixed(1)} icon={Star} />
+          <MetricCard label="Average rating" value={(result.reviews?.average_rating ?? 0).toFixed(1)} icon={Star} />
         )}
         {result.operations?.average_delivery_days !== undefined && (
           <MetricCard
             label="Avg. delivery days"
-            value={result.operations.average_delivery_days.toFixed(1)}
+            value={(result.operations?.average_delivery_days ?? 0).toFixed(1)}
             icon={Truck}
           />
         )}

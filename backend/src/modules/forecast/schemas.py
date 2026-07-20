@@ -1,5 +1,5 @@
 from uuid import UUID
-
+from typing import Any
 from pydantic import BaseModel
 
 
@@ -27,17 +27,38 @@ class ForecastPredictRequest(BaseModel):
     periods: int = 30
 
 
+
+# ---------------------------------------
+# Prediction
+# ---------------------------------------
+
 class ForecastPoint(BaseModel):
-
     date: str
-
     prediction: float
-
     lower: float
-
     upper: float
 
 
-class ForecastPredictResponse(BaseModel):
+class ForecastEvaluation(BaseModel):
+    performance_score: int
+    performance_label: str
+    mae: float
+    rmse: float
+    mape: float
 
+
+class ForecastSummary(BaseModel):
+    forecast_days: int
+    total_expected_value: float
+    average_daily_value: float
+
+    highest_period: dict[str, Any]
+    lowest_expected_period: dict[str, Any]
+
+    confidence: dict[str, Any]
+
+
+class ForecastPredictResponse(BaseModel):
     forecast: list[ForecastPoint]
+    summary: ForecastSummary
+    evaluation: ForecastEvaluation

@@ -3,7 +3,9 @@
 from pydantic import BaseModel, Field
 
 from src.core.config import settings
-
+from uuid import UUID
+from datetime import datetime
+from src.models.knowledge_document import KnowledgeDocumentStatus
 
 class DocumentUploadResponse(BaseModel):
     """Response returned after successfully ingesting a document."""
@@ -69,3 +71,38 @@ class QueryResponse(BaseModel):
     sources: list[SourceChunk]
 
     metrics: QueryMetrics
+
+
+
+class KnowledgeDocumentResponse(BaseModel):
+    """Knowledge document metadata."""
+
+    id: UUID
+    tenant_id: UUID
+    uploaded_by: UUID
+
+    document_id: str
+    filename: str
+    file_type: str
+
+    chunk_count: int
+
+    status: KnowledgeDocumentStatus
+
+    created_at: datetime
+
+    model_config = {
+        "from_attributes": True,
+    }
+
+
+class KnowledgeDocumentListResponse(BaseModel):
+    """List of uploaded documents."""
+
+    documents: list[KnowledgeDocumentResponse]
+
+
+class DeleteDocumentResponse(BaseModel):
+    """Delete response."""
+
+    message: str

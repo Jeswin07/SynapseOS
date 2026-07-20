@@ -38,6 +38,7 @@ class BM25Retriever:
             nltk.data.find("tokenizers/punkt")
         except LookupError:
             nltk.download("punkt")
+            nltk.download("punkt_tab")
 
         self._documents = documents
 

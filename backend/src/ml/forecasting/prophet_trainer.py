@@ -13,20 +13,23 @@ class ProphetTrainer:
 
     def train(
         self,
-        dataframe: pl.DataFrame,
+        dataframe: pl.DataFrame | pd.DataFrame,
         *,
         date_column: str,
         target_column: str,
         aggregation: str = "sum",
+        frequency: str = "D",
     ) -> Prophet:
         """
-        Train a Prophet forecasting model.
+        Train Prophet model using frequency-aware
+        business aggregation.
         """
 
-        if isinstance(
-            dataframe,
-            pl.DataFrame,
-        ):
+        # ----------------------------
+        # Convert dataframe
+        # ----------------------------
+
+        if isinstance(dataframe, pl.DataFrame):
 
             df = (
                 dataframe
@@ -39,7 +42,6 @@ class ProphetTrainer:
                 .to_pandas()
             )
 
-
         else:
 
             df = (
@@ -51,8 +53,6 @@ class ProphetTrainer:
                 ]
                 .copy()
             )
-        print(dataframe.columns)
-        print(date_column)
 
         df = df.rename(
             columns={
@@ -62,16 +62,55 @@ class ProphetTrainer:
         )
 
         df["ds"] = pd.to_datetime(
-            df["ds"]
+            df["ds"],
+            errors="coerce",
         )
-        print(df.columns)
 
-# ------------------------------------
-# Aggregate to daily business metrics
-# ------------------------------------
+        df["y"] = pd.to_numeric(
+            df["y"],
+            errors="coerce",
+        )
 
-        
-        df["ds"] = df["ds"].dt.normalize()
+        df = df.dropna()
+
+        if df.empty:
+            raise ValueError(
+                "No numeric values available for forecasting."
+            )
+
+        # ----------------------------
+        # Frequency-aware aggregation
+        # ----------------------------
+
+        frequency = frequency.upper()
+
+        if frequency == "D":
+
+            df["ds"] = df["ds"].dt.floor("D")
+            pandas_frequency = "D"
+
+        elif frequency == "W":
+
+            df["ds"] = (
+                df["ds"]
+                .dt.to_period("W")
+                .dt.start_time
+            )
+            pandas_frequency = "W-MON"
+
+        elif frequency == "M":
+
+            df["ds"] = (
+                df["ds"]
+                .dt.to_period("M")
+                .dt.start_time
+            )
+            pandas_frequency = "MS"
+
+        else:
+
+            df["ds"] = df["ds"].dt.floor("D")
+            pandas_frequency = "D"
 
         df = (
             df.groupby(
@@ -83,41 +122,62 @@ class ProphetTrainer:
                     "y": aggregation,
                 }
             )
+            .sort_values("ds")
+            .reset_index(drop=True)
         )
 
-        df["ds"] = pd.to_datetime(df["ds"])
+        # ----------------------------
+        # Remove incomplete last period
+        # (important for Olist)
+        # ----------------------------
 
-        df = df.sort_values(
-            "ds"
+        if len(df) > 2:
+            df = df.iloc[:-1].copy()
+
+        # ----------------------------
+        # Fill missing periods
+        # ----------------------------
+
+        df = (
+            df.set_index("ds")
+            .asfreq(pandas_frequency)
         )
 
-        df = df.reset_index(
-            drop=True,
-        )
+        if aggregation == "mean":
 
-        model = Prophet()
-
-        df["y"] = pd.to_numeric(
-            df["y"],
-            errors="coerce",
-        )
-
-
-        df = df.dropna(
-            subset=[
-                "y",
-            ],
-        )
-
-
-        if df.empty:
-            raise ValueError(
-                "No numeric values available for forecasting."
+            df["y"] = (
+                df["y"]
+                .interpolate()
+                .bfill()
+                .ffill()
             )
 
-        model.fit(
-            df,
+        else:
+
+            df["y"] = df["y"].fillna(0)
+
+        df = (
+            df.reset_index()
+            .sort_values("ds")
         )
+
+        if len(df) < 10:
+            raise ValueError(
+                "Not enough historical observations for forecasting."
+            )
+
+        # ----------------------------
+        # Prophet
+        # ----------------------------
+
+        model = Prophet(
+            yearly_seasonality="auto",
+            weekly_seasonality="auto",
+            daily_seasonality="auto",
+            changepoint_prior_scale=0.05,
+        )
+
+        model.fit(df)
 
         return model
 
@@ -126,13 +186,8 @@ class ProphetTrainer:
         model: Prophet,
         path: str,
     ) -> None:
-        """
-        Save Prophet model.
-        """
 
-        Path(
-            path,
-        ).parent.mkdir(
+        Path(path).parent.mkdir(
             parents=True,
             exist_ok=True,
         )
@@ -146,10 +201,5 @@ class ProphetTrainer:
         self,
         path: str,
     ) -> Prophet:
-        """
-        Load Prophet model.
-        """
 
-        return joblib.load(
-            path,
-        )
+        return joblib.load(path)

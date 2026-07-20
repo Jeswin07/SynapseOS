@@ -1,8 +1,14 @@
 """Commerce feature builder."""
 
 from __future__ import annotations
-
+import numpy as np
 import pandas as pd
+
+import re
+
+from src.ml.features.canonical_aliases import (
+    CANONICAL_ALIASES,
+)
 
 from src.ml.features.base import BaseFeatureBuilder
 
@@ -511,9 +517,7 @@ class CommerceFeatureBuilder(BaseFeatureBuilder):
         features = self._apply_canonical_columns(features)
 
         features = self._engineer_common_features(features)
-        print(features[["revenue"]].head())
-        print(features["revenue"].dtype)
-        print(features.columns.tolist())
+
         return features
 
 
@@ -563,116 +567,144 @@ class CommerceFeatureBuilder(BaseFeatureBuilder):
         dataframe: pd.DataFrame,
     ) -> pd.DataFrame:
         """
-        Add enterprise canonical columns without removing
-        original dataset columns.
+        Creates enterprise canonical columns.
 
-        Existing code continues to work while newer modules
-        can rely on standardized names.
+        Rules
+        -----
+        • Preserve valid canonical columns.
+        • Replace empty/invalid canonical columns.
+        • First valid alias wins.
+        • Matching is case-insensitive.
         """
 
-        aliases = {
-
-            "revenue": [
-                "payment_value",
-                "selling_price",
-                "sale_price",
-                "price",
-                "amount",
-                "sales",
-                "revenue",
-                "total_amount",
-            ],
-
-            "customer_id": [
-                "customer_unique_id",
-                "customer_id",
-                "buyer_id",
-                "user_id",
-            ],
-
-            "seller_id": [
-                "seller_id",
-                "merchant_id",
-                "vendor_id",
-            ],
-
-            "category": [
-                "product_category_name",
-                "category",
-                "product_category",
-                "vertical",
-            ],
-
-            "brand": [
-                "brand",
-                "manufacturer",
-            ],
-
-            "order_date": [
-                "order_purchase_timestamp",
-                "purchase_date",
-                "order_date",
-                "created_at",
-                "date",
-            ],
-
-            "delivery_date": [
-                "order_delivered_customer_date",
-                "delivery_date",
-            ],
-
-            "estimated_delivery_date": [
-                "order_estimated_delivery_date",
-                "estimated_delivery_date",
-            ],
-
-            "review_score": [
-                "review_score",
-                "rating",
-                "stars",
-            ],
-
-            "state": [
-                "customer_state",
-                "state",
-                "province",
-            ],
-
-            "city": [
-                "customer_city",
-                "city",
-            ],
-
-            "quantity": [
-                "quantity",
-                "qty",
-            ],
-
-            "discount": [
-                "discount",
-                "discount_amount",
-            ],
+        normalized_columns = {
+            self._normalize_column_name(col): col
+            for col in dataframe.columns
         }
 
-        lower = {
-            c.lower(): c
-            for c in dataframe.columns
-        }
+        mapped_columns: dict[str, str] = {}
 
-        for canonical, possible in aliases.items():
+    # ==========================================================
+    # Revenue (special case)
+    # ==========================================================
 
-            if canonical in dataframe.columns:
+        revenue_aliases = [
+            "payment_value",
+            "order_total_inr",
+            "gross_amount",
+            "net_amount",
+            "total_order_value",
+            "selling_price",
+            "discounted_price_inr",
+            "sale_price",
+            "amount",
+            "price",
+        ]
+
+        revenue_ok = False
+
+        if "revenue" in dataframe.columns:
+
+            revenue = pd.to_numeric(
+                dataframe["revenue"],
+                errors="coerce",
+            )
+
+            if revenue.notna().sum() > 0:
+
+                dataframe["revenue"] = revenue
+                mapped_columns["revenue"] = "revenue"
+                revenue_ok = True
+
+        if not revenue_ok:
+
+            for alias in revenue_aliases:
+
+                real_column = normalized_columns.get(
+                    self._normalize_column_name(alias)
+                )
+
+                if real_column is None:
+                    continue
+
+                values = pd.to_numeric(
+                    dataframe[real_column],
+                    errors="coerce",
+                )
+
+                if values.notna().sum() == 0:
+                    continue
+
+                dataframe["revenue"] = values
+
+                mapped_columns["revenue"] = real_column
+
+
+                break
+
+    # ==========================================================
+    # Everything else
+    # ==========================================================
+
+        for canonical, aliases in CANONICAL_ALIASES.items():
+
+            if canonical == "revenue":
                 continue
 
-            for alias in possible:
+            if canonical in dataframe.columns:
 
-                real = lower.get(alias.lower())
+                candidate = dataframe[canonical]
 
-                if real:
+                if canonical in {
+                    "quantity",
+                    "discount",
+                    "review_score",
+                }:
 
-                    dataframe[canonical] = dataframe[real]
+                    candidate = pd.to_numeric(
+                        candidate,
+                        errors="coerce",
+                    )
 
-                    break
+                if candidate.notna().sum() > 0:
+
+                    dataframe[canonical] = candidate
+
+                    mapped_columns[canonical] = canonical
+
+                    continue
+
+            for alias in aliases:
+
+                real_column = normalized_columns.get(
+                    self._normalize_column_name(alias)
+                )
+
+                if real_column is None:
+                    continue
+
+                candidate = dataframe[real_column]
+
+                if canonical in {
+                    "quantity",
+                    "discount",
+                    "review_score",
+                }:
+
+                    candidate = pd.to_numeric(
+                        candidate,
+                        errors="coerce",
+                    )
+
+                if candidate.notna().sum() == 0:
+                    continue
+
+                dataframe[canonical] = candidate
+
+                mapped_columns[canonical] = real_column
+
+
+                break
 
         return dataframe
     
@@ -680,28 +712,67 @@ class CommerceFeatureBuilder(BaseFeatureBuilder):
         self,
         dataframe: pd.DataFrame,
     ) -> pd.DataFrame:
+        """
+        Create reusable business features.
+
+        The function must NEVER fail if columns are missing.
+        """
+
+    #
+    # -----------------------------
+    # Order Date Features
+    # -----------------------------
+    #
 
         if "order_date" in dataframe.columns:
 
-            dates = pd.to_datetime(
+            dataframe["order_date"] = pd.to_datetime(
                 dataframe["order_date"],
                 errors="coerce",
             )
 
-            dataframe["year"] = dates.dt.year
+            dataframe["order_year"] = (
+                dataframe["order_date"]
+                .dt.year
+            )
 
-            dataframe["month"] = dates.dt.month
+            dataframe["order_month"] = (
+                dataframe["order_date"]
+                .dt.month
+            )
 
-            dataframe["quarter"] = dates.dt.quarter
+            dataframe["order_week"] = (
+                dataframe["order_date"]
+                .dt.isocalendar()
+                .week
+                .astype("Int64")
+            )
 
-            dataframe["weekday"] = dates.dt.day_name()
+            dataframe["order_day"] = (
+                dataframe["order_date"]
+                .dt.day
+            )
 
-            dataframe["week"] = dates.dt.isocalendar().week.astype("Int64")
+            dataframe["order_day_name"] = (
+                dataframe["order_date"]
+                .dt.day_name()
+            )
+
+            dataframe["order_quarter"] = (
+                dataframe["order_date"]
+                .dt.quarter
+            )
+
+    #
+    # -----------------------------
+    # Delivery Features
+    # -----------------------------
+    #
 
         if (
-            "delivery_date" in dataframe.columns
-            and
             "order_date" in dataframe.columns
+            and
+            "delivery_date" in dataframe.columns
         ):
 
             delivery = pd.to_datetime(
@@ -709,33 +780,157 @@ class CommerceFeatureBuilder(BaseFeatureBuilder):
                 errors="coerce",
             )
 
-            purchase = pd.to_datetime(
-                dataframe["order_date"],
+            dataframe["delivery_days"] = (
+                delivery
+                -
+                dataframe["order_date"]
+            ).dt.days
+
+    #
+    # -----------------------------
+    # Customer Features
+    # -----------------------------
+    #
+
+        if "customer_id" in dataframe.columns:
+
+            dataframe["customer_orders"] = (
+
+                dataframe
+                .groupby("customer_id")["customer_id"]
+                .transform("count")
+
+            )
+
+            dataframe["repeat_customer"] = (
+
+                dataframe["customer_orders"] > 1
+
+            )
+
+    #
+    # -----------------------------
+    # Revenue Features
+    # -----------------------------
+    #
+
+        if "revenue" in dataframe.columns:
+
+            dataframe["revenue"] = pd.to_numeric(
+                dataframe["revenue"],
                 errors="coerce",
             )
 
-            dataframe["delivery_days"] = (
-                delivery - purchase
-            ).dt.days
+            dataframe["average_order_value"] = (
+
+                dataframe["revenue"]
+
+            )
+
+    #
+    # -----------------------------
+    # Discount %
+    # -----------------------------
+    #
 
         if (
-            "estimated_delivery_date" in dataframe.columns
+            "discount" in dataframe.columns
             and
-            "delivery_date" in dataframe.columns
+            "revenue" in dataframe.columns
         ):
 
-            estimated = pd.to_datetime(
-                dataframe["estimated_delivery_date"],
+            discount = pd.to_numeric(
+                dataframe["discount"],
                 errors="coerce",
             )
 
-            delivered = pd.to_datetime(
-                dataframe["delivery_date"],
+            revenue = pd.to_numeric(
+                dataframe["revenue"],
                 errors="coerce",
             )
 
-            dataframe["delivery_delay_days"] = (
-                delivered - estimated
-            ).dt.days
+            total = revenue + discount
+
+            dataframe["discount_percentage"] = np.where(
+
+                total > 0,
+
+                (discount / total) * 100,
+
+                np.nan,
+
+            )
+
+    #
+    # -----------------------------
+    # Review Features
+    # -----------------------------
+    #
+
+        if "review_score" in dataframe.columns:
+
+            dataframe["review_score"] = pd.to_numeric(
+                dataframe["review_score"],
+                errors="coerce",
+            )
+
+            dataframe["positive_review"] = (
+
+                dataframe["review_score"] >= 4
+
+            )
+
+            dataframe["negative_review"] = (
+
+                dataframe["review_score"] <= 2
+
+            )
+
+        engineered = [
+
+            "delivery_days",
+
+            "order_year",
+
+            "order_month",
+
+            "order_week",
+
+            "customer_orders",
+
+            "repeat_customer",
+
+            "average_order_value",
+
+            "discount_percentage",
+
+        ]
+
 
         return dataframe
+
+
+    @staticmethod
+    def _normalize_column_name(
+        column: str,
+    ) -> str:
+        """
+        Normalize column names for matching.
+
+        Examples
+        --------
+        Customer ID
+        customer-id
+        CUSTOMER_ID
+        customerId
+
+        →
+
+        customerid
+        """
+
+        return re.sub(
+            r"[^a-z0-9]",
+            "",
+            column.lower(),
+        )
