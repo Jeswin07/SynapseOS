@@ -1,0 +1,19 @@
+{
+    "dataset_name": "GlobalMart Enterprise Commerce Dataset",
+    "version": "1.0",
+    "generated_by": "SynapseOS",
+    "generated_at": "2026-07-19T21:55:37.012359",
+    "currency": "USD",
+    "statistics": {
+        "customers": 99441,
+        "orders": 99441,
+        "products": 32951,
+        "cities": 27,
+        "countries": 22,
+        "categories": 71,
+        "date_range": {
+            "start": "2024-09-04",
+            "end": "2026-10-17"
+        }
+    }
+}

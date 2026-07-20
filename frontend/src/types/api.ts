@@ -176,6 +176,26 @@ export interface QueryResponse {
   metrics: QueryMetrics;
 }
 
+export interface KnowledgeDocumentResponse {
+  id: string;
+  tenant_id: string;
+  uploaded_by: string;
+  filename: string;
+  file_type: string;
+  document_id: string;
+  chunk_count: number;
+  status: "UPLOADING" | "PROCESSING" | "READY" | "FAILED";
+  created_at: string;
+}
+
+export interface KnowledgeDocumentListResponse {
+  documents: KnowledgeDocumentResponse[];
+}
+
+export interface DeleteDocumentResponse {
+  message: string;
+}
+
 // ---- Analytics (modules/analytics/schemas.py + ml/analytics/commerce.py) ---
 
 export interface DatasetFilters {

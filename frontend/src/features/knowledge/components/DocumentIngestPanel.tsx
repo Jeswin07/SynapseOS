@@ -1,24 +1,22 @@
 import { useState } from "react";
 import { toast } from "sonner";
-import { Loader2, BookOpen, Info } from "lucide-react";
+import { Loader2, BookOpen, Trash2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { UploadZone } from "@/components/common/UploadZone";
 import { EmptyState } from "@/components/common/EmptyState";
-import { useIngestDocument } from "@/hooks/useKnowledge";
+import { useIngestDocument, useKnowledgeDocuments, useDeleteDocument } from "@/hooks/useKnowledge";
 import { ApiError } from "@/services/apiClient";
-import type { DocumentUploadResponse } from "@/types/api";
-
-interface IngestedDocument extends DocumentUploadResponse {
-  fileName: string;
-  ingestedAt: string;
-}
 
 export function DocumentIngestPanel() {
   const [pending, setPending] = useState<File[]>([]);
-  const [ingested, setIngested] = useState<IngestedDocument[]>([]);
+  
+  const { data, isLoading } = useKnowledgeDocuments();
   const ingestDocument = useIngestDocument();
+  const deleteDocument = useDeleteDocument();
+
+  const documents = data?.documents || [];
 
   function handleIngest() {
     if (pending.length === 0) return;
@@ -26,13 +24,9 @@ export function DocumentIngestPanel() {
     ingestDocument.mutate(
       { file, collectionName: "enterprise_docs" },
       {
-        onSuccess: (data) => {
-          setIngested((prev) => [
-            { ...data, fileName: file.name, ingestedAt: new Date().toISOString() },
-            ...prev,
-          ]);
+        onSuccess: (res) => {
           setPending((prev) => prev.slice(1));
-          toast.success(`Ingested ${file.name} (${data.chunks_processed} chunks)`);
+          toast.success(`Ingested ${file.name} (${res.chunks_processed} chunks)`);
         },
         onError: (err) => {
           toast.error(err instanceof ApiError ? err.detail : "Failed to ingest document.");
@@ -40,6 +34,19 @@ export function DocumentIngestPanel() {
         },
       }
     );
+  }
+
+  function handleDelete(documentId: string, filename: string) {
+    if (!confirm(`Are you sure you want to delete ${filename}?`)) return;
+    
+    deleteDocument.mutate(documentId, {
+      onSuccess: () => {
+        toast.success(`Deleted ${filename}`);
+      },
+      onError: (err) => {
+        toast.error(err instanceof ApiError ? err.detail : "Failed to delete document.");
+      },
+    });
   }
 
   return (
@@ -62,31 +69,46 @@ export function DocumentIngestPanel() {
       </Card>
 
       <div>
-        <p className="mb-2 text-sm font-medium text-foreground">Document library (this session)</p>
-        {ingested.length === 0 ? (
+        <p className="mb-2 text-sm font-medium text-foreground">Enterprise Knowledge Library</p>
+        
+        {isLoading ? (
+          <div className="flex items-center justify-center py-8 text-sm text-muted-foreground">
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Loading library...
+          </div>
+        ) : documents.length === 0 ? (
           <EmptyState
             icon={BookOpen}
             title="No documents ingested yet"
-            description="Documents you ingest will appear here for this session."
+            description="Documents you ingest will be persistently stored here."
           />
         ) : (
           <ul className="space-y-1.5">
-            {ingested.map((doc) => (
+            {documents.map((doc) => (
               <li
                 key={doc.document_id}
                 className="flex items-center justify-between rounded-lg border border-border px-3 py-2.5 text-sm"
               >
-                <span className="min-w-0 truncate font-medium text-foreground">{doc.fileName}</span>
-                <Badge variant="secondary">{doc.chunks_processed} chunks</Badge>
+                <div className="flex min-w-0 flex-1 flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                  <span className="min-w-0 truncate font-medium text-foreground">{doc.filename}</span>
+                  <div className="flex gap-1.5">
+                    <Badge variant="secondary">{doc.chunk_count} chunks</Badge>
+                    <Badge variant={doc.status === "READY" ? "default" : "danger"}>
+                    </Badge>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                  onClick={() => handleDelete(doc.document_id, doc.filename)}
+                  disabled={deleteDocument.isPending}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
               </li>
             ))}
           </ul>
         )}
-        <p className="mt-3 flex items-start gap-2 text-xs text-muted-foreground">
-          <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-          The backend does not yet expose an endpoint to list previously ingested documents, so this library
-          reflects only documents ingested during your current session.
-        </p>
       </div>
     </div>
   );
