@@ -10,8 +10,10 @@ from src.models.refresh_token import RefreshToken
 from src.models.risk_analysis import RiskAnalysis
 from src.models.tenant import Tenant
 from src.models.user import User
+from src.models.knowledge_document import KnowledgeDocument
+from src.models.conversation import Conversation
 
 __all__ = ["Tenant", "User", "RefreshToken", 
            "Dataset", "DatasetVersion", "DatasetProfile", "DatasetFile",
            "MLModel", "ForecastModel", "RiskAnalysis", "DatasetSemanticModel",
-           "PredictionRun"]
+           "PredictionRun", "KnowledgeDocument", "Conversation"]

@@ -9,7 +9,7 @@ from src.ml.knowledge.retrieval_models import (
     RetrievalResult,
     RetrievedChunk,
 )
-from src.modules.knowledge.repository import QdrantRepository
+from src.modules.knowledge.qdrant_repository import QdrantRepository
 
 
 class Retriever:

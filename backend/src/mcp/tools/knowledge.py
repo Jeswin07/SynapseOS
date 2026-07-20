@@ -1,7 +1,7 @@
 """Knowledge MCP tool."""
 
 from __future__ import annotations
-
+from sqlalchemy.orm import Session
 from src.mcp.models import (
     MCPToolRequest,
     MCPToolResponse,
@@ -16,12 +16,12 @@ class KnowledgeTool(BaseTool):
     MCP tool exposing enterprise knowledge retrieval.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, db: Session) -> None:
         super().__init__(
             tool_name=MCPTool.KNOWLEDGE_SEARCH,
         )
 
-        self.service = KnowledgeService()
+        self.service = KnowledgeService(db)
 
     async def _execute(
         self,

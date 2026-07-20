@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     groq_model: str = "llama-3.3-70b-versatile"
 
     # ---------- Knowledge ----------
-    knowledge_collection: str = "enterprise_docs_v5"
+    knowledge_collection: str = "enterprise_docs"
     knowledge_chunk_size: int = 384
     knowledge_chunk_overlap: int = 64
     knowledge_top_k: int = 5
@@ -67,4 +67,3 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-print(settings.database_url)

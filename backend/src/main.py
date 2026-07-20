@@ -30,6 +30,9 @@ from src.modules.users.router import (
 from src.modules.risk.router import (
     router as risk_router,
 )
+from src.modules.conversations.router import (
+    router as conversation_router
+)
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -63,3 +66,4 @@ app.include_router(assistant_router)
 app.include_router(analytics_router)
 app.include_router(prediction_router)
 app.include_router(risk_router)
+app.include_router(conversation_router)

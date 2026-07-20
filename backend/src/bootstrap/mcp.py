@@ -36,7 +36,7 @@ def create_mcp_service(
 
     # Register tools
     registry.register(
-        KnowledgeTool(),
+        KnowledgeTool(db),
     )
 
     registry.register(

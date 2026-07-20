@@ -5,7 +5,7 @@ from __future__ import annotations
 from neo4j import Driver, GraphDatabase
 
 from src.core.config import settings
-
+from typing import Any, cast, LiteralString
 
 class Neo4jClient:
     """
@@ -35,7 +35,7 @@ class Neo4jClient:
     def execute(
         self,
         query: str,
-        parameters: dict | None = None,
+        parameters: dict[str, Any] | None = None,
     ):
         """
         Execute a Cypher query.
@@ -44,7 +44,7 @@ class Neo4jClient:
         with self.driver.session() as session:
 
             result = session.run(
-                query,
+                cast(LiteralString, query),
                 parameters or {},
             )
 
@@ -56,6 +56,13 @@ class Neo4jClient:
         """
 
         constraints = [
+
+            """
+            CREATE CONSTRAINT document_id
+            IF NOT EXISTS
+            FOR (d:Document)
+            REQUIRE d.document_id IS UNIQUE
+            """,
 
             """
             CREATE CONSTRAINT chunk_id
