@@ -12,7 +12,6 @@ from src.models.knowledge_document import (
 )
 
 
-
 class KnowledgeDocumentRepository:
     """
     Repository responsible for KnowledgeDocument persistence.

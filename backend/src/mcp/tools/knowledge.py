@@ -1,7 +1,9 @@
 """Knowledge MCP tool."""
 
 from __future__ import annotations
+
 from sqlalchemy.orm import Session
+
 from src.mcp.models import (
     MCPToolRequest,
     MCPToolResponse,

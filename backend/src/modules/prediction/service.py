@@ -6,6 +6,9 @@ from uuid import UUID
 
 from sqlalchemy.orm import Session
 
+from src.ml.cache.prediction_cache import (
+    PredictionCache,
+)
 from src.ml.features.service import (
     FeatureService,
 )
@@ -17,9 +20,6 @@ from src.ml.prediction.service import (
 )
 from src.modules.prediction.repository import (
     PredictionRepository,
-)
-from src.ml.cache.prediction_cache import (
-    PredictionCache,
 )
 
 

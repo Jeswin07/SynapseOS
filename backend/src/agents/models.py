@@ -7,6 +7,8 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field
 
+from src.modules.conversation_messages.schemas import ChatMessage
+
 
 class AgentMetadata(BaseModel):
     """
@@ -33,9 +35,11 @@ class AgentInput(BaseModel):
 
     user_id: UUID 
 
+    history: list[ChatMessage] = Field(default_factory=list)
+
     session_id: str | None = None
 
-    conversation_id: str | None = None
+    conversation_id: UUID | None = None
 
     context: dict[str, Any] = Field(
         default_factory=dict,

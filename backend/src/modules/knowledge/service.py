@@ -2,14 +2,17 @@
 
 from __future__ import annotations
 
+import mimetypes
+import os
 import time
 import uuid
 from datetime import datetime
 from pathlib import Path
-import mimetypes
-import os
+
+from sqlalchemy.orm import Session
 
 from src.core.config import settings
+from src.core.storage.storage_service import StorageService
 from src.ml.knowledge.embeddings import EmbeddingEngine
 from src.ml.knowledge.generator import GroqGenerator
 from src.ml.knowledge.graph.graph_builder import GraphBuilder
@@ -17,6 +20,18 @@ from src.ml.knowledge.graph.graph_retriever import GraphRetriever
 from src.ml.knowledge.hybrid_retriever import HybridRetriever
 from src.ml.knowledge.reranker import CrossEncoderReranker
 from src.ml.knowledge.retrieval_models import RetrievedChunk
+from src.models.knowledge_document import (
+    KnowledgeDocument,
+    KnowledgeDocumentStatus,
+)
+from src.modules.knowledge.document_repository import (
+    KnowledgeDocumentRepository,
+)
+from src.modules.knowledge.exceptions import (
+    KnowledgeAccessDeniedException,
+    KnowledgeDeleteException,
+    KnowledgeDocumentNotFoundException,
+)
 from src.modules.knowledge.qdrant_repository import QdrantRepository
 from src.modules.knowledge.schemas import (
     DocumentUploadResponse,
@@ -24,21 +39,6 @@ from src.modules.knowledge.schemas import (
     QueryRequest,
     QueryResponse,
     SourceChunk,
-)
-from sqlalchemy.orm import Session
-
-from src.core.storage.storage_service import StorageService
-from src.modules.knowledge.document_repository import (
-    KnowledgeDocumentRepository,
-)
-from src.models.knowledge_document import (
-    KnowledgeDocument,
-    KnowledgeDocumentStatus,
-)
-from src.modules.knowledge.exceptions import (
-    KnowledgeAccessDeniedException,
-    KnowledgeDeleteException,
-    KnowledgeDocumentNotFoundException,
 )
 
 

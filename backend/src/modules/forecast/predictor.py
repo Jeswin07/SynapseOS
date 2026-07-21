@@ -32,7 +32,6 @@ class ForecastPredictor:
         future_rows = forecast.tail(
             periods,
         )
-        print(future_rows[["ds", "yhat", "yhat_lower", "yhat_upper"]])
 
         return [
             {

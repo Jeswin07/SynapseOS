@@ -18,6 +18,11 @@ from sqlalchemy.orm import Session
 
 from src.db.session import get_db
 from src.modules.auth.dependencies import get_current_user
+from src.modules.knowledge.exceptions import (
+    KnowledgeAccessDeniedException,
+    KnowledgeDeleteException,
+    KnowledgeDocumentNotFoundException,
+)
 from src.modules.knowledge.schemas import (
     DeleteDocumentResponse,
     DocumentUploadResponse,
@@ -27,11 +32,6 @@ from src.modules.knowledge.schemas import (
     QueryResponse,
 )
 from src.modules.knowledge.service import KnowledgeService
-from src.modules.knowledge.exceptions import (
-    KnowledgeAccessDeniedException,
-    KnowledgeDeleteException,
-    KnowledgeDocumentNotFoundException,
-)
 
 router = APIRouter(
     prefix="/knowledge",

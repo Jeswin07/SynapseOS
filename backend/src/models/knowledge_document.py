@@ -7,13 +7,15 @@ from sqlalchemy import (
     Integer,
     String,
     func,
+)
+from sqlalchemy import (
     Enum as SQLEnum,
 )
 from sqlalchemy.orm import Mapped, mapped_column
 
 from src.db.base import Base
 from src.models.knowledge_enums import KnowledgeDocumentStatus
-from enum import Enum
+
 
 class KnowledgeDocument(Base):
     """

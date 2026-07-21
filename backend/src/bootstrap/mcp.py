@@ -14,6 +14,7 @@ from src.mcp.tools.knowledge import KnowledgeTool
 from src.mcp.tools.predict import PredictTool
 from src.mcp.tools.risk import RiskTool
 
+
 def create_mcp_service(
         db:Session
 ) -> MCPService:

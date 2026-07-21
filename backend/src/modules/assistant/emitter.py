@@ -30,7 +30,7 @@ class StreamEmitter:
 
     async def stream(
         self,
-    ) -> AsyncGenerator[StreamEvent, None]:
+    ) -> AsyncGenerator[StreamEvent]:
 
         while True:
 

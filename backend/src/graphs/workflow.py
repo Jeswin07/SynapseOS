@@ -2,21 +2,17 @@
 
 from __future__ import annotations
 
-
 from langgraph.graph import (
-    StateGraph,
     END,
+    StateGraph,
 )
-
 
 from src.agents.registry import (
     AgentRegistry,
 )
-
 from src.graphs.nodes import (
     BusinessGraphNodes,
 )
-
 from src.graphs.state import (
     BusinessGraphState,
 )

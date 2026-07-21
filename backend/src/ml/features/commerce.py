@@ -1,16 +1,16 @@
 """Commerce feature builder."""
 
 from __future__ import annotations
-import numpy as np
-import pandas as pd
 
 import re
 
+import numpy as np
+import pandas as pd
+
+from src.ml.features.base import BaseFeatureBuilder
 from src.ml.features.canonical_aliases import (
     CANONICAL_ALIASES,
 )
-
-from src.ml.features.base import BaseFeatureBuilder
 
 
 class CommerceFeatureBuilder(BaseFeatureBuilder):

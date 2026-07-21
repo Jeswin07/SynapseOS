@@ -7,20 +7,31 @@ import type { StreamEvent } from "@/types/api";
 export function useAssistantChat() {
   const [isSending, setIsSending] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
-  const { appendMessage, updateMessage, renameFromFirstMessage } = useAssistantStore();
+
+  const {
+    appendMessage,
+    updateMessage,
+    renameFromFirstMessage,
+  } = useAssistantStore();
 
   const sendMessage = useCallback(
-    async (conversationId: string, text: string, streaming: boolean, datasetVersionId: string | null,) => {
+    async (
+      conversationId: string,
+      text: string,
+      streaming: boolean,
+    ) => {
       const userMessage: ChatMessage = {
         id: crypto.randomUUID(),
         role: "user",
         content: text,
         createdAt: new Date().toISOString(),
       };
+
       appendMessage(conversationId, userMessage);
       renameFromFirstMessage(conversationId, text);
 
       const assistantMessageId = crypto.randomUUID();
+
       const initialEvents: StreamEvent[] = [
         {
           type: "status",
@@ -37,17 +48,24 @@ export function useAssistantChat() {
         createdAt: new Date().toISOString(),
         streaming: true,
         executionEvents: initialEvents,
-    };
+      };
+
       appendMessage(conversationId, assistantMessage);
       setIsSending(true);
 
       if (streaming) {
         const controller = new AbortController();
         abortRef.current = controller;
+
         const events: StreamEvent[] = [...initialEvents];
 
         await assistantService.streamChat(
-          { message: text, metadata: {dataset_version_id: datasetVersionId,} },
+          {
+            conversation_id: conversationId,
+            message: text,
+            metadata: {
+            },
+          },
           {
             onEvent: (event) => {
               if (
@@ -58,11 +76,16 @@ export function useAssistantChat() {
               } else {
                 events.push(event);
               }
+
               updateMessage(conversationId, assistantMessageId, {
                 executionEvents: [...events],
-                content: event.type === "status" ? event.message : "",
+                content:
+                  event.type === "status"
+                    ? event.message
+                    : "",
               });
             },
+
             onFinal: (response) => {
               updateMessage(conversationId, assistantMessageId, {
                 content: response.answer,
@@ -70,22 +93,32 @@ export function useAssistantChat() {
                 executionEvents: [...events],
                 streaming: false,
               });
+
               setIsSending(false);
             },
+
             onError: (message) => {
               updateMessage(conversationId, assistantMessageId, {
                 streaming: false,
                 error: message,
               });
+
               setIsSending(false);
             },
           },
-          controller.signal
+          controller.signal,
         );
+
         setIsSending(false);
       } else {
         try {
-          const response = await assistantService.chat({ message: text, metadata: {dataset_version_id: datasetVersionId,} });
+          const response = await assistantService.chat({
+            conversation_id: conversationId,
+            message: text,
+            metadata: {
+            },
+          });
+
           updateMessage(conversationId, assistantMessageId, {
             content: response.answer,
             response,
@@ -94,14 +127,21 @@ export function useAssistantChat() {
         } catch (err) {
           updateMessage(conversationId, assistantMessageId, {
             streaming: false,
-            error: err instanceof Error ? err.message : "The assistant could not respond. Please try again.",
+            error:
+              err instanceof Error
+                ? err.message
+                : "The assistant could not respond. Please try again.",
           });
         } finally {
           setIsSending(false);
         }
       }
     },
-    [appendMessage, updateMessage, renameFromFirstMessage]
+    [
+      appendMessage,
+      updateMessage,
+      renameFromFirstMessage,
+    ],
   );
 
   const cancel = useCallback(() => {
@@ -109,5 +149,9 @@ export function useAssistantChat() {
     setIsSending(false);
   }, []);
 
-  return { sendMessage, isSending, cancel };
+  return {
+    sendMessage,
+    isSending,
+    cancel,
+  };
 }

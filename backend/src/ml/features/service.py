@@ -7,6 +7,9 @@ import uuid
 import pandas as pd
 from sqlalchemy.orm import Session
 
+from src.ml.cache.feature_cache import (
+    FeatureCache,
+)
 from src.ml.data.dataset_loader import (
     DatasetLoader,
 )
@@ -18,9 +21,6 @@ from src.ml.features.registry import (
 )
 from src.modules.data.repository import (
     DatasetRepository,
-)
-from src.ml.cache.feature_cache import (
-    FeatureCache,
 )
 
 

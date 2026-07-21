@@ -9,7 +9,6 @@ from pydantic import BaseModel, Field
 
 from src.mcp.types import MCPTool
 
-
 # ==========================================================
 # Enums
 # ==========================================================

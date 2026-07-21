@@ -7,6 +7,9 @@ from src.core.storage.path_generator import (
     generate_dataset_object_path,
 )
 from src.core.storage.storage_service import StorageService
+from src.ml.cache.feature_cache import (
+    FeatureCache,
+)
 from src.models.dataset import Dataset
 from src.models.dataset_enums import (
     BusinessDomain,
@@ -26,9 +29,6 @@ from src.shared.exceptions.dataset import (
 from src.shared.logging import logger
 from src.shared.utils.checksum import (
     calculate_sha256,
-)
-from src.ml.cache.feature_cache import (
-    FeatureCache,
 )
 
 

@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+from typing import Any, LiteralString, cast
+
 from neo4j import Driver, GraphDatabase
 
 from src.core.config import settings
-from typing import Any, cast, LiteralString
+
 
 class Neo4jClient:
     """

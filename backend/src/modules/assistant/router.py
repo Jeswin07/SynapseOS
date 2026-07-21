@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
 from fastapi.responses import StreamingResponse
+from sqlalchemy.orm import Session
+
 from src.db.session import get_db
 from src.models.user import User
 from src.modules.assistant.schemas import (

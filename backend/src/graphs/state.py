@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-from typing import TypedDict, Any
+from typing import Any, TypedDict
 
 from src.agents.models import (
     AgentInput,
     AgentOutput,
 )
-
 from src.agents.types import (
     AgentType,
 )

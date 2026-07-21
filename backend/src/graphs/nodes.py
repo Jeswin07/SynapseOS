@@ -1,29 +1,29 @@
 """LangGraph workflow nodes."""
 
 from __future__ import annotations
+
 import asyncio
 import time
+
 from src.agents.business.aggregator import (
     BusinessAggregator,
 )
-
 from src.agents.business.planner import (
     BusinessPlanner,
 )
-
 from src.agents.registry import (
     AgentRegistry,
 )
-
+from src.agents.types import AgentType
 from src.graphs.state import (
     BusinessGraphState,
 )
-from src.agents.types import AgentType
 from src.modules.assistant.emitter import StreamEmitter
 from src.modules.assistant.events import (
     StreamEvent,
     StreamEventType,
 )
+
 
 class BusinessGraphNodes:
     """
@@ -66,6 +66,7 @@ class BusinessGraphNodes:
 
         plan = await self.planner.plan(
             state["request"].query,
+            history=state["request"].history,
         )
 
         print(

@@ -1,13 +1,14 @@
 """Business Agent using LangGraph."""
 
 from __future__ import annotations
+
 import time
+
 from src.agents.base import BaseAgent
-from src.agents.business.fallback import BusinessFallback
-from src.modules.assistant.emitter import StreamEmitter
 from src.agents.business.executive_response import (
     ExecutiveResponseGenerator,
 )
+from src.agents.business.fallback import BusinessFallback
 from src.agents.models import (
     AgentInput,
     AgentOutput,
@@ -18,10 +19,12 @@ from src.agents.registry import (
 from src.agents.types import (
     AgentType,
 )
+from src.graphs.state import BusinessGraphState
 from src.graphs.workflow import (
     create_business_graph,
 )
-from src.graphs.state import BusinessGraphState
+from src.modules.assistant.emitter import StreamEmitter
+
 
 class BusinessAgent(BaseAgent):
 
@@ -106,6 +109,7 @@ class BusinessAgent(BaseAgent):
         final_response = (
             await self.executive.generate(
                 query=request.query,
+                history=request.history,
                 response=merged_response,
             )
         )

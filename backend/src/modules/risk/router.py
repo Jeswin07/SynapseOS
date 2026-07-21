@@ -6,23 +6,18 @@ from fastapi import (
     APIRouter,
     Depends,
 )
-
 from sqlalchemy.orm import Session
 
 from src.db.session import get_db
-
 from src.modules.auth.dependencies import (
     get_current_user,
 )
-
 from src.modules.risk.schemas import (
     RiskResponse,
 )
-
 from src.modules.risk.service import (
     RiskService,
 )
-
 
 router = APIRouter(
     prefix="/risks",

@@ -7,8 +7,8 @@ from sqlalchemy.orm import Session
 from src.agents.business.agent import BusinessAgent
 from src.agents.intelligence.agent import IntelligenceAgent
 from src.agents.knowledge.agent import KnowledgeAgent
-from src.agents.scenario.agent import ScenarioAgent
 from src.agents.registry import AgentRegistry
+from src.agents.scenario.agent import ScenarioAgent
 from src.bootstrap.mcp import create_mcp_service
 
 

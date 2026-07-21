@@ -5,7 +5,7 @@ from __future__ import annotations
 import uuid
 
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 
 from src.models.conversation import Conversation
 
@@ -13,7 +13,7 @@ from src.models.conversation import Conversation
 class ConversationRepository:
     """Repository for Conversation operations."""
 
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session: Session):
         self.session = session
 
     async def create(
@@ -32,8 +32,8 @@ class ConversationRepository:
         )
 
         self.session.add(conversation)
-        await self.session.commit()
-        await self.session.refresh(conversation)
+        self.session.commit()
+        self.session.refresh(conversation)
 
         return conversation
 
@@ -41,7 +41,7 @@ class ConversationRepository:
         self,
         conversation_id: uuid.UUID,
     ) -> Conversation | None:
-        result = await self.session.execute(
+        result = self.session.execute(
             select(Conversation).where(
                 Conversation.id == conversation_id,
             )
@@ -55,7 +55,7 @@ class ConversationRepository:
         tenant_id: uuid.UUID,
         user_id: uuid.UUID,
     ) -> list[Conversation]:
-        result = await self.session.execute(
+        result = self.session.execute(
             select(Conversation)
             .where(
                 Conversation.tenant_id == tenant_id,
@@ -73,8 +73,8 @@ class ConversationRepository:
     ) -> Conversation:
         conversation.title = title
 
-        await self.session.commit()
-        await self.session.refresh(conversation)
+        self.session.commit()
+        self.session.refresh(conversation)
 
         return conversation
 
@@ -82,5 +82,5 @@ class ConversationRepository:
         self,
         conversation: Conversation,
     ) -> None:
-        await self.session.delete(conversation)
-        await self.session.commit()
+        self.session.delete(conversation)
+        self.session.commit()

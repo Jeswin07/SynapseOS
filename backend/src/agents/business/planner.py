@@ -6,6 +6,7 @@ from src.agents.business.models import ExecutionPlan
 from src.agents.common.json_parser import parse_llm_json
 from src.agents.common.llm import LLMClient
 from src.agents.types import AgentType
+from src.modules.conversation_messages.schemas import ChatMessage
 
 
 class BusinessPlanner:
@@ -20,9 +21,35 @@ class BusinessPlanner:
     async def plan(
         self,
         query: str,
+        history: list[ChatMessage] | None = None,
     ) -> ExecutionPlan:
 
         query_lower = query.lower().strip()
+
+        history = history or []
+
+
+        FOLLOW_UP_WORDS = {
+            "only",
+            "also",
+            "compare",
+            "same",
+            "those",
+            "them",
+            "it",
+            "that",
+            "these",
+            "top",
+            "bottom",
+            "last",
+            "previous",
+            "next",
+            "before",
+            "after",
+            "today",
+            "yesterday",
+        }
+
 
         # -------------------------
     # Greeting Detection
@@ -174,26 +201,104 @@ class BusinessPlanner:
             "business",
         ]
 
+        KNOWLEDGE_ONLY_TERMS = [
+            "policy",
+            "policies",
+            "documentation",
+            "document",
+            "manual",
+            "guide",
+            "contract",
+            "terms",
+            "faq",
+            "return policy",
+            "refund policy",
+            "privacy policy",
+            "how do",
+            "what is",
+            "where can i find",
+        ]
+
+        BUSINESS_KEYWORDS = (
+            knowledge_keywords
+            + intelligence_keywords
+            + decision_terms
+            + STRATEGIC_KEYWORDS
+            + business_terms
+        )
+
+
+        def find_last_business_query() -> str:
+            """
+            Walk backwards through the conversation and return the
+            latest user message that actually contains business intent.
+            """
+            for msg in reversed(history[:-1]):
+                if msg.role != "user":
+                    continue
+
+                text = msg.content.lower()
+
+                if any(keyword in text for keyword in BUSINESS_KEYWORDS):
+                    return text
+
+            return ""
+        
+        previous_query = find_last_business_query()
+
+        if (
+            previous_query
+            and (
+                len(query_lower.split()) <= 5
+                or query_lower.split()[0] in FOLLOW_UP_WORDS
+            )
+        ):
+            planner_query = f"{previous_query} {query_lower}"
+        else:
+            planner_query = query_lower
+
+        knowledge_only = any(
+            term in planner_query
+            for term in KNOWLEDGE_ONLY_TERMS
+        )
+
+        analytics_match = any(
+            term in planner_query
+            for term in intelligence_keywords
+        )
+
+        scenario_match = any(
+            term in planner_query
+            for term in decision_terms + STRATEGIC_KEYWORDS
+        )
+
     # -------------------------
     # Capability Detection
     # -------------------------
 
+        if knowledge_only and not analytics_match and not scenario_match:
+            return ExecutionPlan(
+                agents=[AgentType.KNOWLEDGE],
+                reasoning="Knowledge/document lookup."
+            )
+        
+        
         needs_documents = any(
-            keyword in query_lower
+            keyword in planner_query
             for keyword in knowledge_keywords
         )
 
         needs_analytics = any(
-            keyword in query_lower
+            keyword in planner_query
             for keyword in intelligence_keywords
         )
 
         needs_decision = (
             (
-                any(term in query_lower for term in decision_terms)
-                or any(term in query_lower for term in STRATEGIC_KEYWORDS)
+                any(term in planner_query for term in decision_terms)
+                or any(term in planner_query for term in STRATEGIC_KEYWORDS)
             )
-            and any(term in query_lower for term in business_terms)
+            and any(term in planner_query for term in business_terms)
         )
 
 
@@ -230,7 +335,7 @@ class BusinessPlanner:
 
         if (
             not agents
-            and len(query_lower.split()) <= 1
+            and len(planner_query.split()) <= 1
         ):
             return ExecutionPlan(
                 agents=[],

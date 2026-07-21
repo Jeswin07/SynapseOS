@@ -4,11 +4,9 @@ from __future__ import annotations
 
 from src.agents.common.json_parser import parse_llm_json
 from src.agents.common.llm import LLMClient
-
 from src.agents.intelligence.schemas import (
     IntelligencePlan,
 )
-
 from src.mcp.types import MCPTool
 
 

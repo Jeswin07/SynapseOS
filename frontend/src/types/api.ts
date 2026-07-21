@@ -365,6 +365,7 @@ export interface RiskResponse {
 // ---- Assistant (modules/assistant/schemas.py + events.py) -----------------
 
 export interface AssistantChatRequest {
+  conversation_id: string;
   message: string;
   metadata?: Record<string, unknown>;
 }
@@ -390,6 +391,25 @@ export interface StreamEvent {
 export interface AssistantStreamFinalEvent {
   type: "final";
   response: AssistantChatResponse;
+}
+
+export interface ConversationCreateRequest {
+    dataset_version_id: string;
+    title?: string;
+}
+
+export interface ConversationUpdateRequest {
+    title: string;
+}
+
+export interface ConversationResponse {
+    id: string;
+    tenant_id: string;
+    user_id: string;
+    dataset_version_id: string;
+    title: string;
+    created_at: string;
+    updated_at: string;
 }
 
 // ---- Generic API error envelope --------------------------------------------

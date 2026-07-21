@@ -1,11 +1,13 @@
 """Pydantic schemas for Knowledge Intelligence API contracts."""
 
+from datetime import datetime
+from uuid import UUID
+
 from pydantic import BaseModel, Field
 
 from src.core.config import settings
-from uuid import UUID
-from datetime import datetime
 from src.models.knowledge_document import KnowledgeDocumentStatus
+
 
 class DocumentUploadResponse(BaseModel):
     """Response returned after successfully ingesting a document."""

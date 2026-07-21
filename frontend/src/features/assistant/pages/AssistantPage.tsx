@@ -1,12 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Sparkles } from "lucide-react";
 
 import { ConversationSidebar } from "@/features/assistant/components/ConversationSidebar";
-import { ChatMessageBubble } from "@/features/assistant/components/ChatMessageBubble";
 import { ChatComposer } from "@/features/assistant/components/ChatComposer";
-
-import { DatasetVersionSelect } from "@/components/common/DatasetVersionSelect";
-import { Card, CardContent } from "@/components/ui/card";
+import { ChatMessageBubble } from "@/features/assistant/components/ChatMessageBubble";
 
 import { useAssistantStore } from "@/stores/assistant.store";
 import { useAssistantChat } from "@/hooks/useAssistant";
@@ -15,22 +12,15 @@ export default function AssistantPage() {
   const {
     conversations,
     activeConversationId,
-    ensureActiveConversation,
     streamingMode,
     setStreamingMode,
   } = useAssistantStore();
 
-  const { sendMessage, isSending, cancel } = useAssistantChat();
+  const { sendMessage, isSending, cancel } =
+    useAssistantChat();
 
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const [datasetId, setDatasetId] = useState<string | null>(null);
-  const [versionId, setVersionId] = useState<string | null>(null);
-
-  useEffect(() => {
-    ensureActiveConversation();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const scrollRef =
+    useRef<HTMLDivElement>(null);
 
   const conversation = conversations.find(
     (c) => c.id === activeConversationId
@@ -44,49 +34,52 @@ export default function AssistantPage() {
   }, [conversation?.messages]);
 
   function handleSend(text: string) {
-    if (!versionId) {
-      alert("Please select a dataset version first.");
+    if (!conversation) {
+      alert(
+        "Create a conversation before chatting."
+      );
       return;
     }
 
-    const id = ensureActiveConversation();
-
     sendMessage(
-      id,
+      conversation.id,
       text,
-      streamingMode,
-      versionId,
+      streamingMode
     );
   }
 
   return (
     <div className="-m-4 flex h-[calc(100vh-3.5rem)] overflow-hidden sm:-m-6">
+
       <ConversationSidebar />
 
       <div className="flex min-w-0 flex-1 flex-col">
+        {/* Header */}
 
-        {/* Dataset Selection */}
+        <div className="border-b border-border bg-background/80 backdrop-blur">
+          <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
 
-        <div className="mx-auto w-full max-w-3xl px-4 pt-4 sm:px-6">
+            <div>
+              <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                Active Conversation
+              </p>
 
-          <Card>
+              <p className="font-medium">
+                {conversation?.title ?? "No Conversation Selected"}
+              </p>
+            </div>
 
-            <CardContent className="p-5">
+            <div className="text-right">
+              <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                AI Assistant
+              </p>
 
-              <DatasetVersionSelect
-                datasetId={datasetId}
-                versionId={versionId}
-                onDatasetChange={(id) => {
-                  setDatasetId(id);
-                  setVersionId(null);
-                }}
-                onVersionChange={setVersionId}
-              />
+              <p className="font-medium">
+                Business Agent
+              </p>
+            </div>
 
-            </CardContent>
-
-          </Card>
-
+          </div>
         </div>
 
         {/* Chat */}
@@ -95,7 +88,7 @@ export default function AssistantPage() {
           ref={scrollRef}
           className="flex-1 overflow-y-auto scrollbar-thin"
         >
-          <div className="mx-auto max-w-3xl space-y-6 px-4 py-6 sm:px-6">
+          <div className="mx-auto max-w-5xl space-y-8 px-4 py-6 sm:px-6">
 
             {(!conversation ||
               conversation.messages.length === 0) && (
@@ -107,13 +100,14 @@ export default function AssistantPage() {
                 </div>
 
                 <h2 className="text-xl font-semibold">
-                  How can I help with your business today?
+                  Enterprise Decision Intelligence
                 </h2>
 
-                <p className="max-w-md text-sm text-muted-foreground">
-                  Select a dataset version above, then ask questions about
-                  analytics, forecasting, prediction, risk analysis,
-                  scenario planning, or your enterprise knowledge base.
+                <p className="max-w-xl text-sm text-muted-foreground">
+                  Create a conversation from the sidebar and choose the
+                  dataset version that conversation should use. Once created,
+                  simply ask questions about forecasting, prediction, risk,
+                  analytics, enterprise knowledge, or business strategy.
                 </p>
 
               </div>
@@ -132,7 +126,7 @@ export default function AssistantPage() {
 
         {/* Composer */}
 
-        <div className="mx-auto w-full max-w-3xl px-4 pb-4 sm:px-6">
+        <div className="mx-auto w-full max-w-5xl px-4 pb-4 sm:px-6">
 
           <ChatComposer
             onSend={handleSend}
@@ -145,6 +139,7 @@ export default function AssistantPage() {
         </div>
 
       </div>
+
     </div>
   );
 }

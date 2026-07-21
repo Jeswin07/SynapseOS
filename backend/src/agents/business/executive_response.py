@@ -9,6 +9,7 @@ from src.agents.business.executive_evidence_builder import (
 )
 from src.agents.common.llm import LLMClient
 from src.agents.models import AgentOutput
+from src.modules.conversation_messages.schemas import ChatMessage
 
 
 class ExecutiveResponseGenerator:
@@ -29,11 +30,21 @@ class ExecutiveResponseGenerator:
         self,
         *,
         query: str,
+        history: list[ChatMessage],
         response: AgentOutput,
     ) -> AgentOutput:
 
         evidence = self.builder.build(
             response,
+        )
+
+        history_text = ""
+
+        if history:
+
+            history_text = "\n\n".join(
+            f"{msg.role.upper()}:\n{msg.content}"
+            for msg in history
         )
 
         payload = json.dumps(
@@ -60,11 +71,17 @@ into an executive-level business briefing.
 
 ==========================================================
 
-USER QUESTION
+USER CONVERSATION
+
+{history_text}
+
+==================================================
+
+CURRENT USER QUESTION
 
 {query}
 
-==========================================================
+==================================================
 
 BUSINESS EVIDENCE
 
@@ -102,6 +119,17 @@ state that there is insufficient evidence.
 
 If at least one evidence section exists,
 base the response ONLY on that evidence.
+
+If the current question depends on previous conversation,
+use the supplied conversation history.
+
+If the current question introduces a new topic,
+focus primarily on the current question.
+
+Do not invent previous conversation.
+
+If conversation history is empty,
+answer only from the current question.
 
 Never say there is insufficient evidence simply because some evidence types are unavailable.
 
@@ -277,12 +305,42 @@ Do not invent opportunities.
 
 Do not invent recommendations.
 
-Maximum 500 words.
+STYLE
+
+Return VALID GitHub Markdown.
+
+VERY IMPORTANT:
+
+- Every heading MUST begin with Markdown heading syntax.
+- Use exactly:
+
+# Executive Summary
+
+## Key Findings
+
+## Strategic Insights
+
+## Business Risks
+
+## Recommendations
+
+## Confidence
+
+- Leave one blank line after every heading.
+- Use bullet lists instead of long paragraphs.
+- Bold all important numbers and KPIs.
+- Maximum 250 words.
+- Never output plain text headings.
+- Never output HTML.
+
+Maximum 450 words.
 """
 
         answer = await self.llm.generate(
             prompt,
         )
+
+        print(answer)
 
         response.answer = answer
 

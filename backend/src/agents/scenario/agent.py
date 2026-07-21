@@ -17,10 +17,11 @@ from src.agents.scenario.evidence import (
 from src.agents.scenario.planner import (
     ScenarioPlanner,
 )
-from src.agents.types import AgentType
 from src.agents.scenario.simulation_engine import (
     SimulationEngine,
 )
+from src.agents.types import AgentType
+
 
 class ScenarioAgent(BaseAgent):
     """

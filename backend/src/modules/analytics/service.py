@@ -8,10 +8,10 @@ from sqlalchemy.orm import Session
 
 from src.ml.analytics.commerce import CommerceAnalyticsEngine
 from src.ml.cache.analytics_cache import AnalyticsCache
+from src.ml.core.filtering.options import DatasetFilterOptions
 from src.ml.core.filtering.schemas import DatasetFilters
 from src.ml.core.filtering.service import DatasetFilterService
 from src.ml.features.service import FeatureService
-from src.ml.core.filtering.options import DatasetFilterOptions
 
 
 class AnalyticsService:
@@ -58,9 +58,6 @@ class AnalyticsService:
             filters=filters,
         )
 
-        print(len(features))
-        print(len(filtered))
-
         result = self.engine.analyze(filtered)
 
         if filters is None:
@@ -70,7 +67,6 @@ class AnalyticsService:
                 result,
             )
 
-        print(filters)
 
         return result
 

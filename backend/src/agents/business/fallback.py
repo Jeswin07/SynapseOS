@@ -1,4 +1,4 @@
-from src.agents.models import AgentOutput, AgentMetadata
+from src.agents.models import AgentMetadata, AgentOutput
 
 
 class BusinessFallback:

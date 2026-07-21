@@ -3,7 +3,7 @@ import {
   Loader2,
   AlertCircle,
 } from "lucide-react";
-
+import { Badge } from "@/components/ui/badge";
 import type { StreamEvent } from "@/types/api";
 
 interface Props {
@@ -167,73 +167,161 @@ export function ExecutionTimeline({
   }
 
   return (
-    <div className="rounded-xl border border-border bg-muted/30 p-4">
-      <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-        Agent execution
-      </p>
+    <div className="overflow-hidden rounded-2xl border border-border bg-muted/20">
 
-      <ol className="space-y-2">
+      {/* Header */}
+
+      <div className="border-b border-border bg-muted/30 px-4 py-3">
+
+        <div className="flex items-center justify-between">
+
+          <div>
+
+            <h4 className="text-sm font-semibold">
+              Agent Workflow
+            </h4>
+
+            <p className="text-xs text-muted-foreground">
+              Multi-agent execution pipeline
+            </p>
+
+          </div>
+
+          {isActive && (
+            <div className="flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+
+              Running
+
+            </div>
+          )}
+
+        </div>
+
+      </div>
+
+      {/* Stages */}
+
+      <div className="space-y-3 p-4">
+
         {stages.map((stage) => {
+
           let icon;
-          let color = "";
+
+          let iconColor = "";
+
+          let badgeText = "";
 
           switch (stage.status) {
-            case "completed":
-              icon = (
-                <Check className="h-3 w-3" />
-              );
 
-              color =
-                "border-green-500 bg-green-500/10 text-green-600";
+            case "completed":
+
+              icon = <Check className="h-4 w-4" />;
+
+              iconColor =
+                "bg-green-500 text-white";
+
+              badgeText = "Completed";
 
               break;
 
             case "running":
+
               icon = (
-                <Loader2 className="h-3 w-3 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" />
               );
 
-              color =
-                "border-blue-500 bg-blue-500/10 text-blue-600";
+              iconColor =
+                "bg-blue-500 text-white";
+
+              badgeText = "Running";
 
               break;
 
             case "error":
+
               icon = (
-                <AlertCircle className="h-3 w-3" />
+                <AlertCircle className="h-4 w-4" />
               );
 
-              color =
-                "border-red-500 bg-red-500/10 text-red-600";
+              iconColor =
+                "bg-red-500 text-white";
+
+              badgeText = "Error";
 
               break;
+
           }
 
           return (
-            <li
+
+            <div
               key={stage.id}
-              className="flex items-center gap-2"
+              className="flex items-center gap-4 rounded-xl border border-border bg-background px-4 py-3 transition-all"
             >
-              <span
-                className={`flex h-5 w-5 items-center justify-center rounded-full border ${color}`}
+
+              <div
+                className={`flex h-9 w-9 items-center justify-center rounded-full ${iconColor}`}
               >
                 {icon}
-              </span>
+              </div>
 
-              <span className="text-sm">
-                {stage.label}
-              </span>
-            </li>
+              <div className="flex-1">
+
+                <div className="font-medium">
+
+                  {stage.label}
+
+                </div>
+
+                <div className="text-xs text-muted-foreground">
+
+                  {badgeText}
+
+                </div>
+
+              </div>
+
+              {stage.status === "completed" && (
+
+                <Badge
+                  variant="secondary"
+                  className="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300"
+                >
+                  Done
+                </Badge>
+
+              )}
+
+              {stage.status === "running" && (
+
+                <Badge>
+
+                  Active
+
+                </Badge>
+
+              )}
+
+              {stage.status === "error" && (
+
+                <Badge variant="danger" className="font-medium">
+
+                  Failed
+
+                </Badge>
+
+              )}
+
+            </div>
+
           );
-        })}
-      </ol>
 
-      {isActive && (
-        <p className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-          <Loader2 className="h-3 w-3 animate-spin" />
-          Running...
-        </p>
-      )}
+        })}
+
+      </div>
+
     </div>
   );
 }

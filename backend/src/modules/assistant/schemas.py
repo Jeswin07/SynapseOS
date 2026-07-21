@@ -12,6 +12,7 @@ class AssistantChatRequest(BaseModel):
     """
     User request to the Business AI Assistant.
     """
+    conversation_id: UUID
 
     message: str
 

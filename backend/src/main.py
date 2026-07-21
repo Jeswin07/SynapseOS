@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.core.storage.storage_service import StorageService
 from src.modules.analytics.router import (
@@ -9,6 +10,7 @@ from src.modules.auth.admin_routes import (
     router as admin_router,
 )
 from src.modules.auth.router import router as auth_router
+from src.modules.conversations.router import router as conversation_router
 from src.modules.data.router import (
     router as data_router,
 )
@@ -21,20 +23,15 @@ from src.modules.knowledge.router import (
 from src.modules.prediction.router import (
     router as prediction_router,
 )
+from src.modules.risk.router import (
+    router as risk_router,
+)
 from src.modules.tenants.router import (
     router as tenant_router,
 )
 from src.modules.users.router import (
     router as users_router,
 )
-from src.modules.risk.router import (
-    router as risk_router,
-)
-from src.modules.conversations.router import (
-    router as conversation_router
-)
-from fastapi.middleware.cors import CORSMiddleware
-
 
 app = FastAPI(title="SynapseOS API", version="1.0.0", openapi_version="3.0.3",)
 

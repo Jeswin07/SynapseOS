@@ -8,7 +8,6 @@ from src.agents.scenario.models import (
     ScenarioPlan,
     ScenarioType,
 )
-
 from src.mcp.types import MCPTool
 
 
