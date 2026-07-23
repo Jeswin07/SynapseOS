@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import logging
+
 from src.agents.base import BaseAgent
 from src.agents.models import (
     AgentInput,
@@ -11,6 +13,7 @@ from src.agents.types import AgentType
 from src.mcp.service import MCPService
 from src.mcp.types import MCPTool
 
+logger = logging.getLogger(__name__)
 
 class KnowledgeAgent(BaseAgent):
     """
@@ -37,18 +40,38 @@ class KnowledgeAgent(BaseAgent):
         request: AgentInput,
     ) -> AgentOutput:
 
-        response = await self.mcp.execute(
-            tool=MCPTool.KNOWLEDGE_SEARCH,
-            tenant_id=request.tenant_id,
-            user_id=request.user_id,
-            query=request.query,
+        logger.info(
+            "Knowledge Agent execution started | conversation_id=%s",
+            request.conversation_id,
         )
 
-        return AgentOutput(
-            answer="",
-            sources=response.data.get(
-                "sources",
-                [],
-            ),
-            data=response.data,
-        )
+        try:
+            logger.info(
+                "Executing knowledge search via MCP"
+            )
+            response = await self.mcp.execute(
+                tool=MCPTool.KNOWLEDGE_SEARCH,
+                tenant_id=request.tenant_id,
+                user_id=request.user_id,
+                query=request.query,
+            )
+
+            logger.info(
+                "Knowledge search completed"
+            )
+
+            return AgentOutput(
+                answer="",
+                sources=response.data.get(
+                    "sources",
+                    [],
+                ),
+                data=response.data,
+            )
+
+        except Exception:
+            logger.exception(
+                "Knowledge Agent execution failed | conversation_id=%s",
+                request.conversation_id,
+            )
+            raise

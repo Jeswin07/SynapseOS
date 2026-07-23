@@ -7,7 +7,6 @@ import {
   BarChart3,
   TrendingUp,
   Target,
-  GitBranch,
   Users,
   Settings,
   ChevronsLeft,
@@ -26,7 +25,6 @@ const NAV_ITEMS = [
   { to: "/analytics", label: "Analytics", icon: BarChart3 },
   { to: "/forecasting", label: "Forecasting", icon: TrendingUp },
   { to: "/prediction", label: "Prediction", icon: Target },
-  { to: "/scenario", label: "Scenario Planner", icon: GitBranch },
   { to: "/users", label: "Users", icon: Users },
   { to: "/settings", label: "Settings", icon: Settings },
 ];

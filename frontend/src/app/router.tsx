@@ -14,7 +14,6 @@ const KnowledgePage = lazy(() => import("@/features/knowledge/pages/KnowledgePag
 const AnalyticsPage = lazy(() => import("@/features/analytics/pages/AnalyticsPage"));
 const ForecastingPage = lazy(() => import("@/features/forecasting/pages/ForecastingPage"));
 const PredictionPage = lazy(() => import("@/features/prediction/pages/PredictionPage"));
-const ScenarioPage = lazy(() => import("@/features/scenario/pages/ScenarioPage"));
 const UsersPage = lazy(() => import("@/features/users/pages/UsersPage"));
 const SettingsPage = lazy(() => import("@/features/settings/pages/SettingsPage"));
 const NotFoundPage = lazy(() => import("@/features/misc/NotFoundPage"));
@@ -42,7 +41,6 @@ const router = createBrowserRouter([
       { path: "/analytics", element: withSuspense(<AnalyticsPage />) },
       { path: "/forecasting", element: withSuspense(<ForecastingPage />) },
       { path: "/prediction", element: withSuspense(<PredictionPage />) },
-      { path: "/scenario", element: withSuspense(<ScenarioPage />) },
       { path: "/users", element: withSuspense(<UsersPage />) },
       { path: "/settings", element: withSuspense(<SettingsPage />) },
     ],

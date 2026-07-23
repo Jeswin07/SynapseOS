@@ -30,11 +30,6 @@ class PredictionTrainer:
         data: pd.DataFrame,
         prediction_type: PredictionType,
     ):
-        print("=" * 80)
-        print("TRAINER INPUT")
-        print(data.columns.tolist())
-        print(data.shape)
-        print("=" * 80)
 
         features = self.prepare_features(data, prediction_type)
 
@@ -43,8 +38,6 @@ class PredictionTrainer:
             prediction_type,
         )
 
-        print(target.value_counts())
-        print(target.value_counts(normalize=True))
 
         X_train, X_test, y_train, y_test = train_test_split(
             features,
@@ -59,7 +52,7 @@ class PredictionTrainer:
             random_state=42,
             class_weight="balanced",
         )
-        print(features.columns.tolist())
+
         model.fit(
             X_train,
             y_train,
@@ -77,7 +70,6 @@ class PredictionTrainer:
             )
         )
 
-        print(importance.head(15))
 
         prediction = model.predict(X_test)
 
@@ -140,11 +132,6 @@ class PredictionTrainer:
             
         }
 
-        print("=" * 80)
-        print("MODEL EVALUATION")
-        for k, v in metrics.items():
-            print(f"{k}: {v}")
-        print("=" * 80)
 
         importance = (
             pd.DataFrame(

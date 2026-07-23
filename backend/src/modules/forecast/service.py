@@ -1,3 +1,4 @@
+import logging
 import uuid
 
 import pandas as pd
@@ -16,8 +17,8 @@ from src.modules.forecast.predictor import (
     ForecastPredictor,
 )
 from src.modules.forecast.repository import ForecastRepository
-from src.shared.logging import logger
 
+logger = logging.getLogger(__name__)
 
 class ForecastService:
     """
@@ -57,6 +58,10 @@ class ForecastService:
         Train dynamic forecasting model.
         """
 
+        logger.info(
+            "Forecast training requested | dataset_version_id=%s",
+            dataset_version_id,
+        )
 
         version = (
             self.repository
@@ -277,15 +282,9 @@ class ForecastService:
 
 
             logger.info(
-                "Forecast trained.",
-                extra={
-                    "forecast_id": str(
-                        forecast.id,
-                    ),
-
-                    "target":
-                    final_target_column,
-                },
+                "Forecast training completed | forecast_id=%s target=%s",
+                forecast.id,
+                final_target_column,
             )
 
 
@@ -299,13 +298,8 @@ class ForecastService:
 
 
             logger.exception(
-                "Forecast training failed.",
-                extra={
-                    "dataset_version_id":
-                    str(
-                        dataset_version_id,
-                    )
-                },
+                "Forecast training failed | dataset_version_id=%s",
+                dataset_version_id,
             )
 
 
@@ -318,25 +312,46 @@ class ForecastService:
         periods: int,
     ):
 
-        forecast = self.repository.get_by_id(
+        logger.info(
+            "Forecast prediction requested | forecast_id=%s periods=%d",
             forecast_id,
+            periods,
         )
 
-        if forecast is None:
-            raise ValueError(
-                "Forecast model not found."
+        try:
+
+            forecast = self.repository.get_by_id(
+                forecast_id,
             )
 
-        prediction = self.predictor.predict(
-            artifact_path=forecast.artifact_path,
-            periods=periods,
-            frequency=forecast.frequency,
-        )
+            if forecast is None:
+                raise ValueError(
+                    "Forecast model not found."
+                )
 
-        result = self._build_summary(
-            forecast=forecast,
-            prediction=prediction,
-        )
+            prediction = self.predictor.predict(
+                artifact_path=forecast.artifact_path,
+                periods=periods,
+                frequency=forecast.frequency,
+            )
+
+            result = self._build_summary(
+                forecast=forecast,
+                prediction=prediction,
+            )
+
+            logger.info(
+                "Forecast prediction completed | forecast_id=%s periods=%d",
+                forecast_id,
+                periods,
+            )
+
+        except Exception:
+            logger.exception(
+                "Forecast prediction failed | forecast_id=%s",
+                forecast_id,
+            )
+            raise
 
         return {
             "forecast": prediction,
@@ -352,108 +367,134 @@ class ForecastService:
         query: str,
     ):
 
-        version = (
-            self.repository
-            .get_dataset_version(
-                dataset_version_id,
-            )
+        logger.info(
+            "Auto forecast requested | dataset_version_id=%s",
+            dataset_version_id,
         )
 
-        if version is None:
-
-            raise ValueError(
-                "Dataset version not found."
-            )
-
-        cache_key = (
-            f"{dataset_version_id}:"
-            f"{query}:"
-            f"{periods}"
-        )
-
-        cached = ForecastCache.get(
-            cache_key,
-        )
-
-        if cached is not None:
-            return cached
-
-
-    # build features only for planning
-        features = (
-            self.feature_service
-            .build_features(
-                dataset_version_id,
-            )
-        )
-
-
-        plan = await self.planner.plan(
-            query=query,
-            columns=list(
-                features.columns,
-            ),
-        )
-
-        if (
-            plan.target_column is None
-            or
-            plan.date_column is None
-        ):
-            raise ValueError(
-                "Unable to detect forecasting columns."
+        try:
+            version = (
+                self.repository
+                .get_dataset_version(
+                    dataset_version_id,
+                )
             )
 
-        existing_forecast = (
-            self.repository
-            .get_existing_forecast(
-                dataset_id=version.dataset_id,
-                target_column=plan.target_column,
-                aggregation=plan.aggregation,
-                frequency=plan.frequency,
+            if version is None:
+
+                raise ValueError(
+                    "Dataset version not found."
+                )
+
+            cache_key = (
+                f"{dataset_version_id}:"
+                f"{query}:"
+                f"{periods}"
             )
-        )
+
+            cached = ForecastCache.get(
+                cache_key,
+            )
+
+            if cached is not None:
+                logger.info(
+                    "Forecast cache hit | dataset_version_id=%s",
+                    dataset_version_id,
+                )
+                return cached
 
 
-        if (
-            existing_forecast
-            and
-            existing_forecast.artifact_path
-        ):
+        # build features only for planning
+            features = (
+                self.feature_service
+                .build_features(
+                    dataset_version_id,
+                )
+            )
 
-            forecast = existing_forecast
 
-
-        else:
-
-            forecast = await self.train(
-                dataset_version_id=dataset_version_id,
-                created_by=user_id,
+            plan = await self.planner.plan(
                 query=query,
+                columns=list(
+                    features.columns,
+                ),
+            )
+
+            if (
+                plan.target_column is None
+                or
+                plan.date_column is None
+            ):
+                raise ValueError(
+                    "Unable to detect forecasting columns."
+                )
+
+            existing_forecast = (
+                self.repository
+                .get_existing_forecast(
+                    dataset_id=version.dataset_id,
+                    target_column=plan.target_column,
+                    aggregation=plan.aggregation,
+                    frequency=plan.frequency,
+                )
             )
 
 
-        predict_result = self.predict(
-            forecast_id=forecast.id,
-            periods=periods,
-        )
+            if (
+                existing_forecast
+                and
+                existing_forecast.artifact_path
+            ):
+
+                forecast = existing_forecast
 
 
-        result = {
-            "forecast_id": str(forecast.id),
-            "forecast_config": {
-                "metric": forecast.target_column,
-                "date_column": forecast.date_column,
-                "aggregation": forecast.aggregation,
-                "frequency": forecast.frequency,
-            },
-            **predict_result,
-        }
+            else:
 
-        ForecastCache.set(
-            cache_key,
-            result,
-        )
+                logger.info(
+                    "Training new forecast model"
+                )
+
+                forecast = await self.train(
+                    dataset_version_id=dataset_version_id,
+                    created_by=user_id,
+                    query=query,
+                )
+
+
+            predict_result = self.predict(
+                forecast_id=forecast.id,
+                periods=periods,
+            )
+
+
+            result = {
+                "forecast_id": str(forecast.id),
+                "forecast_config": {
+                    "metric": forecast.target_column,
+                    "date_column": forecast.date_column,
+                    "aggregation": forecast.aggregation,
+                    "frequency": forecast.frequency,
+                },
+                **predict_result,
+            }
+
+            ForecastCache.set(
+                cache_key,
+                result,
+            )
+
+            logger.info(
+                "Auto forecast completed | forecast_id=%s",
+                forecast.id,
+            )
+
+        except Exception:
+            logger.exception(
+                "Auto forecast failed | dataset_version_id=%s",
+                dataset_version_id,
+            )
+            raise
 
         return result
     

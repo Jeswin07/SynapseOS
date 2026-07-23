@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import uuid
 
 from src.modules.conversation_messages.repository import (
@@ -9,6 +10,7 @@ from src.modules.conversation_messages.repository import (
 )
 from src.modules.conversation_messages.schemas import ChatMessage
 
+logger = logging.getLogger(__name__)
 
 class ConversationMessageService:
     """Service for conversation message operations."""
@@ -29,6 +31,11 @@ class ConversationMessageService:
         Save a user message.
         """
 
+        logger.info(
+            "User message received | conversation_id=%s",
+            conversation_id,
+        )
+
         await self.repository.add_message(
             conversation_id=conversation_id,
             role="user",
@@ -44,6 +51,11 @@ class ConversationMessageService:
         """
         Save an assistant message.
         """
+
+        logger.info(
+            "Assistant message generated | conversation_id=%s",
+            conversation_id,
+        )
 
         await self.repository.add_message(
             conversation_id=conversation_id,
@@ -61,6 +73,11 @@ class ConversationMessageService:
         Return recent conversation history
         formatted for the LLM.
         """
+
+        logger.info(
+            "Conversation history requested | conversation_id=%s",
+            conversation_id,
+        )
 
         messages = await self.repository.get_recent_messages(
             conversation_id=conversation_id,

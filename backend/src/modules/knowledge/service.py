@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import mimetypes
 import os
 import time
@@ -41,6 +42,7 @@ from src.modules.knowledge.schemas import (
     SourceChunk,
 )
 
+logger = logging.getLogger(__name__)
 
 class KnowledgeService:
     """Orchestrates RAG workflows."""
@@ -81,6 +83,15 @@ class KnowledgeService:
         while simultaneously building the Neo4j Knowledge Graph.
         """
 
+        logger.info(
+            "Knowledge document ingestion started | tenant_id=%s " \
+            "file_name=%s collection=%s uploaded_by=%s",
+            tenant_id,
+            file_name,
+            collection_name,
+            uploaded_by,
+        )
+
         document_id = str(uuid.uuid4())
 
         uploaded_at = datetime.now()
@@ -106,6 +117,12 @@ class KnowledgeService:
             document_id=document_id,
             chunk_count=0,
             status=KnowledgeDocumentStatus.UPLOADING,
+        )
+
+        logger.info(
+            "Knowledge document registered | document_id=%s tenant_id=%s",
+            document_id,
+            tenant_id,
         )
 
         try:
@@ -135,9 +152,21 @@ class KnowledgeService:
                     content_type=content_type,
                 )
 
+            logger.info(
+                "Knowledge document stored | document_id=%s size=%s content_type=%s",
+                document_id,
+                file_size,
+                content_type,
+            )
+
             document.status = KnowledgeDocumentStatus.PROCESSING
 
             self.document_repository.commit()
+
+            logger.info(
+                "Knowledge processing started | document_id=%s",
+                document_id,
+            )
 
         except Exception:
 
@@ -149,7 +178,6 @@ class KnowledgeService:
         # Chunk Document
         # -------------------------------------------------
         try:
-
             nodes = self.embedding_engine.chunk_document(
                 file_path=file_path,
                 metadata=metadata,
@@ -265,13 +293,26 @@ class KnowledgeService:
 
             self.hybrid_retriever.invalidate_index()
 
+
             document.status = KnowledgeDocumentStatus.READY
 
             self.document_repository.commit()
 
             self.document_repository.refresh(document)
+
+            logger.info(
+                "Knowledge document processed | document_id=%s chunks=%s collection=%s",
+                document_id,
+                len(chunks),
+                collection_name,
+            )
         
         except Exception:
+
+            logger.exception(
+                "Knowledge document processing failed | document_id=%s",
+                document_id,
+            )
 
             self.document_repository.rollback()
 
@@ -322,196 +363,196 @@ class KnowledgeService:
         LLM Generation
         """
 
+        logger.info(
+            "Knowledge query started | collection=%s top_k=%s",
+            request.collection_name,
+            request.top_k,
+        )
+
         total_start = time.perf_counter()
 
-    # -------------------------------------------------
-    # Hybrid Retrieval
-    # -------------------------------------------------
+        try:
+            # -------------------------------------------------
+            # Hybrid Retrieval
+            # -------------------------------------------------
 
-        hybrid = self.hybrid_retriever.retrieve(
-            query=request.query,
-            collection_name=request.collection_name,
-            candidate_k=settings.rag_candidate_k,
-        )
-
-    # -------------------------------------------------
-    # Graph Retrieval
-    # -------------------------------------------------
-        rerank_start = time.perf_counter()
-
-        graph = self.graph_retriever.retrieve(
-            query=request.query,
-            top_k=max(
-                request.top_k * 2,
-                10,
-            ),
-        )
-
-        rerank_ms = round(
-            (time.perf_counter() - rerank_start) * 1000,
-            2,
-        )
-
-        print(f"Graph Retrieval: {rerank_ms} ms")
-
-    # -------------------------------------------------
-    # Merge Candidates
-    # -------------------------------------------------
-
-        candidate_map: dict[str, RetrievedChunk] = {}
-
-        for chunk in hybrid.points:
-            payload = chunk.payload or {}
-
-            chunk_id = payload.get("chunk_id")
-
-            if chunk_id is None:
-                continue
-
-            candidate_map[chunk_id] = chunk
-
-        for chunk in graph:
-
-            payload = chunk.payload or {}
-
-            chunk_id = payload.get("chunk_id")
-
-            if chunk_id is None:
-                continue
-
-            candidate_map.setdefault(
-                chunk_id,
-                chunk,
+            hybrid = self.hybrid_retriever.retrieve(
+                query=request.query,
+                collection_name=request.collection_name,
+                candidate_k=settings.rag_candidate_k,
             )
 
-        candidates = list(candidate_map.values())
+            # -------------------------------------------------
+            # Graph Retrieval
+            # -------------------------------------------------
 
-    # -------------------------------------------------
-    # CrossEncoder Reranking
-    # -------------------------------------------------
-        rerank_start = time.perf_counter()
+            graph = self.graph_retriever.retrieve(
+                query=request.query,
+                top_k=max(
+                    request.top_k * 2,
+                    10,
+                ),
+            )
 
-        points = self.reranker.rerank(
-            query=request.query,
-            candidates=candidates,
-            top_k=request.top_k,
-        )
+            # -------------------------------------------------
+            # Merge Candidates
+            # -------------------------------------------------
 
-        rerank_ms = round(
-            (time.perf_counter() - rerank_start) * 1000,
-            2,
-        )
+            candidate_map: dict[str, RetrievedChunk] = {}
 
-        print(f"Reranker: {rerank_ms} ms")
+            for chunk in hybrid.points:
+                payload = chunk.payload or {}
 
-    # -------------------------------------------------
-    # Build Context
-    # -------------------------------------------------
+                chunk_id = payload.get("chunk_id")
 
-        context: list[str] = []
+                if chunk_id is None:
+                    continue
 
-        sources: list[SourceChunk] = []
+                candidate_map[chunk_id] = chunk
 
-        for point in points:
+            for chunk in graph:
+                payload = chunk.payload or {}
 
-            payload = point.payload or {}
+                chunk_id = payload.get("chunk_id")
 
-            text = str(
-                payload.get(
-                    "text",
-                    "",
+                if chunk_id is None:
+                    continue
+
+                candidate_map.setdefault(
+                    chunk_id,
+                    chunk,
                 )
+
+            candidates = list(candidate_map.values())
+
+            # -------------------------------------------------
+            # CrossEncoder Reranking
+            # -------------------------------------------------
+
+            points = self.reranker.rerank(
+                query=request.query,
+                candidates=candidates,
+                top_k=request.top_k,
             )
 
-            context.append(text)
+            # -------------------------------------------------
+            # Build Context
+            # -------------------------------------------------
 
-            sources.append(
-                SourceChunk(
-                    text=text[:200]
-                    + (
-                        "..."
-                        if len(text) > 200
-                        else ""
-                    ),
-                    score=round(
-                        float(point.score),
-                        4,
-                    ),
-                    file_name=str(
-                        payload.get(
-                            "file_name",
-                            "Unknown",
-                        )
-                    ),
-                    page_label=str(
-                        payload.get(
-                            "page_label",
-                            "1",
-                        )
-                    ),
-                    page_number=payload.get(
-                        "page_number",
-                    ),
-                    chunk_index=payload.get(
-                        "chunk_index",
-                    ),
-                    chunk_id=payload.get(
-                        "chunk_id",
-                    ),
-                    file_type=payload.get(
-                        "file_type",
-                    ),
-                    chunk_length=payload.get(
-                        "chunk_length",
-                    ),
+            context: list[str] = []
+
+            sources: list[SourceChunk] = []
+
+            for point in points:
+
+                payload = point.payload or {}
+
+                text = str(
+                    payload.get(
+                        "text",
+                        "",
+                    )
                 )
+
+                context.append(text)
+
+                sources.append(
+                    SourceChunk(
+                        text=text[:200]
+                        + (
+                            "..."
+                            if len(text) > 200
+                            else ""
+                        ),
+                        score=round(
+                            float(point.score),
+                            4,
+                        ),
+                        file_name=str(
+                            payload.get(
+                                "file_name",
+                                "Unknown",
+                            )
+                        ),
+                        page_label=str(
+                            payload.get(
+                                "page_label",
+                                "1",
+                            )
+                        ),
+                        page_number=payload.get(
+                            "page_number",
+                        ),
+                        chunk_index=payload.get(
+                            "chunk_index",
+                        ),
+                        chunk_id=payload.get(
+                            "chunk_id",
+                        ),
+                        file_type=payload.get(
+                            "file_type",
+                        ),
+                        chunk_length=payload.get(
+                            "chunk_length",
+                        ),
+                    )
+                )
+
+            # -------------------------------------------------
+            # Generate Answer
+            # -------------------------------------------------
+
+            generation_start = time.perf_counter()
+
+            answer = self.generator.generate_answer(
+                query=request.query,
+                context=context,
             )
 
-    # -------------------------------------------------
-    # Generate Answer
-    # -------------------------------------------------
-
-        generation_start = time.perf_counter()
-
-        answer = self.generator.generate_answer(
-            query=request.query,
-            context=context,
-        )
-
-        generation_time_ms = round(
-            (
-                time.perf_counter()
-                - generation_start
+            generation_time_ms = round(
+                (
+                    time.perf_counter()
+                    - generation_start
+                )
+                * 1000,
+                2,
             )
-            * 1000,
-            2,
-        )
 
-        total_time_ms = round(
-            (
-                time.perf_counter()
-                - total_start
+            total_time_ms = round(
+                (
+                    time.perf_counter()
+                    - total_start
+                )
+                * 1000,
+                2,
             )
-            * 1000,
-            2,
-        )
 
-    # -------------------------------------------------
-    # Response
-    # -------------------------------------------------
+            logger.info(
+                "Knowledge query completed | collection=%s chunks=%s total_time_ms=%s",
+                request.collection_name,
+                len(points),
+                total_time_ms,
+            )
 
-        return QueryResponse(
-            answer=answer,
-            sources=sources,
-            metrics=QueryMetrics(
-                retrieval_time_ms=hybrid.retrieval_time_ms,
-                generation_time_ms=generation_time_ms,
-                total_time_ms=total_time_ms,
-                chunks_retrieved=len(points),
-                average_similarity=hybrid.average_similarity,
-                highest_similarity=hybrid.highest_similarity,
-            ),
-        )
+            return QueryResponse(
+                answer=answer,
+                sources=sources,
+                metrics=QueryMetrics(
+                    retrieval_time_ms=hybrid.retrieval_time_ms,
+                    generation_time_ms=generation_time_ms,
+                    total_time_ms=total_time_ms,
+                    chunks_retrieved=len(points),
+                    average_similarity=hybrid.average_similarity,
+                    highest_similarity=hybrid.highest_similarity,
+                ),
+            )
+
+        except Exception:
+            logger.exception(
+                "Knowledge query failed | collection=%s",
+                request.collection_name,
+            )
+            raise
 
     
     def answer(
@@ -548,6 +589,10 @@ class KnowledgeService:
         Returns:
             List of knowledge documents ordered by newest first.
         """
+        logger.info(
+            "Knowledge documents listed | tenant_id=%s",
+            tenant_id,
+        )
 
         return self.document_repository.list_documents(
             tenant_id=tenant_id,
@@ -579,6 +624,11 @@ class KnowledgeService:
         )
 
         if document is None:
+            logger.warning(
+                "Knowledge document not found | document_id=%s tenant_id=%s",
+                document_id,
+                tenant_id,
+            )
             raise KnowledgeDocumentNotFoundException(
                 document_id,
             )
@@ -614,6 +664,12 @@ class KnowledgeService:
             collection_name:
                 Qdrant collection.
         """
+
+        logger.info(
+            "Knowledge document deletion started | document_id=%s tenant_id=%s",
+            document_id,
+            tenant_id,
+        )
 
         document = self.get_document(
             tenant_id=tenant_id,
@@ -670,9 +726,19 @@ class KnowledgeService:
 
             self.hybrid_retriever.invalidate_index()
 
+            logger.info(
+                "Knowledge document deleted | document_id=%s",
+                document_id,
+            )
+
         except Exception as exc:
 
             self.document_repository.rollback()
+
+            logger.exception(
+                "Knowledge document deletion failed | document_id=%s",
+                document_id,
+            )
 
             raise KnowledgeDeleteException(
                 str(exc),

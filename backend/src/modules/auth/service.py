@@ -1,3 +1,4 @@
+import logging
 from datetime import (
     UTC,
     datetime,
@@ -30,6 +31,8 @@ from src.modules.tenants.service import (
     TenantService,
 )
 
+logger = logging.getLogger(__name__)
+
 
 class AuthService:
     def __init__(
@@ -54,9 +57,18 @@ class AuthService:
     ):
 
         try:
+            logger.info(
+                "Registration request received for email='%s', company='%s'.",
+                email,
+                company_name,
+            )
             existing_user = self.repository.get_by_email(email)
 
             if existing_user:
+                logger.warning(
+                    "Registration rejected. User already exists for email='%s'.",
+                    email,
+                )
                 raise ValueError("User already exists")
 
             tenant = self.tenant_service.create_tenant(
@@ -79,6 +91,14 @@ class AuthService:
             self.db.refresh(tenant)
             self.db.refresh(user)
 
+            logger.info(
+                "Organization registered successfully. "
+                "tenant_id=%s user_id=%s role=%s",
+                tenant.id,
+                user.id,
+                user.role.value,
+            )
+
             return {
                 "tenant": tenant,
                 "user": user,
@@ -95,15 +115,28 @@ class AuthService:
         password: str,
     ):
 
+        logger.info(
+            "Authentication request received for email='%s'.",
+            email,
+        )
+
         user = self.repository.get_by_email(email)
 
         if not user:
+            logger.warning(
+                "Authentication failed. Unknown email='%s'.",
+                email,
+            )
             raise ValueError("Invalid credentials")
 
         if not verify_password(
             password,
             user.hashed_password,
         ):
+            logger.warning(
+                "Authentication failed. Invalid password for user_id=%s.",
+                user.id,
+            )
             raise ValueError("Invalid credentials")
 
         try:
@@ -130,6 +163,14 @@ class AuthService:
 
             self.db.commit()
 
+            logger.info(
+                "User authenticated successfully. "
+                "user_id=%s tenant_id=%s role=%s",
+                user.id,
+                user.tenant_id,
+                user.role.value,
+            )
+
             return {
                 "access_token": access_token,
                 "refresh_token": refresh_token,
@@ -146,6 +187,8 @@ class AuthService:
         refresh_token: str,
     ):
 
+        logger.info("Refreshing access token.")
+
         payload = decode_token(refresh_token)
 
         if not is_refresh_token(payload):
@@ -153,13 +196,17 @@ class AuthService:
 
         stored_token = self.refresh_repository.get_by_token(refresh_token)
 
+        logger.warning(
+            "Refresh token validation failed."
+        )
+
         if not stored_token:
             raise ValueError("Refresh token not found")
 
         if stored_token.expires_at < datetime.utcnow():
             raise ValueError("Refresh token expired")
 
-        user = self.repository.get_by_id(str(stored_token.user_id))
+        user = self.repository.get_by_id(stored_token.user_id)
 
         if not user:
             raise ValueError("User not found")
@@ -188,6 +235,9 @@ class AuthService:
             raise ValueError(
                 "Refresh token not found"
             )
+            logger.warning(
+                "Logout requested with an unknown refresh token."
+            )
 
         try:
 
@@ -196,6 +246,10 @@ class AuthService:
             )
 
             self.db.commit()
+
+            logger.info(
+                "User logged out successfully."
+            )
 
         except Exception:
 

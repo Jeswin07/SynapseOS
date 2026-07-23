@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import logging
+
 from src.agents.base import BaseAgent
 from src.agents.intelligence.planner import (
     IntelligencePlanner,
@@ -15,6 +17,7 @@ from src.mcp.service import (
     MCPService,
 )
 
+logger = logging.getLogger(__name__)
 
 class IntelligenceAgent(BaseAgent):
     """
@@ -50,69 +53,109 @@ class IntelligenceAgent(BaseAgent):
         Execute intelligence workflow.
         """
 
-
-        forced_tools = request.metadata.get(
-            "forced_tools",
+        logger.info(
+            "Intelligence Agent execution started | conversation_id=%s",
+            request.conversation_id,
         )
 
-        if forced_tools:
+        try:
 
-            class ForcedPlan:
-
-                def __init__(self, tools):
-                    self.tools = tools
-
-                def model_dump(self):
-                    return {
-                        "tools": [
-                            tool.value
-                            for tool in self.tools
-                        ],
-                        "reasoning": "Forced by Scenario Agent.",
-                    }
-
-            plan = ForcedPlan(
-                forced_tools,
+            forced_tools = request.metadata.get(
+                "forced_tools",
             )
 
-        else:
+            if forced_tools:
 
-            plan = await self.planner.plan(
-                request.query,
+                logger.info(
+                    "Using forced MCP tools from Scenario Agent"
+                )
+
+                class ForcedPlan:
+
+                    def __init__(self, tools):
+                        self.tools = tools
+
+                    def model_dump(self):
+                        return {
+                            "tools": [
+                                tool.value
+                                for tool in self.tools
+                            ],
+                            "reasoning": "Forced by Scenario Agent.",
+                        }
+
+                plan = ForcedPlan(
+                    forced_tools,
+                )
+
+            else:
+
+                logger.info(
+                    "Generating intelligence execution plan"
+                )
+
+                plan = await self.planner.plan(
+                    request.query,
+                )
+
+                logger.info(
+                    "Planner selected tools: %s",
+                    [tool.value for tool in plan.tools],
+                )
+
+
+            results = {}
+
+            logger.info(
+                "Executing %d MCP tool(s)",
+                len(plan.tools),
             )
-            print("PLAN:", plan.model_dump())
+            # Execute MCP tools
+            for tool in plan.tools:
 
+                logger.info(
+                    "Executing MCP tool: %s",
+                    tool.value,
+                )
 
-        results = {}
+                response = await self.mcp.execute(
+                    tool=tool,
+                    tenant_id=request.tenant_id,
+                    user_id=request.user_id,
+                    query=request.query,
+                    dataset_version_id=request.metadata.get(
+                        "dataset_version_id",
+                    ),
+                )
 
+                logger.info(
+                    "Completed MCP tool: %s",
+                    tool.value,
+                )
 
-        # Execute MCP tools
-        for tool in plan.tools:
+                results[
+                    tool.value
+                ] = response.data.get(
+                    tool.value,
+                    response.data,
+                )
 
-            response = await self.mcp.execute(
-                tool=tool,
-                tenant_id=request.tenant_id,
-                user_id=request.user_id,
-                query=request.query,
-                dataset_version_id=request.metadata.get(
-                    "dataset_version_id",
-                ),
+            logger.info(
+                "Intelligence Agent execution completed"
             )
 
-
-            results[
-                tool.value
-            ] = response.data.get(
-                tool.value,
-                response.data,
+            return AgentOutput(
+                answer="",
+                data={
+                    "query": request.query,
+                    "plan": plan.model_dump(),
+                    "results": results,
+                },
             )
 
-
-        return AgentOutput(
-            answer="",
-            data={
-                "query": request.query,
-                "plan": plan.model_dump(),
-                "results": results,
-            },
-        )
+        except Exception:
+            logger.exception(
+                "Intelligence Agent execution failed | conversation_id=%s",
+                request.conversation_id,
+            )
+            raise

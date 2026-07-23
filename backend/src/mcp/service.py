@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from typing import Any
 from uuid import UUID
 
@@ -12,6 +13,7 @@ from src.mcp.models import (
 )
 from src.mcp.types import MCPTool
 
+logger = logging.getLogger(__name__)
 
 class MCPService:
     """
@@ -40,17 +42,37 @@ class MCPService:
         Execute an MCP tool.
         """
 
-        request = MCPToolRequest(
-            tool=tool,
-            tenant_id=tenant_id,
-            user_id=user_id,
-            query=query,
-            parameters={
-                "query": query,
-                **parameters,
-            },
-        )
+        try:
+            logger.info(
+                "Executing MCP tool: %s",
+                tool.value,
+            )
 
-        return await self.client.invoke(
-            request,
-        )
+            request = MCPToolRequest(
+                tool=tool,
+                tenant_id=tenant_id,
+                user_id=user_id,
+                query=query,
+                parameters={
+                    "query": query,
+                    **parameters,
+                },
+            )
+
+            response = await self.client.invoke(
+                request,
+            )
+
+            logger.info(
+                "MCP tool completed: %s",
+                tool.value,
+            )
+
+            return response
+
+        except Exception:
+            logger.exception(
+                "MCP tool execution failed: %s",
+                tool.value,
+            )
+            raise

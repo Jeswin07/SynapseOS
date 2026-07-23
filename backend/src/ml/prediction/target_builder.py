@@ -66,12 +66,7 @@ class PredictionTargetBuilder:
             latest_date - frame["last_order_date"]
         ).dt.days
 
-        print(days_since_last_purchase.describe())
 
-        for threshold in [90, 120, 150, 180, 210]:
-            target = (days_since_last_purchase >= threshold).astype(int)
-            print(threshold)
-            print(target.value_counts(normalize=True))
 
         return (
             days_since_last_purchase >= 180
@@ -133,11 +128,5 @@ class PredictionTargetBuilder:
             )
 
         target = (delay > 0).astype(int)
-
-        print("=" * 80)
-        print("Delivery Target Distribution")
-        print(target.value_counts())
-        print(target.value_counts(normalize=True))
-        print("=" * 80)
 
         return target

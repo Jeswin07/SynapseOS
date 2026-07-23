@@ -20,13 +20,18 @@ class EntityExtractor:
 
     def __init__(self) -> None:
 
-        self.nlp = spacy.load(
-            "en_core_web_sm",
-            disable=[
-                "parser",
-                "textcat",
-            ],
-        )
+        try:
+            self.nlp = spacy.load(
+                "en_core_web_sm",
+                disable=[
+                    "parser",
+                    "textcat",
+                ],
+            )
+        except OSError as e:
+            raise RuntimeError(
+                "SpaCy model 'en_core_web_sm' is missing."
+            ) from e
 
         self.matcher = PhraseMatcher(
             self.nlp.vocab,

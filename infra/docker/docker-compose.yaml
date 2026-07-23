@@ -2,43 +2,67 @@ services:
   postgres:
     image: postgres:17
     container_name: synapseos-postgres
+    restart: unless-stopped
+
     environment:
       POSTGRES_DB: synapseos
       POSTGRES_USER: synapseos
       POSTGRES_PASSWORD: synapseos
+
     ports:
       - "5432:5432"
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U synapseos -d synapseos"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - synapseos-network
 
   minio:
     image: minio/minio
     container_name: synapseos-minio
     restart: unless-stopped
+
     ports:
       - "9000:9000"
       - "9001:9001"
+
     environment:
       MINIO_ROOT_USER: synapseos
       MINIO_ROOT_PASSWORD: synapseos123
+
     command: server /data --console-address ":9001"
+
     volumes:
       - minio_data:/data
+
+    networks:
+      - synapseos-network
 
   qdrant:
     image: qdrant/qdrant:latest
     container_name: synapseos-qdrant
     restart: unless-stopped
+
     ports:
       - "6333:6333"
       - "6334:6334"
+
     volumes:
       - qdrant_data:/qdrant/storage
+
+    networks:
+      - synapseos-network
 
   neo4j:
     image: neo4j:5.26-community
     container_name: synapseos-neo4j
-
     restart: unless-stopped
 
     ports:
@@ -52,9 +76,93 @@ services:
       - neo4j_data:/data
       - neo4j_logs:/logs
 
+    networks:
+      - synapseos-network
+
+  backend:
+    build:
+      context: ../../backend
+      dockerfile: Dockerfile
+
+    image: synapseos-backend:latest
+    container_name: synapseos-backend
+    restart: unless-stopped
+
+    env_file:
+      - ../../backend/.env.docker
+
+    expose:
+      - "8000"
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_started
+      qdrant:
+        condition: service_started
+      neo4j:
+        condition: service_started
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+    networks:
+      - synapseos-network
+
+  frontend:
+    build:
+      context: ../../frontend
+      dockerfile: Dockerfile
+
+    image: synapseos-frontend:latest
+    container_name: synapseos-frontend
+    restart: unless-stopped
+
+    expose:
+      - "80"
+
+    networks:
+      - synapseos-network
+
+  gateway:
+    build:
+      context: ../nginx
+      dockerfile: Dockerfile
+
+    image: synapseos-gateway:latest
+    container_name: synapseos-gateway
+    restart: unless-stopped
+
+    depends_on:
+      frontend:
+        condition: service_started
+      backend:
+        condition: service_healthy
+
+    ports:
+      - "80:80"
+
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+    networks:
+      - synapseos-network
+
 volumes:
   postgres_data:
   minio_data:
   qdrant_data:
   neo4j_data:
   neo4j_logs:
+
+networks:
+  synapseos-network:
+    driver: bridge

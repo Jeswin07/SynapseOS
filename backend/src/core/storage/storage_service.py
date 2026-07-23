@@ -2,14 +2,15 @@ from io import BytesIO
 from typing import BinaryIO
 
 from minio.error import S3Error
+import logging
 
 from src.core.config import settings
 from src.core.storage.exceptions import (
     UploadFailedError,
 )
 from src.core.storage.minio_client import client
-from src.shared.logging import logger
 
+logger = logging.getLogger(__name__)
 
 class StorageService:
     """Service for object storage operations."""

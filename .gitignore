@@ -1,13 +1,36 @@
+# Python
 __pycache__/
+*.py[cod]
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
+# Virtual environments
 .venv/
+venv/
 
-.env
-
-*.pyc
-
-.idea/
+# IDE
 .vscode/
+.idea/
 
+# Environment
+.env
+.env.*
+!.env.example
+
+# Alembic
+alembic/versions/*.pyc
+
+# ML
+mlruns/
+artifacts/
+
+# Database
 postgres_data/
+
+# Logs
+logs/
+*.log
+
+# macOS
+.DS_Store

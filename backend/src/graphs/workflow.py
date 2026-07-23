@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import logging
+
 from langgraph.graph import (
     END,
     StateGraph,
@@ -18,12 +20,16 @@ from src.graphs.state import (
 )
 from src.modules.assistant.emitter import StreamEmitter
 
+logger = logging.getLogger(__name__)
 
 def create_business_graph(
     registry: AgentRegistry,
     emitter: StreamEmitter | None = None,
 ):
 
+    logger.info(
+        "Creating Business LangGraph workflow"
+    )
 
     nodes = BusinessGraphNodes(
         registry=registry,
@@ -80,5 +86,8 @@ def create_business_graph(
         END,
     )
 
+    logger.info(
+        "Business LangGraph compiled successfully"
+    )
 
     return graph.compile()

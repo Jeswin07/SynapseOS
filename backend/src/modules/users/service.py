@@ -1,3 +1,5 @@
+import logging
+
 from sqlalchemy.orm import Session
 
 from src.models.user import User
@@ -8,6 +10,7 @@ from src.modules.users.repository import (
     UserManagementRepository,
 )
 
+logger = logging.getLogger(__name__)
 
 class UserManagementService:
 
@@ -30,11 +33,24 @@ class UserManagementService:
         role,
     ):
 
+        logger.info(
+            "User creation started | tenant_id=%s email=%s role=%s requested_by=%s",
+            current_user.tenant_id,
+            email,
+            role,
+            current_user.id,
+        )
+
         existing_user = (
             self.repository.get_by_email(email)
         )
 
         if existing_user:
+            logger.warning(
+                "User creation rejected | tenant_id=%s email=%s reason=already_exists",
+                current_user.tenant_id,
+                email,
+            )
             raise ValueError(
                 "User already exists"
             )
@@ -57,6 +73,14 @@ class UserManagementService:
 
             self.db.refresh(user)
 
+            logger.info(
+                "User created | user_id=%s tenant_id=%s role=%s created_by=%s",
+                user.id,
+                user.tenant_id,
+                user.role,
+                current_user.id,
+            )
+
             return user
 
         except Exception:
@@ -69,6 +93,12 @@ class UserManagementService:
         self,
         current_user,
     ):
+
+        logger.info(
+            "User list requested | tenant_id=%s requested_by=%s",
+            current_user.tenant_id,
+            current_user.id,
+        )
 
         return (
             self.repository.list_by_tenant(

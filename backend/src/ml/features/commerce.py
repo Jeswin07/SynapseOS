@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import re
 
 import numpy as np
@@ -12,6 +13,7 @@ from src.ml.features.canonical_aliases import (
     CANONICAL_ALIASES,
 )
 
+logger = logging.getLogger(__name__)
 
 class CommerceFeatureBuilder(BaseFeatureBuilder):
     """
@@ -25,6 +27,9 @@ class CommerceFeatureBuilder(BaseFeatureBuilder):
         datasets: dict[str, pd.DataFrame],
     ) -> pd.DataFrame:
 
+        logger.info(
+            "Commerce feature builder initialized"
+        )
 
         if "orders" not in datasets:
 

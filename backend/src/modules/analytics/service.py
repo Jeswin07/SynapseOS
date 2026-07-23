@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import uuid
 
 from sqlalchemy.orm import Session
@@ -13,6 +14,7 @@ from src.ml.core.filtering.schemas import DatasetFilters
 from src.ml.core.filtering.service import DatasetFilterService
 from src.ml.features.service import FeatureService
 
+logger = logging.getLogger(__name__)
 
 class AnalyticsService:
     """
@@ -39,36 +41,78 @@ class AnalyticsService:
         Generate analytics from dataset features.
         """
 
+        logger.info(
+            "Analytics requested | dataset_version_id=%s has_filters=%s",
+            dataset_version_id,
+            filters is not None,
+        )
+
+        try:
         # Only use cache when there are no filters.
-        if filters is None:
+            if filters is None:
 
-            cache_key = str(dataset_version_id)
+                cache_key = str(dataset_version_id)
 
-            cached = AnalyticsCache.get(cache_key)
+                cached = AnalyticsCache.get(cache_key)
 
-            if cached is not None:
-                return cached
+                if cached is not None:
 
-        features = self.feature_service.build_features(
-            dataset_version_id=dataset_version_id,
-        )
+                    logger.info(
+                        "Analytics cache hit | dataset_version_id=%s",
+                        dataset_version_id,
+                    )
 
-        filtered = self.filter_service.apply(
-            dataframe=features,
-            filters=filters,
-        )
+                    return cached
 
-        result = self.engine.analyze(filtered)
-
-        if filters is None:
-
-            AnalyticsCache.set(
-                str(dataset_version_id),
-                result,
+            logger.info(
+                "Analytics cache miss | dataset_version_id=%s",
+                dataset_version_id,
             )
 
+            logger.info(
+                "Generating analytics features | dataset_version_id=%s",
+                dataset_version_id,
+            )
 
-        return result
+            features = self.feature_service.build_features(
+                dataset_version_id=dataset_version_id,
+            )
+
+            logger.info(
+                "Features generated | rows=%d columns=%d",
+                len(features),
+                len(features.columns),
+            )
+
+            filtered = self.filter_service.apply(
+                dataframe=features,
+                filters=filters,
+            )
+
+            logger.info(
+                "Filtering completed | rows=%d",
+                len(filtered),
+            )
+
+            result = self.engine.analyze(filtered)
+
+            if filters is None:
+
+                AnalyticsCache.set(
+                    str(dataset_version_id),
+                    result,
+                )
+
+            logger.info(
+                "Analytics generation completed"
+            )
+            return result
+        except Exception:
+            logger.exception(
+                "Analytics generation failed | dataset_version_id=%s",
+                dataset_version_id,
+            )
+            raise
 
     def get_filter_options(
         self,
@@ -83,5 +127,9 @@ class AnalyticsService:
         )
 
         options = DatasetFilterOptions()
+
+        logger.info(
+            "Filter options generated"
+        )
 
         return options.build(features)

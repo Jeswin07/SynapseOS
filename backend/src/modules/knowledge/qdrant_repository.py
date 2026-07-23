@@ -16,11 +16,15 @@ class QdrantRepository:
 
     def __init__(
         self,
-        host: str = "localhost",
-        port: int = 6333,
+        host: str | None = None,
+        port: int | None = None,
     ) -> None:
-        """Initialize the Qdrant client."""
-        self.client = QdrantClient(host=host, port=port)
+
+        self.client = QdrantClient(
+            host=host or settings.qdrant_host,
+            port=port or settings.qdrant_port,
+        )
+
         self.vector_size = settings.embedding_dimension  # BAAI/bge-small-en-v1.5
 
     def ensure_collection(self, collection_name: str) -> None:

@@ -2,7 +2,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    
     app_name: str = "SynapseOS"
+    environment: str = "development"
+
+    log_level: str = "INFO"
 
     postgres_host: str
     postgres_port: int
@@ -10,6 +14,9 @@ class Settings(BaseSettings):
     postgres_db: str
     postgres_user: str
     postgres_password: str
+
+    qdrant_host: str
+    qdrant_port: int
 
     jwt_secret_key: str
     jwt_algorithm: str
@@ -24,7 +31,6 @@ class Settings(BaseSettings):
     minio_secure: bool
 
     groq_api_key: str
-    groq_model: str = "llama-3.3-70b-versatile"
 
     # ---------- Knowledge ----------
     knowledge_collection: str = "enterprise_docs"
@@ -65,5 +71,5 @@ class Settings(BaseSettings):
         )
 
 
-settings = Settings()
+settings = Settings() #type: ignore
 

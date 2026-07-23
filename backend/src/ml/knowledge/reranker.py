@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 from sentence_transformers import CrossEncoder
+import logging
 
 from src.core.config import settings
 from src.ml.knowledge.retrieval_models import RetrievedChunk
-from src.shared.logging import logger
 
+logger = logging.getLogger(__name__)
 
 class CrossEncoderReranker:
     """

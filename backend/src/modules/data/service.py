@@ -1,3 +1,4 @@
+import logging
 import uuid
 
 from fastapi import UploadFile
@@ -26,11 +27,11 @@ from src.modules.data.repository import DatasetRepository
 from src.shared.exceptions.dataset import (
     DatasetException,
 )
-from src.shared.logging import logger
 from src.shared.utils.checksum import (
     calculate_sha256,
 )
 
+logger = logging.getLogger(__name__)
 
 class DatasetService:
     """
@@ -98,10 +99,8 @@ class DatasetService:
         """
 
         logger.info(
-            "Fetching datasets.",
-            extra={
-                "tenant_id": str(tenant_id),
-            },
+            "Dataset list requested | tenant_id=%s",
+            tenant_id,
         )
 
         return self.repository.list_datasets(
@@ -134,10 +133,8 @@ class DatasetService:
 
         if dataset is None:
             logger.warning(
-                "Dataset not found.",
-                extra={
-                    "dataset_id": str(dataset_id),
-                },
+                "Dataset not found | dataset_id=%s",
+                dataset_id,
             )
 
             raise DatasetException(
@@ -181,17 +178,22 @@ class DatasetService:
         """
 
         logger.info(
-            "Creating dataset.",
-            extra={
-                "tenant_id": str(tenant_id),
-                "dataset_name": name,
-            },
+            "Dataset creation started | tenant_id=%s dataset_name=%s type=%s domain=%s",
+            tenant_id,
+            name,
+            dataset_type,
+            business_domain,
         )
 
         if self.repository.exists_by_name(
             tenant_id,
             name,
         ):
+            logger.warning(
+                "Dataset creation rejected | tenant_id=%s dataset_name=%s reason=already_exists",
+                tenant_id,
+                name,
+            )
             raise DatasetException(
                 "Dataset already exists."
             )
@@ -215,10 +217,10 @@ class DatasetService:
         self.repository.refresh(dataset)
 
         logger.info(
-            "Dataset created successfully.",
-            extra={
-                "dataset_id": str(dataset.id),
-            },
+            "Dataset created | dataset_id=%s tenant_id=%s created_by=%s",
+            dataset.id,
+            tenant_id,
+            created_by,
         )
 
         return dataset
@@ -235,6 +237,13 @@ class DatasetService:
         Upload a new dataset version containing multiple files.
         """
 
+        logger.info(
+            "Dataset version upload started | dataset_id=%s tenant_id=%s files=%s",
+            dataset_id,
+            tenant_id,
+            len(files),
+        )
+
         try:
 
             dataset = (
@@ -245,6 +254,12 @@ class DatasetService:
             )
 
             if dataset is None:
+                logger.warning(
+                    "Dataset version upload rejected | dataset_id=%s" \
+                    " tenant_id=%s reason=dataset_not_found",
+                    dataset_id,
+                    tenant_id,
+                )
                 raise DatasetException(
                     "Dataset not found."
                 )
@@ -365,12 +380,10 @@ class DatasetService:
             )
 
             logger.info(
-                "Dataset version uploaded.",
-                extra={
-                    "dataset_id": str(dataset.id),
-                    "version": version_number,
-                    "files": len(files),
-                },
+                "Dataset version uploaded | dataset_id=%s version=%s files=%s",
+                dataset.id,
+                version_number,
+                len(files),
             )
 
             return dataset_version
@@ -410,6 +423,10 @@ class DatasetService:
         """
         Download a specific dataset file.
         """
+        logger.info(
+            "Dataset file download requested | file_id=%s",
+            dataset_file_id,
+        )
 
         dataset_file = (
             self.repository.get_dataset_file_by_id(
@@ -418,6 +435,10 @@ class DatasetService:
         )
 
         if dataset_file is None:
+            logger.warning(
+                "Dataset file download rejected | file_id=%s reason=file_not_found",
+                dataset_file_id,
+            )
             raise DatasetException(
                 "Dataset file not found."
             )
@@ -436,6 +457,12 @@ class DatasetService:
         tenant_id: uuid.UUID,
     ) -> None:
 
+        logger.info(
+            "Dataset deletion started | dataset_id=%s tenant_id=%s",
+            dataset_id,
+            tenant_id,
+        )
+
         dataset = (
             self.repository.get_dataset_by_id_and_tenant(
                 dataset_id,
@@ -444,6 +471,12 @@ class DatasetService:
         )
 
         if dataset is None:
+            logger.warning(
+                "Dataset deletion rejected | dataset_id=%s " \
+                "tenant_id=%s reason=not_found",
+                dataset_id,
+                tenant_id,
+            )
             raise DatasetException(
                 "Dataset not found."
             )
@@ -453,6 +486,12 @@ class DatasetService:
         )
 
         self.repository.commit()
+
+        logger.info(
+            "Dataset deleted | dataset_id=%s tenant_id=%s",
+            dataset_id,
+            tenant_id,
+        )
 
     
     def get_dataset_files(

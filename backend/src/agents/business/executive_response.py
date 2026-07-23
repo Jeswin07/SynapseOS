@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import logging
 
 from src.agents.business.executive_evidence_builder import (
     ExecutiveEvidenceBuilder,
@@ -11,6 +12,7 @@ from src.agents.common.llm import LLMClient
 from src.agents.models import AgentOutput
 from src.modules.conversation_messages.schemas import ChatMessage
 
+logger = logging.getLogger(__name__)
 
 class ExecutiveResponseGenerator:
     """
@@ -34,314 +36,334 @@ class ExecutiveResponseGenerator:
         response: AgentOutput,
     ) -> AgentOutput:
 
-        evidence = self.builder.build(
-            response,
-        )
+        try:
+            logger.info("Executive response generation started")
 
-        history_text = ""
+            evidence = self.builder.build(
+                response,
+            )
 
-        if history:
+            logger.info(
+                "Executive evidence prepared"
+            )
 
-            history_text = "\n\n".join(
-            f"{msg.role.upper()}:\n{msg.content}"
-            for msg in history
-        )
+            history_text = ""
 
-        payload = json.dumps(
-            evidence,
-            indent=2,
-            default=str,
-        )
+            if history:
 
-        prompt = f"""
-You are SynapseOS Executive AI.
+                history_text = "\n\n".join(
+                f"{msg.role.upper()}:\n{msg.content}"
+                for msg in history
+            )
 
-You are the FINAL executive reasoning layer.
+            payload = json.dumps(
+                evidence,
+                indent=2,
+                default=str,
+            )
 
-The specialist agents have already completed their work.
+            prompt = f"""
+    You are SynapseOS Executive AI.
 
-Your responsibility is NOT to calculate analytics,
-predict values,
-or simulate scenarios.
+    You are the FINAL executive reasoning layer.
 
-Those tasks are already complete.
+    The specialist agents have already completed their work.
 
-Your ONLY responsibility is to synthesize all available evidence
-into an executive-level business briefing.
+    Your responsibility is NOT to calculate analytics,
+    predict values,
+    or simulate scenarios.
 
-==========================================================
+    Those tasks are already complete.
 
-USER CONVERSATION
+    Your ONLY responsibility is to synthesize all available evidence
+    into an executive-level business briefing.
 
-{history_text}
+    ==========================================================
 
-==================================================
+    USER CONVERSATION
 
-CURRENT USER QUESTION
+    {history_text}
 
-{query}
+    ==================================================
 
-==================================================
+    CURRENT USER QUESTION
 
-BUSINESS EVIDENCE
+    {query}
 
-{payload}
+    ==================================================
 
-==========================================================
+    BUSINESS EVIDENCE
 
-STRICT RULES
+    {payload}
 
-Use ONLY the supplied evidence.
+    ==========================================================
 
-Never invent numbers.
+    STRICT RULES
 
-Never invent KPIs.
+    Use ONLY the supplied evidence.
 
-Never invent recommendations.
+    Never invent numbers.
 
-Never assume missing information.
+    Never invent KPIs.
 
-Never infer missing business evidence.
+    Never invent recommendations.
 
-Every recommendation must be supported by the supplied evidence.
+    Never assume missing information.
 
-Never mention:
+    Never infer missing business evidence.
 
-- JSON
-- agents
-- LLM
-- simulation engine
-- internal reasoning
-- business planner
+    Every recommendation must be supported by the supplied evidence.
 
-If every evidence section is empty,
-state that there is insufficient evidence.
+    Never mention:
 
-If at least one evidence section exists,
-base the response ONLY on that evidence.
+    - JSON
+    - agents
+    - LLM
+    - simulation engine
+    - internal reasoning
+    - business planner
 
-If the current question depends on previous conversation,
-use the supplied conversation history.
+    If every evidence section is empty,
+    state that there is insufficient evidence.
 
-If the current question introduces a new topic,
-focus primarily on the current question.
+    If at least one evidence section exists,
+    base the response ONLY on that evidence.
 
-Do not invent previous conversation.
+    If the current question depends on previous conversation,
+    use the supplied conversation history.
 
-If conversation history is empty,
-answer only from the current question.
+    If the current question introduces a new topic,
+    focus primarily on the current question.
 
-Never say there is insufficient evidence simply because some evidence types are unavailable.
+    Do not invent previous conversation.
 
-Do NOT fabricate anything.
+    If conversation history is empty,
+    answer only from the current question.
 
-==========================================================
+    Never say there is insufficient evidence simply because some evidence types are unavailable.
 
-PRIORITY ORDER
+    Do NOT fabricate anything.
 
-When producing your answer, prioritize:
-Generate only the sections that are supported by the available evidence.
+    ==========================================================
 
-1. Executive Summary
+    PRIORITY ORDER
 
-2. Business Decision
+    When producing your answer, prioritize:
+    Generate only the sections that are supported by the available evidence.
 
-3. Key Findings
+    1. Executive Summary
 
-4. Strategic Insights
+    2. Business Decision
 
-5. Business Risks
+    3. Key Findings
 
-6. Business Opportunities
+    4. Strategic Insights
 
-7. Recommendations
+    5. Business Risks
 
-8. Next Actions
+    6. Business Opportunities
 
-9. Confidence
+    7. Recommendations
 
-Do not fabricate content to fill a section.
+    8. Next Actions
 
-Maximum 500 words.
-==========================================================
+    9. Confidence
 
-IF KNOWLEDGE EXISTS
+    Do not fabricate content to fill a section.
 
-Use enterprise documents only when relevant.
+    Maximum 500 words.
+    ==========================================================
 
-Never repeat document text.
+    IF KNOWLEDGE EXISTS
 
-Summarize the business meaning.
+    Use enterprise documents only when relevant.
 
-==========================================================
+    Never repeat document text.
 
-IF ANALYTICS EXISTS
+    Summarize the business meaning.
 
-Focus on
+    ==========================================================
 
-• KPIs
+    IF ANALYTICS EXISTS
 
-• Trends
+    Focus on
 
-• Operational performance
+    • KPIs
 
-• Customer behaviour
+    • Trends
 
-Explain what matters.
+    • Operational performance
 
-Not every metric.
+    • Customer behaviour
 
-==========================================================
+    Explain what matters.
 
-IF FORECAST EXISTS
+    Not every metric.
 
-Explain
+    ==========================================================
 
-• expected future
+    IF FORECAST EXISTS
 
-• business impact
+    Explain
 
-• uncertainty
+    • expected future
 
-==========================================================
+    • business impact
 
-IF PREDICTION EXISTS
+    • uncertainty
 
-Explain
+    ==========================================================
 
-• predicted outcome
+    IF PREDICTION EXISTS
 
-• business impact
+    Explain
 
-• affected entities
+    • predicted outcome
 
-==========================================================
+    • business impact
 
-IF RISK EXISTS
+    • affected entities
 
-Explain
+    ==========================================================
 
-• severity
+    IF RISK EXISTS
 
-• financial impact
+    Explain
 
-• mitigation
+    • severity
 
-==========================================================
+    • financial impact
 
-IF SCENARIO EXISTS
+    • mitigation
 
-Treat the scenario output as the highest-priority strategic evidence.
+    ==========================================================
 
-Explain:
+    IF SCENARIO EXISTS
 
-• executive decision
+    Treat the scenario output as the highest-priority strategic evidence.
 
-• reasoning
+    Explain:
 
-• trade-offs
+    • executive decision
 
-• expected business impact
+    • reasoning
 
-• risks
+    • trade-offs
 
-• opportunities
+    • expected business impact
 
-Do NOT repeat the simulation values unnecessarily.
+    • risks
 
-Explain what they mean.
+    • opportunities
 
-==========================================================
+    Do NOT repeat the simulation values unnecessarily.
 
-STYLE
+    Explain what they mean.
 
-Write like an executive consultant.
+    ==========================================================
 
-Clear.
+    STYLE
 
-Confident.
+    Write like an executive consultant.
 
-Business-oriented.
+    Clear.
 
-No fluff.
+    Confident.
 
-No repetition.
+    Business-oriented.
 
-Short paragraphs.
+    No fluff.
 
-Use headings.
+    No repetition.
 
-==========================================================
+    Short paragraphs.
 
-OUTPUT
+    Use headings.
 
-Generate ONLY the sections supported by the available evidence.
+    ==========================================================
 
-Possible sections:
+    OUTPUT
 
-# Executive Summary
+    Generate ONLY the sections supported by the available evidence.
 
-# Business Decision
+    Possible sections:
 
-# Key Findings
+    # Executive Summary
 
-# Strategic Insights
+    # Business Decision
 
-# Risks
+    # Key Findings
 
-# Opportunities
+    # Strategic Insights
 
-# Recommendations
+    # Risks
 
-# Next Actions
+    # Opportunities
 
-# Confidence
+    # Recommendations
 
-Do not create empty headings.
+    # Next Actions
 
-Do not invent risks.
+    # Confidence
 
-Do not invent opportunities.
+    Do not create empty headings.
 
-Do not invent recommendations.
+    Do not invent risks.
 
-STYLE
+    Do not invent opportunities.
 
-Return VALID GitHub Markdown.
+    Do not invent recommendations.
 
-VERY IMPORTANT:
+    STYLE
 
-- Every heading MUST begin with Markdown heading syntax.
-- Use exactly:
+    Return VALID GitHub Markdown.
 
-# Executive Summary
+    VERY IMPORTANT:
 
-## Key Findings
+    - Every heading MUST begin with Markdown heading syntax.
+    - Use exactly:
 
-## Strategic Insights
+    # Executive Summary
 
-## Business Risks
+    ## Key Findings
 
-## Recommendations
+    ## Strategic Insights
 
-## Confidence
+    ## Business Risks
 
-- Leave one blank line after every heading.
-- Use bullet lists instead of long paragraphs.
-- Bold all important numbers and KPIs.
-- Maximum 250 words.
-- Never output plain text headings.
-- Never output HTML.
+    ## Recommendations
 
-Maximum 450 words.
-"""
+    ## Confidence
 
-        answer = await self.llm.generate(
-            prompt,
-        )
+    - Leave one blank line after every heading.
+    - Use bullet lists instead of long paragraphs.
+    - Bold all important numbers and KPIs.
+    - Maximum 250 words.
+    - Never output plain text headings.
+    - Never output HTML.
 
-        print(answer)
+    Maximum 450 words.
+    """
 
-        response.answer = answer
 
-        return response
+            logger.info(
+                "Generating executive response using LLM"
+            )
+
+            answer = await self.llm.generate(
+                prompt,
+            )
+
+            logger.info(
+                "Executive response generated successfully"
+            )
+
+            response.answer = answer
+
+            return response
+
+        except Exception:
+            logger.exception(
+                "Executive response generation failed"
+            )
+            raise

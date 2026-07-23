@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from uuid import UUID
 
 from sqlalchemy.orm import Session
@@ -22,6 +23,7 @@ from src.modules.prediction.repository import (
     PredictionRepository,
 )
 
+logger = logging.getLogger(__name__)
 
 class PredictionService:
     """
@@ -62,46 +64,73 @@ class PredictionService:
         Execute prediction workflow.
         """
 
-        cache_key = (
-            f"{dataset_version_id}:"
-            f"{prediction_type}"
-        )
+        try:
 
-        cached = PredictionCache.get(
-            cache_key,
-        )
-
-        if cached is not None:
-            return cached
-
-        data = self.features.build_features(
-            dataset_version_id,
-        )
-
-
-        result = self.engine.predict(
-            data=data,
-            prediction_type=PredictionType(
+            logger.info(
+                "Prediction requested | dataset_version_id=%s prediction_type=%s",
+                dataset_version_id,
                 prediction_type,
-            ),
-        )
+            )
+
+            cache_key = (
+                f"{dataset_version_id}:"
+                f"{prediction_type}"
+            )
+
+            cached = PredictionCache.get(
+                cache_key,
+            )
+
+            if cached is not None:
+                logger.info(
+                    "Prediction cache hit | dataset_version_id=%s prediction_type=%s",
+                    dataset_version_id,
+                    prediction_type,
+                )
+                return cached
+
+            data = self.features.build_features(
+                dataset_version_id,
+            )
 
 
-        if save:
-
-            self.repository.create(
-                dataset_version_id=dataset_version_id,
-                created_by=created_by,
-                prediction_type=prediction_type,
-                result=result.model_dump(
-                    mode="json",
+            result = self.engine.predict(
+                data=data,
+                prediction_type=PredictionType(
+                    prediction_type,
                 ),
             )
 
-        PredictionCache.set(
-            cache_key,
-            result,
-        )
+
+            if save:
+
+                self.repository.create(
+                    dataset_version_id=dataset_version_id,
+                    created_by=created_by,
+                    prediction_type=prediction_type,
+                    result=result.model_dump(
+                        mode="json",
+                    ),
+                )
+
+            PredictionCache.set(
+                cache_key,
+                result,
+            )
+
+            logger.info(
+                "Prediction completed | dataset_version_id=%s prediction_type=%s",
+                dataset_version_id,
+                prediction_type,
+            )
+
+        except Exception:
+            logger.exception(
+                "Prediction failed | dataset_version_id=%s prediction_type=%s",
+                dataset_version_id,
+                prediction_type,
+            )
+            raise
 
         return result
 
@@ -114,6 +143,19 @@ class PredictionService:
         Get prediction history.
         """
 
-        return self.repository.list(
+        logger.info(
+            "Prediction history requested | user_id=%s",
             created_by,
         )
+
+        try:
+            return self.repository.list(
+                created_by,
+            )
+        
+        except Exception:
+            logger.exception(
+                "Prediction history failed | user_id=%s",
+                created_by,
+            )
+            raise

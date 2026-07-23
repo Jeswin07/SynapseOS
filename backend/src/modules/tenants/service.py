@@ -1,3 +1,5 @@
+import logging
+
 from sqlalchemy.orm import Session
 
 from src.models.tenant import Tenant
@@ -5,6 +7,7 @@ from src.modules.tenants.repository import (
     TenantRepository,
 )
 
+logger = logging.getLogger(__name__)
 
 class TenantService:
     def __init__(
@@ -21,9 +24,19 @@ class TenantService:
         industry: str,
     ) -> Tenant:
 
+        logger.info(
+            "Tenant creation started | company=%s industry=%s",
+            company_name,
+            industry,
+        )
+
         existing = self.repository.get_by_company_name(company_name)
 
         if existing:
+            logger.warning(
+                "Tenant creation rejected | company=%s reason=already_exists",
+                company_name,
+            )
             raise ValueError("Company already exists")
 
         tenant = Tenant(
@@ -34,5 +47,11 @@ class TenantService:
         self.repository.create(tenant)
 
         self.db.flush()
+
+        logger.info(
+            "Tenant created | tenant_id=%s company=%s",
+            tenant.id,
+            tenant.company_name,
+        )
 
         return tenant
