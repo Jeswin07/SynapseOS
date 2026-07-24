@@ -114,47 +114,6 @@ services:
     networks:
       - synapseos-network
 
-  frontend:
-    build:
-      context: ../../frontend
-      dockerfile: Dockerfile
-
-    image: synapseos-frontend:latest
-    container_name: synapseos-frontend
-    restart: unless-stopped
-
-    expose:
-      - "80"
-
-    networks:
-      - synapseos-network
-
-  gateway:
-    build:
-      context: ../nginx
-      dockerfile: Dockerfile
-
-    image: synapseos-gateway:latest
-    container_name: synapseos-gateway
-    restart: unless-stopped
-
-    depends_on:
-      frontend:
-        condition: service_started
-      backend:
-        condition: service_healthy
-
-    ports:
-      - "80:80"
-
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-    networks:
-      - synapseos-network
 
 volumes:
   postgres_data:
