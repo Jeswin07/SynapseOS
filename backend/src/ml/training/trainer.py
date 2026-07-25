@@ -8,7 +8,10 @@ from src.ml.evaluation.metrics import (
     ModelEvaluator,
 )
 from src.ml.preprocessing.loader import DatasetLoader
-
+from src.core.storage.artifact_storage import (
+    MODEL_ARTIFACTS_DIR,
+    ensure_artifact_directories,
+)
 
 class MLTrainer:
     """
@@ -71,21 +74,17 @@ class MLTrainer:
             dataframe.columns
         ) - 1
 
-        Path("artifacts").mkdir(
-            exist_ok=True,
-        )
+        ensure_artifact_directories()
 
-        artifact_path = (
-            f"artifacts/{model_id}.joblib"
-        )
+        artifact_path = MODEL_ARTIFACTS_DIR / f"{model_id}.joblib"
 
         algorithm_instance.save(
             training_result.model,
             training_result.preprocessor,
-            artifact_path,
+            str(artifact_path),
         )
 
         return (
-            artifact_path,
+            str(artifact_path),
             metrics,
         )

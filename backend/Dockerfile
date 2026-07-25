@@ -61,6 +61,11 @@ RUN groupadd --system synapseos && \
 
 COPY --from=builder --chown=synapseos:synapseos /app /app
 
+RUN mkdir -p /app/artifacts/forecast \
+    /app/artifacts/models \
+    /app/artifacts/evaluation \
+ && chown -R synapseos:synapseos /app/artifacts
+
 USER synapseos
 
 EXPOSE 8000
