@@ -4,6 +4,8 @@ services:
       context: ../../backend
       dockerfile: Dockerfile
 
+    image: synapseos-backend:dev
+
     env_file:
       - ../../backend/.env.docker
 
