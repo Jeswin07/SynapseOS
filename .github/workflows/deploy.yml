@@ -1,0 +1,30 @@
+name: Deploy Backend
+
+on:
+  workflow_run:
+    workflows: ["Backend CI"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to GCP VM
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.GCP_HOST }}
+          username: ${{ secrets.GCP_USER }}
+          key: ${{ secrets.GCP_SSH_KEY }}
+
+          script: |
+            cd /opt/synapseos/infra/docker
+
+            docker compose pull backend
+
+            docker compose up -d backend
+
+            docker image prune -f

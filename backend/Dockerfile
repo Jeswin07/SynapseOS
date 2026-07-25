@@ -1,64 +1,76 @@
-# -----------------------------------------------------------------------------
+# =========================
 # Builder Stage
-# -----------------------------------------------------------------------------
-
+# =========================
 FROM python:3.11-slim AS builder
 
-LABEL org.opencontainers.image.title="SynapseOS" \
-      org.opencontainers.image.description="Enterprise Decision Intelligence Platform" \
-      org.opencontainers.image.authors="Jeswin K Reji"
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    UV_PYTHON=/usr/local/bin/python3 \
-    UV_PYTHON_DOWNLOADS=never
+# Important: use system Python instead of downloading one into /root/.local
+ENV UV_LINK_MODE=copy
+ENV UV_PYTHON=/usr/local/bin/python3
+ENV UV_PYTHON_DOWNLOADS=never
 
 WORKDIR /app
 
+# System dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        gcc \
+        g++ \
+        curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install uv
 RUN pip install --no-cache-dir uv
 
+# Copy dependency files first
 COPY pyproject.toml uv.lock ./
 
+# Install dependencies
 RUN uv sync --frozen --no-dev
 
+# Copy project
 COPY . .
 
+# Install project (if your package is defined in pyproject)
 RUN uv sync --frozen --no-dev
 
+# Download spaCy model
 RUN uv run python -m spacy download en_core_web_sm
 
-# -----------------------------------------------------------------------------
+# =========================
 # Runtime Stage
-# -----------------------------------------------------------------------------
-
+# =========================
 FROM python:3.11-slim
 
-LABEL org.opencontainers.image.title="SynapseOS" \
-      org.opencontainers.image.description="Enterprise Decision Intelligence Platform"
-
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PATH="/app/.venv/bin:$PATH"
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PATH="/app/.venv/bin:$PATH"
 
 WORKDIR /app
 
-# Install runtime tools (used by Docker healthcheck)
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y --no-install-recommends \
+        curl \
+    && rm -rf /var/lib/apt/lists/*
 
-# Create non-root user
 RUN groupadd --system synapseos && \
     useradd --system --gid synapseos --create-home synapseos
 
-# Copy application and virtual environment
-COPY --from=builder /app /app
+COPY --from=builder --chown=synapseos:synapseos /app /app
 
-# Set ownership
-RUN chown -R synapseos:synapseos /app
+RUN mkdir -p /app/artifacts/forecast \
+    /app/artifacts/models \
+    /app/artifacts/evaluation \
+ && chown -R synapseos:synapseos /app/artifacts
 
 USER synapseos
 
 EXPOSE 8000
 
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers", "--forwarded-allow-ips=*"]
+HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
+CMD curl -f http://localhost:8000/health || exit 1
+
+CMD ["python", "-m", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

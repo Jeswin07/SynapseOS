@@ -10,7 +10,10 @@ from src.ml.forecasting.prophet_trainer import (
 from src.ml.preprocessing.loader import (
     DatasetLoader,
 )
-
+from src.core.storage.artifact_storage import (
+    FORECAST_ARTIFACTS_DIR,
+    ensure_artifact_directories,
+)
 
 class ForecastTrainer:
     """
@@ -69,22 +72,18 @@ class ForecastTrainer:
             frequency=frequency,
         )
 
-        Path(
-            "artifacts/forecast",
-        ).mkdir(
-            parents=True,
-            exist_ok=True,
-        )
+        ensure_artifact_directories()
 
         artifact_path = (
-            f"artifacts/forecast/{forecast_id}.joblib"
+            FORECAST_ARTIFACTS_DIR
+            / f"{forecast_id}.joblib"
         )
 
         self.trainer.save(
             model,
-            artifact_path,
+            str(artifact_path),
         )
 
-        return artifact_path
+        return str(artifact_path)
 
 
