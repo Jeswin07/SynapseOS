@@ -20,11 +20,15 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+          # Increased timeouts for large Docker images
+          timeout: 30m
+          command_timeout: 30m
+
           script: |
             cd ${{ secrets.VM_PATH }}
 
             docker compose pull backend
 
-            docker compose up -d backend
+            docker compose up -d --force-recreate backend
 
             docker image prune -f
