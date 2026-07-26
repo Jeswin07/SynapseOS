@@ -232,12 +232,13 @@ class AuthService:
         )
 
         if not stored_token:
-            raise ValueError(
-                "Refresh token not found"
-            )
             logger.warning(
                 "Logout requested with an unknown refresh token."
             )
+            raise ValueError(
+                "Refresh token not found"
+            )
+            
 
         try:
 

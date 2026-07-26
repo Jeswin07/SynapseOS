@@ -519,6 +519,12 @@ class CommerceFeatureBuilder(BaseFeatureBuilder):
                 )
             ).dt.days
 
+        if (
+            "customer_unique_id" in features.columns
+            and "customer_id" in features.columns
+        ):
+            features["customer_id"] = features["customer_unique_id"]
+
         features = self._apply_canonical_columns(features)
 
         features = self._engineer_common_features(features)

@@ -14,6 +14,7 @@ from src.ml.cache.feature_cache import (
 from src.models.dataset import Dataset
 from src.models.dataset_enums import (
     BusinessDomain,
+    DatasetStatus,
     DatasetType,
 )
 from src.models.dataset_file import DatasetFile
@@ -371,6 +372,8 @@ class DatasetService:
                 self.repository.create_dataset_profile(
                     dataset_profile,
                 )
+
+            dataset_version.status = DatasetStatus.READY
 
             self.repository.commit()
             FeatureCache.clear()

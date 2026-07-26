@@ -1,6 +1,9 @@
-from pathlib import Path
 from uuid import UUID
 
+from src.core.storage.artifact_storage import (
+    FORECAST_ARTIFACTS_DIR,
+    ensure_artifact_directories,
+)
 from src.ml.forecasting.detector import (
     ForecastColumnDetector,
 )
@@ -10,10 +13,7 @@ from src.ml.forecasting.prophet_trainer import (
 from src.ml.preprocessing.loader import (
     DatasetLoader,
 )
-from src.core.storage.artifact_storage import (
-    FORECAST_ARTIFACTS_DIR,
-    ensure_artifact_directories,
-)
+
 
 class ForecastTrainer:
     """

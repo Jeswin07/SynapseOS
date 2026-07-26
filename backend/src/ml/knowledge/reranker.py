@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-from sentence_transformers import CrossEncoder
 import logging
+
+from sentence_transformers import CrossEncoder
 
 from src.core.config import settings
 from src.ml.knowledge.retrieval_models import RetrievedChunk

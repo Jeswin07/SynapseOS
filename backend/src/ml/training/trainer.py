@@ -1,17 +1,17 @@
 import time
-from pathlib import Path
 from uuid import UUID
 
+from src.core.storage.artifact_storage import (
+    MODEL_ARTIFACTS_DIR,
+    ensure_artifact_directories,
+)
 from src.ml.algorithms.registry import AlgorithmRegistry
 from src.ml.evaluation.metrics import (
     EvaluationResult,
     ModelEvaluator,
 )
 from src.ml.preprocessing.loader import DatasetLoader
-from src.core.storage.artifact_storage import (
-    MODEL_ARTIFACTS_DIR,
-    ensure_artifact_directories,
-)
+
 
 class MLTrainer:
     """

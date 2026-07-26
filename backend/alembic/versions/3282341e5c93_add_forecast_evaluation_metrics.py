@@ -5,17 +5,17 @@ Revises: c15f1071e514
 Create Date: 2026-07-18 02:27:44.506549
 
 """
-from typing import Sequence, Union
+from collections.abc import Sequence
 
-from alembic import op
 import sqlalchemy as sa
 
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision: str = '3282341e5c93'
-down_revision: Union[str, Sequence[str], None] = 'c15f1071e514'
-branch_labels: Union[str, Sequence[str], None] = None
-depends_on: Union[str, Sequence[str], None] = None
+down_revision: str | Sequence[str] | None = 'c15f1071e514'
+branch_labels: str | Sequence[str] | None = None
+depends_on: str | Sequence[str] | None = None
 
 
 def upgrade() -> None:

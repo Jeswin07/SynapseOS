@@ -1,8 +1,8 @@
+import logging
 from io import BytesIO
 from typing import BinaryIO
 
 from minio.error import S3Error
-import logging
 
 from src.core.config import settings
 from src.core.storage.exceptions import (
