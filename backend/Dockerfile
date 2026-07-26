@@ -6,7 +6,7 @@ FROM python:3.11-slim AS builder
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Important: use system Python instead of downloading one into /root/.local
+# Configure uv
 ENV UV_LINK_MODE=copy
 ENV UV_PYTHON=/usr/local/bin/python3
 ENV UV_PYTHON_DOWNLOADS=never
@@ -19,26 +19,34 @@ RUN apt-get update && \
         build-essential \
         gcc \
         g++ \
-        curl \
-    && rm -rf /var/lib/apt/lists/*
+        curl && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install uv
 RUN pip install --no-cache-dir uv
 
-# Copy dependency files first
+# Copy dependency files
 COPY pyproject.toml uv.lock ./
 
-# Install dependencies
+# Install project dependencies
 RUN uv sync --frozen --no-dev
 
-# Copy project
+# Copy source code
 COPY . .
 
-# Install project (if your package is defined in pyproject)
+# Sync project again (installs local package)
 RUN uv sync --frozen --no-dev
 
-# Download spaCy model
-RUN uv run python -m spacy download en_core_web_sm
+# ------------------------------------------------------------
+# Install spaCy English model into the SAME virtual environment
+# ------------------------------------------------------------
+RUN uv pip install \
+    --python /app/.venv/bin/python \
+    https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+
+# Verify installation
+RUN /app/.venv/bin/python -c "import en_core_web_sm; print(en_core_web_sm.__file__)"
+RUN /app/.venv/bin/python -m spacy validate
 
 # =========================
 # Runtime Stage
@@ -53,18 +61,22 @@ WORKDIR /app
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        curl \
-    && rm -rf /var/lib/apt/lists/*
+        curl && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN groupadd --system synapseos && \
-    useradd --system --gid synapseos --create-home synapseos
+    useradd --system \
+        --gid synapseos \
+        --create-home \
+        synapseos
 
 COPY --from=builder --chown=synapseos:synapseos /app /app
 
-RUN mkdir -p /app/artifacts/forecast \
+RUN mkdir -p \
+    /app/artifacts/forecast \
     /app/artifacts/models \
-    /app/artifacts/evaluation \
- && chown -R synapseos:synapseos /app/artifacts
+    /app/artifacts/evaluation && \
+    chown -R synapseos:synapseos /app/artifacts
 
 USER synapseos
 
