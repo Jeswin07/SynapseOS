@@ -39,7 +39,7 @@ function extractDetail(body: ApiErrorBody | undefined, fallback: string): string
 
 const STATUS_MESSAGES: Record<number, string> = {
   400: "The request could not be processed. Please check your input.",
-  401: "Your session has expired. Please sign in again.",
+  401: "Authentication failed.",
   403: "You don't have permission to perform this action.",
   404: "The requested resource could not be found.",
   422: "Some fields need your attention.",
@@ -54,8 +54,17 @@ apiClient.interceptors.response.use(
     const detail = extractDetail(error.response?.data, fallback);
 
     if (status === 401) {
+    const message = detail.toLowerCase();
+
+    const isExpired =
+      message.includes("expired") ||
+      message.includes("token") ||
+      message.includes("session");
+
+    if (isExpired) {
       useAuthStore.getState().clearSession();
     }
+  }
 
     return Promise.reject(new ApiError(status, detail));
   }
