@@ -109,7 +109,9 @@ Use only the supplied information.
         response = self.client.chat.completions.create(
             model=self.model,
             temperature=0,
-            max_tokens=700,
+            reasoning_effort="low",
+            include_reasoning=False,
+            max_completion_tokens=settings.generator_max_tokens,
             messages=[
                 {
                     "role": "system",

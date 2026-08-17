@@ -48,8 +48,8 @@ class Settings(BaseSettings):
     embedding_model: str = "BAAI/bge-small-en-v1.5"
     embedding_dimension: int = 384
     # ---------- Generator ----------
-    groq_model: str = "llama-3.3-70b-versatile"
-    groq_judge_model: str ="llama-3.1-8b-instant"
+    groq_model: str = "openai/gpt-oss-20b"
+    groq_judge_model: str = "openai/gpt-oss-20b"
     generator_temperature: float = 0.1
     generator_max_tokens: int = 700
 

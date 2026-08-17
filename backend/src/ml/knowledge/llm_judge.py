@@ -97,6 +97,9 @@ Return ONLY valid JSON.
         response = self.client.chat.completions.create(
             model=self.model,
             temperature=0,
+            reasoning_effort="low",
+            include_reasoning=False,
+            max_completion_tokens=700,
             response_format={
                 "type": "json_object",
             },

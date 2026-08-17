@@ -28,19 +28,18 @@ class LLMClient:
     ) -> str:
 
 
-        response = (
-            await self.client.chat.completions.create(
-                model=settings.groq_model,
-
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt,
-                    }
-                ],
-
-                temperature=0,
-            )
+        response = await self.client.chat.completions.create(
+            model=settings.groq_model,
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt,
+                }
+            ],
+            temperature=0,
+            reasoning_effort="low",
+            include_reasoning=False,
+            max_completion_tokens=settings.generator_max_tokens,
         )
 
 
